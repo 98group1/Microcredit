@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贷款申请表</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        #app{
+            width:800px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px black solid;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <h2>贷款申请表</h2>
+    </div>
+    <el-form :inline="true" :model="formInline" label-width="150px" class="demo-form-inline">
+        <!--隐藏主键-->
+        <el-input v-model="form.applyId" type="hidden" autocomplete="off"></el-input>
+        <el-input v-model="form.userId" type="hidden" autocomplete="off"></el-input>
+        <el-row>
+            <el-form-item label="贷款类型">
+                <el-input v-model="form.loanType" placeholder="贷款类型" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="贷款金额">
+                <el-input v-model="form.loanMoney" placeholder="贷款金额" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+        <!--<el-row>
+
+        </el-row>-->
+        <el-row>
+            <el-form-item label="贷款期限">
+                <el-input v-model="form.loanDeandline" placeholder="贷款期限" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="担保人姓名">
+                <el-input v-model="form.boundmanName" placeholder="担保人姓名" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="还款方式">
+                <el-select v-model="form.repaymentId" placeholder="请选择还款方式">
+                    <el-option label="到期一次付清" value="shanghai"></el-option>
+                    <el-option label="按月分期" value="beijing"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="贷款描述">
+                <el-input v-model="form.describes" placeholder="贷款描述" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+    </el-form>
+    <div id="footer" slot="footer" class="dialog-footer">
+        <el-button id="close" type="danger" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button id="sure" type="primary" @click="next">下一步</el-button>
+    </div>
+</div>
+
+<script>
+    var vue=new Vue({
+        el:"#app",
+        data:{
+            form:{
+                userId:'',
+                loanType:'',
+                loanMoney:'',
+                loanDeandline:'',
+                repaymentId:'',
+                bondsmanName:'',
+                descrebes:'',
+                loanStatus:''
+            },
+            formLabelWidth:'300px'
+        },
+        method:{
+            saveData:function(){
+                var self=this;
+                axios.post(this.url, this.form)
+                    .then(function (response) {
+                        //添加或者修改成功
+                        if(response.data==1){
+                            self.$message({
+                                message: '恭喜你， 操作成功',
+                                type: 'success'
+                            });
+                            //关闭弹出框
+                            self.dialogFormVisible=false;
+                            //刷新页面
+                            self.loadData();
+                        }else{ //添加或者修改错误
+                            self.$message.error('错了哦， 操作错误');
+                        }
+                    })
+            },
+        }
+    })
+</script>
+</body>
+</html>

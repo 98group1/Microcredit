@@ -15,7 +15,9 @@ public class Apply {
     private Integer loanType;
     //担保人姓名
     private String bondsmanName;
-    //贷款状态   1未审核2审核中3审核通过4审核不通过 5放款中6还款中7逾期8还款结束
+    //贷款状态   1未审核2审核中（一审通过二审还没开始期间）
+    // 3审核通过（一审、二审都通过） 4审核不通过，即驳回（一审二审其中一个不通过就不通过）
+    // 5贷款金额已到账6 待还款 7 已还款 8还款结束 9逾期
     private Integer loanStatus;
     //贷款金额
     private Double loanMoney;
