@@ -1,27 +1,26 @@
 package com.aaa.microcredit.entity;
 
 public class CpInfo {
-    //公司id
     private Integer cpId;
-    //登录的用户名
+
     private String username;
-    //公司名称
+
     private String cpName;
-    //公司机构代码号
+
     private String cpCode;
-    //公司地址
+
     private String cpAddress;
-    //公司营业执照图片原始名称
+
     private String licenseName;
-    //公司营业执照图片地址
+
     private String licenseUrl;
-    //公司电话
+
     private String cpTel;
-    //公司账户1
+
     private String cpAccount1;
-    //公司账户2
+
     private String cpAccount2;
-    //公司邮箱
+
     private String cpEmail;
 
     public Integer getCpId() {

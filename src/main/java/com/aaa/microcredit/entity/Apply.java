@@ -1,36 +1,49 @@
 package com.aaa.microcredit.entity;
 
-import lombok.Data;
-
 import java.util.Date;
-@Data
+
 public class Apply {
-    //贷款id
     private Integer applyId;
-    //用户id
+
     private Integer userId;
-    //还款方式
-    private Integer repaymentId;
-    //贷款类型
+
     private Integer loanType;
-    //担保人姓名
-    private String bondsmanName;
-    //贷款状态   1未审核2审核中3审核通过4审核不通过 5放款中6还款中7逾期8还款结束
-    private Integer loanStatus;
-    //贷款金额
+
     private Double loanMoney;
-    //贷款期限
-    private String loanDeadline;
-    //贷款时间
-    private Date loanTime;
-    //一审人
-    private String firstCareful;
-    //二审人
-    private String twoCareful;
-    //驳回理由
-    private String reason;
-    //借款描述
+
+    private Integer loanDeadline;
+
+    private Integer repaymentId;
+
+    private String bondsmanName;
+
+    private String bondsmanAge;
+
+    private String bondsmanSex;
+
+    private String bondsmanTel;
+
+    private String bondsmanZj;
+
+    private String bondsmanSfzz;
+
+    private String bondsmanSfzf;
+
+    private String bondsmanAdd;
+
+    private String income;
+
     private String describes;
+
+    private Integer loanStatus;
+
+    private Date loanTime;
+
+    private String firstCareful;
+
+    private String twoCareful;
+
+    private String reason;
 
     public Integer getApplyId() {
         return applyId;
@@ -48,36 +61,12 @@ public class Apply {
         this.userId = userId;
     }
 
-    public Integer getRepaymentId() {
-        return repaymentId;
-    }
-
-    public void setRepaymentId(Integer repaymentId) {
-        this.repaymentId = repaymentId;
-    }
-
     public Integer getLoanType() {
         return loanType;
     }
 
     public void setLoanType(Integer loanType) {
         this.loanType = loanType;
-    }
-
-    public String getBondsmanName() {
-        return bondsmanName;
-    }
-
-    public void setBondsmanName(String bondsmanName) {
-        this.bondsmanName = bondsmanName == null ? null : bondsmanName.trim();
-    }
-
-    public Integer getLoanStatus() {
-        return loanStatus;
-    }
-
-    public void setLoanStatus(Integer loanStatus) {
-        this.loanStatus = loanStatus;
     }
 
     public Double getLoanMoney() {
@@ -88,12 +77,108 @@ public class Apply {
         this.loanMoney = loanMoney;
     }
 
-    public String getLoanDeadline() {
+    public Integer getLoanDeadline() {
         return loanDeadline;
     }
 
-    public void setLoanDeadline(String loanDeadline) {
-        this.loanDeadline = loanDeadline == null ? null : loanDeadline.trim();
+    public void setLoanDeadline(Integer loanDeadline) {
+        this.loanDeadline = loanDeadline;
+    }
+
+    public Integer getRepaymentId() {
+        return repaymentId;
+    }
+
+    public void setRepaymentId(Integer repaymentId) {
+        this.repaymentId = repaymentId;
+    }
+
+    public String getBondsmanName() {
+        return bondsmanName;
+    }
+
+    public void setBondsmanName(String bondsmanName) {
+        this.bondsmanName = bondsmanName == null ? null : bondsmanName.trim();
+    }
+
+    public String getBondsmanAge() {
+        return bondsmanAge;
+    }
+
+    public void setBondsmanAge(String bondsmanAge) {
+        this.bondsmanAge = bondsmanAge == null ? null : bondsmanAge.trim();
+    }
+
+    public String getBondsmanSex() {
+        return bondsmanSex;
+    }
+
+    public void setBondsmanSex(String bondsmanSex) {
+        this.bondsmanSex = bondsmanSex == null ? null : bondsmanSex.trim();
+    }
+
+    public String getBondsmanTel() {
+        return bondsmanTel;
+    }
+
+    public void setBondsmanTel(String bondsmanTel) {
+        this.bondsmanTel = bondsmanTel == null ? null : bondsmanTel.trim();
+    }
+
+    public String getBondsmanZj() {
+        return bondsmanZj;
+    }
+
+    public void setBondsmanZj(String bondsmanZj) {
+        this.bondsmanZj = bondsmanZj == null ? null : bondsmanZj.trim();
+    }
+
+    public String getBondsmanSfzz() {
+        return bondsmanSfzz;
+    }
+
+    public void setBondsmanSfzz(String bondsmanSfzz) {
+        this.bondsmanSfzz = bondsmanSfzz == null ? null : bondsmanSfzz.trim();
+    }
+
+    public String getBondsmanSfzf() {
+        return bondsmanSfzf;
+    }
+
+    public void setBondsmanSfzf(String bondsmanSfzf) {
+        this.bondsmanSfzf = bondsmanSfzf == null ? null : bondsmanSfzf.trim();
+    }
+
+    public String getBondsmanAdd() {
+        return bondsmanAdd;
+    }
+
+    public void setBondsmanAdd(String bondsmanAdd) {
+        this.bondsmanAdd = bondsmanAdd == null ? null : bondsmanAdd.trim();
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income == null ? null : income.trim();
+    }
+
+    public String getDescribes() {
+        return describes;
+    }
+
+    public void setDescribes(String describes) {
+        this.describes = describes == null ? null : describes.trim();
+    }
+
+    public Integer getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(Integer loanStatus) {
+        this.loanStatus = loanStatus;
     }
 
     public Date getLoanTime() {
@@ -126,13 +211,5 @@ public class Apply {
 
     public void setReason(String reason) {
         this.reason = reason == null ? null : reason.trim();
-    }
-
-    public String getDescribes() {
-        return describes;
-    }
-
-    public void setDescribes(String describe) {
-        this.describes = describe == null ? null : describe.trim();
     }
 }
