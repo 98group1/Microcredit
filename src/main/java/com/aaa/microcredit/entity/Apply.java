@@ -1,20 +1,19 @@
 package com.aaa.microcredit.entity;
 
+import lombok.Data;
+
 import java.util.Date;
-
+@Data
 public class Apply {
+    //贷款id
     private Integer applyId;
-
+    //用户id
     private Integer userId;
-
-    private Integer loanType;
-
-    private Double loanMoney;
-
-    private Integer loanDeadline;
-
+    //还款方式
     private Integer repaymentId;
-
+    //贷款类型
+    private Integer loanType;
+    //担保人姓名
     private String bondsmanName;
 
     private String bondsmanAge;
@@ -32,18 +31,24 @@ public class Apply {
     private String bondsmanAdd;
 
     private String income;
-
-    private String describes;
-
+    //贷款状态   1未审核2审核中（一审通过二审还没开始期间）
+    // 3审核通过（一审、二审都通过） 4审核不通过，即驳回（一审二审其中一个不通过就不通过）
+    // 5贷款金额已到账6 待还款 7 已还款 8还款结束 9逾期
     private Integer loanStatus;
-
+    //贷款金额
+    private Double loanMoney;
+    //贷款期限
+    private String loanDeadline;
+    //贷款时间
     private Date loanTime;
-
+    //一审人
     private String firstCareful;
-
+    //二审人
     private String twoCareful;
-
+    //驳回理由
     private String reason;
+    //借款描述
+    private String describes;
 
     public Integer getApplyId() {
         return applyId;
@@ -61,6 +66,14 @@ public class Apply {
         this.userId = userId;
     }
 
+    public Integer getRepaymentId() {
+        return repaymentId;
+    }
+
+    public void setRepaymentId(Integer repaymentId) {
+        this.repaymentId = repaymentId;
+    }
+
     public Integer getLoanType() {
         return loanType;
     }
@@ -69,29 +82,7 @@ public class Apply {
         this.loanType = loanType;
     }
 
-    public Double getLoanMoney() {
-        return loanMoney;
-    }
 
-    public void setLoanMoney(Double loanMoney) {
-        this.loanMoney = loanMoney;
-    }
-
-    public Integer getLoanDeadline() {
-        return loanDeadline;
-    }
-
-    public void setLoanDeadline(Integer loanDeadline) {
-        this.loanDeadline = loanDeadline;
-    }
-
-    public Integer getRepaymentId() {
-        return repaymentId;
-    }
-
-    public void setRepaymentId(Integer repaymentId) {
-        this.repaymentId = repaymentId;
-    }
 
     public String getBondsmanName() {
         return bondsmanName;
@@ -165,13 +156,6 @@ public class Apply {
         this.income = income == null ? null : income.trim();
     }
 
-    public String getDescribes() {
-        return describes;
-    }
-
-    public void setDescribes(String describes) {
-        this.describes = describes == null ? null : describes.trim();
-    }
 
     public Integer getLoanStatus() {
         return loanStatus;
@@ -179,6 +163,22 @@ public class Apply {
 
     public void setLoanStatus(Integer loanStatus) {
         this.loanStatus = loanStatus;
+    }
+
+    public Double getLoanMoney() {
+        return loanMoney;
+    }
+
+    public void setLoanMoney(Double loanMoney) {
+        this.loanMoney = loanMoney;
+    }
+
+    public String getLoanDeadline() {
+        return loanDeadline;
+    }
+
+    public void setLoanDeadline(String loanDeadline) {
+        this.loanDeadline = loanDeadline == null ? null : loanDeadline.trim();
     }
 
     public Date getLoanTime() {
@@ -211,5 +211,13 @@ public class Apply {
 
     public void setReason(String reason) {
         this.reason = reason == null ? null : reason.trim();
+    }
+
+    public String getDescribes() {
+        return describes;
+    }
+
+    public void setDescribes(String describe) {
+        this.describes = describe == null ? null : describe.trim();
     }
 }

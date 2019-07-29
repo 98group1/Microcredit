@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ApplyController {
     @Autowired
     private ApplyService applyService;
-
     /**
      * 根据id查询申请信息
      * @param applyId
@@ -22,6 +21,16 @@ public class ApplyController {
     @ResponseBody
     public Apply SelectApplyId(Integer applyId){
         return applyService.selectByPrimaryKey(applyId);
+    }
+
+    /**
+     * 申请资料录入
+     * @param apply 参数 ，对象实体
+     * @return  返回执行结果
+     */
+    public Object save(Apply apply){
+        int result = applyService.insertSelective(apply);
+        return result;
     }
 
 }
