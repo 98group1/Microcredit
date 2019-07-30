@@ -38,10 +38,7 @@ public class ApplyController {
     @RequestMapping("/save")
     @ResponseBody
     public Object save(@RequestBody Apply apply){
-        System.out.println("**********"+apply);
-        System.out.println(apply.getLoanDeadline());
         int result = applyService.insertSelective(apply);
-        System.out.println(result);
         return result;
     }
 
@@ -51,11 +48,9 @@ public class ApplyController {
         System.out.println("开始上传。。。");
 //        String originalFilename = bondsmanSfzz.getOriginalFilename();
         String newFileName = ftpUtil.upLoad(bondsmanSfzz);
-        System.out.println(newFileName);
         Map map=new HashMap();
 //        map.put("originalFilename",originalFilename);
         map.put("newFileName",newFileName);
-        System.out.println(map);
         return map;
     }
 
@@ -66,7 +61,6 @@ public class ApplyController {
 //        String originalFilename = bondsmanSfzf.getOriginalFilename();
 //        System.out.println(originalFilename);
         String newFileName = ftpUtil.upLoad(bondsmanSfzf);
-        System.out.println(newFileName);
         Map map=new HashMap();
 //        map.put("originalFilename",originalFilename);
         map.put("newFileName",newFileName);
