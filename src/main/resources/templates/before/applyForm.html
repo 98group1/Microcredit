@@ -12,6 +12,29 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
         #app{
             width:800px;
             height: 100%;
@@ -27,38 +50,109 @@
     <div>
         <h2>贷款申请表</h2>
     </div>
-    <el-form :inline="true" :model="formInline" label-width="150px" class="demo-form-inline">
+    <el-form :inline="true" :model="form" label-width="150px" class="demo-form-inline">
         <!--隐藏主键-->
         <el-input v-model="form.applyId" type="hidden" autocomplete="off"></el-input>
         <el-input v-model="form.userId" type="hidden" autocomplete="off"></el-input>
         <el-row>
             <el-form-item label="贷款类型">
-                <el-input v-model="form.loanType" placeholder="贷款类型" autocomplete="off"></el-input>
+                <el-select v-model="form.loanType" placeholder="请选择贷款方式">
+                    <el-option label="信用贷" value="1"></el-option>
+                    <el-option label="抵押贷" value="2"></el-option>
+                </el-select>
+                <!--<el-input v-model="form.loanType" placeholder="贷款类型" autocomplete="off"></el-input>-->
             </el-form-item>
             <el-form-item label="贷款金额">
                 <el-input v-model="form.loanMoney" placeholder="贷款金额" autocomplete="off"></el-input>
             </el-form-item>
         </el-row>
-        <!--<el-row>
-
-        </el-row>-->
         <el-row>
             <el-form-item label="贷款期限">
-                <el-input v-model="form.loanDeandline" placeholder="贷款期限" autocomplete="off"></el-input>
+                <el-select v-model="form.loanDeadline" placeholder="请选择贷款期限">
+                    <el-option label="6个月" value="6"></el-option>
+                    <el-option label="7个月" value="7"></el-option>
+                    <el-option label="8个月" value="8"></el-option>
+                    <el-option label="9个月" value="9"></el-option>
+                    <el-option label="10个月" value="10"></el-option>
+                    <el-option label="11个月" value="11"></el-option>
+                    <el-option label="12个月" value="12"></el-option>
+                </el-select>
+                <!--<el-input v-model="form.loanDeandline" placeholder="贷款期限" autocomplete="off"></el-input>-->
             </el-form-item>
             <el-form-item label="担保人姓名">
-                <el-input v-model="form.boundmanName" placeholder="担保人姓名" autocomplete="off"></el-input>
+                <el-input v-model="form.boundsmanName" placeholder="担保人姓名" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="担保人年龄">
+                <el-input v-model="form.boundsmanAge" placeholder="担保人年龄" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="担保人性别">
+                <el-input v-model="form.boundsmanSex" placeholder="担保人性别" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="担保人电话">
+                <el-input v-model="form.boundsmanTel" placeholder="担保人电话" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="担保人身份证号">
+                <el-input v-model="form.boundsmanZj" placeholder="担保人身份证号" autocomplete="off"></el-input>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="身份证正面" >
+                <el-upload
+                        name="bondsmanSfzz"
+                        class="avatar-uploader"
+                        action="/demo/apply/uploadSfzz"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="身份证反面" >
+                <el-upload
+                        name="bondsmanSfzf"
+                        class="avatar-uploader"
+                        action="/demo/apply/uploadSfzf"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess1"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="担保人家庭住址">
+                <el-input v-model="form.boundsmanAdd" placeholder="担保人家庭住址" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="担保人年收入">
+                <el-input v-model="form.income" placeholder="担保人年收入,单位：万元" autocomplete="off"></el-input>
             </el-form-item>
         </el-row>
         <el-row>
             <el-form-item label="还款方式">
                 <el-select v-model="form.repaymentId" placeholder="请选择还款方式">
-                    <el-option label="到期一次付清" value="shanghai"></el-option>
-                    <el-option label="按月分期" value="beijing"></el-option>
+                    <el-option label="到期一次付清" value="1"></el-option>
+                    <el-option label="按月分期" value="2"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="还款类型">
+                <el-select v-model="form.repaymentType" placeholder="请选择还款类型">
+                    <el-option label="等额本金" value="1"></el-option>
+                    <el-option label="等额本息" value="2"></el-option>
+                </el-select>
+            </el-form-item>
+        </el-row>
+        <el-row>
             <el-form-item label="贷款描述">
                 <el-input v-model="form.describes" placeholder="贷款描述" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item >
+                <!--<el-input v-model="form.describes" placeholder="贷款描述" autocomplete="off"></el-input>-->
             </el-form-item>
         </el-row>
     </el-form>
@@ -73,39 +167,70 @@
         el:"#app",
         data:{
             form:{
-                userId:'',
+                userId:'1',
                 loanType:'',
                 loanMoney:'',
-                loanDeandline:'',
+                loanDeadline:'',
                 repaymentId:'',
+                repaymentType:'',
                 bondsmanName:'',
+                bondsmanAge:'',
+                bondsmanSex:'',
+                bondsmanTel:'',
+                bondsmanZj:'',
+                bondsmanSfzz:'',
+                bondsmanSfzf:'',
+                bondsmanAdd:'',
+                income:'',
                 descrebes:'',
-                loanStatus:''
+                loanStatus:'1'
             },
-            formLabelWidth:'300px'
+            formLabelWidth:'300px',
+            url:'',
+            imageUrl:'',
+            imageUrl1:''
         },
-        method:{
-            saveData:function(){
+        methods:{
+            next:function () {
                 var self=this;
-                axios.post(this.url, this.form)
+                this.url="/demo/apply/save";
+                alert(JSON.stringify(this.form));
+                axios.post(this.url,this.form)
                     .then(function (response) {
                         //添加或者修改成功
                         if(response.data==1){
                             self.$message({
-                                message: '恭喜你， 操作成功',
-                                type: 'success'
+                                message:'恭喜你，操作成功！',
+                                type:'success'
                             });
-                            //关闭弹出框
-                            self.dialogFormVisible=false;
-                            //刷新页面
-                            self.loadData();
-                        }else{ //添加或者修改错误
-                            self.$message.error('错了哦， 操作错误');
+                        }else{
+                            //添加或者修改错误
+                            self.$message.error('错了哦，操作错误');
                         }
-                    })
+                    });
             },
+            handleAvatarSuccess:function(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.form.bondsmanSfzz =file.response.newFileName;
+            },
+            handleAvatarSuccess1:function(res, file) {
+                this.imageUrl1 = URL.createObjectURL(file.raw);
+                this.form.bondsmanSfzf =file.response.newFileName;
+            },
+            beforeAvatarUpload:function(file) {
+                var isJPG = file.type === 'image/jpeg';
+                var isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            }
         }
-    })
+    });
 </script>
 </body>
 </html>
