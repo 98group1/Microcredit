@@ -1,5 +1,8 @@
 package com.aaa.microcredit.entity;
 
+import lombok.Data;
+
+@Data
 public class CpInfo {
     private Integer cpId;
 

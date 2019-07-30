@@ -18,4 +18,5 @@ public class CpInfoController {
     public CpInfo selectCpInfoId(Integer cpId){
         return cpInfoService.selectByPrimaryKey(cpId);
     }
+
 }

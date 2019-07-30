@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.LawPersonMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.LawPerson">
+    <id column="law_id" jdbcType="INTEGER" property="lawId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="law_person" jdbcType="VARCHAR" property="lawPerson" />
+    <result column="law_sex" jdbcType="CHAR" property="lawSex" />
+    <result column="law_age" jdbcType="INTEGER" property="lawAge" />
+    <result column="law_tel" jdbcType="VARCHAR" property="lawTel" />
+    <result column="law_zj" jdbcType="VARCHAR" property="lawZj" />
+    <result column="house_address" jdbcType="VARCHAR" property="houseAddress" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="law_sfzz" jdbcType="VARCHAR" property="lawSfzz" />
+    <result column="law_sfzf" jdbcType="VARCHAR" property="lawSfzf" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    law_id, username, law_person, law_sex, law_age, law_tel, law_zj, house_address, education, 
+    law_sfzz, law_sfzf, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from law_person
+    where law_id = #{lawId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from law_person
+    where law_id = #{lawId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.LawPerson">
+    insert into law_person (law_id, username, law_person, 
+      law_sex, law_age, law_tel, 
+      law_zj, house_address, education, 
+      law_sfzz, law_sfzf, status
+      )
+    values (#{lawId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{lawPerson,jdbcType=VARCHAR}, 
+      #{lawSex,jdbcType=CHAR}, #{lawAge,jdbcType=INTEGER}, #{lawTel,jdbcType=VARCHAR}, 
+      #{lawZj,jdbcType=VARCHAR}, #{houseAddress,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{lawSfzz,jdbcType=VARCHAR}, #{lawSfzf,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.LawPerson">
+    insert into law_person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lawId != null">
+        law_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="lawPerson != null">
+        law_person,
+      </if>
+      <if test="lawSex != null">
+        law_sex,
+      </if>
+      <if test="lawAge != null">
+        law_age,
+      </if>
+      <if test="lawTel != null">
+        law_tel,
+      </if>
+      <if test="lawZj != null">
+        law_zj,
+      </if>
+      <if test="houseAddress != null">
+        house_address,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="lawSfzz != null">
+        law_sfzz,
+      </if>
+      <if test="lawSfzf != null">
+        law_sfzf,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lawId != null">
+        #{lawId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPerson != null">
+        #{lawPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSex != null">
+        #{lawSex,jdbcType=CHAR},
+      </if>
+      <if test="lawAge != null">
+        #{lawAge,jdbcType=INTEGER},
+      </if>
+      <if test="lawTel != null">
+        #{lawTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lawZj != null">
+        #{lawZj,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAddress != null">
+        #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSfzz != null">
+        #{lawSfzz,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSfzf != null">
+        #{lawSfzf,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.LawPerson">
+    update law_person
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="lawPerson != null">
+        law_person = #{lawPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSex != null">
+        law_sex = #{lawSex,jdbcType=CHAR},
+      </if>
+      <if test="lawAge != null">
+        law_age = #{lawAge,jdbcType=INTEGER},
+      </if>
+      <if test="lawTel != null">
+        law_tel = #{lawTel,jdbcType=VARCHAR},
+      </if>
+      <if test="lawZj != null">
+        law_zj = #{lawZj,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAddress != null">
+        house_address = #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSfzz != null">
+        law_sfzz = #{lawSfzz,jdbcType=VARCHAR},
+      </if>
+      <if test="lawSfzf != null">
+        law_sfzf = #{lawSfzf,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where law_id = #{lawId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.LawPerson">
+    update law_person
+    set username = #{username,jdbcType=VARCHAR},
+      law_person = #{lawPerson,jdbcType=VARCHAR},
+      law_sex = #{lawSex,jdbcType=CHAR},
+      law_age = #{lawAge,jdbcType=INTEGER},
+      law_tel = #{lawTel,jdbcType=VARCHAR},
+      law_zj = #{lawZj,jdbcType=VARCHAR},
+      house_address = #{houseAddress,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      law_sfzz = #{lawSfzz,jdbcType=VARCHAR},
+      law_sfzf = #{lawSfzf,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where law_id = #{lawId,jdbcType=INTEGER}
+  </update>
+</mapper>

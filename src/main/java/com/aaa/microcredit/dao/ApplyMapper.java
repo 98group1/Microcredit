@@ -1,7 +1,9 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.Apply;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ApplyMapper {
     int deleteByPrimaryKey(Integer applyId);
 

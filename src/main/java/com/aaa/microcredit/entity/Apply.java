@@ -1,8 +1,10 @@
 package com.aaa.microcredit.entity;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
+@Data
 public class Apply {
     private Integer applyId;
 
@@ -44,7 +46,11 @@ public class Apply {
 
     private String firstCareful;
 
+    private Date firstTime;
+
     private String twoCareful;
+
+    private Date twoTime;
 
     private String reason;
 
@@ -208,12 +214,28 @@ public class Apply {
         this.firstCareful = firstCareful == null ? null : firstCareful.trim();
     }
 
+    public Date getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(Date firstTime) {
+        this.firstTime = firstTime;
+    }
+
     public String getTwoCareful() {
         return twoCareful;
     }
 
     public void setTwoCareful(String twoCareful) {
         this.twoCareful = twoCareful == null ? null : twoCareful.trim();
+    }
+
+    public Date getTwoTime() {
+        return twoTime;
+    }
+
+    public void setTwoTime(Date twoTime) {
+        this.twoTime = twoTime;
     }
 
     public String getReason() {
