@@ -1,5 +1,6 @@
 package com.aaa.microcredit.controller;
 
+import com.aaa.microcredit.entity.Apply;
 import com.aaa.microcredit.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
