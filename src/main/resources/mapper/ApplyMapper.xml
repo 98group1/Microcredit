@@ -20,11 +20,11 @@
     <result column="income" jdbcType="VARCHAR" property="income" />
     <result column="describes" jdbcType="VARCHAR" property="describes" />
     <result column="loan_status" jdbcType="INTEGER" property="loanStatus" />
-    <result column="Loan_time" jdbcType="DATE" property="loanTime" />
+    <result column="Loan_time" jdbcType="DATETIME" property="loanTime" />
     <result column="first_careful" jdbcType="VARCHAR" property="firstCareful" />
-    <result column="first_time" jdbcType="DATE" property="firstTime" />
+    <result column="first_time" jdbcType="DATETIME" property="firstTime" />
     <result column="two_careful" jdbcType="VARCHAR" property="twoCareful" />
-    <result column="two_time" jdbcType="DATE" property="twoTime" />
+    <result column="two_time" jdbcType="DATETIME" property="twoTime" />
     <result column="Reason" jdbcType="VARCHAR" property="reason" />
   </resultMap>
   <sql id="Base_Column_List">
