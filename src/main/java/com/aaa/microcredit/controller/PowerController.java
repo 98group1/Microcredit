@@ -23,7 +23,6 @@ public class PowerController {
      */
     @RequestMapping("tree")
     public Object tree(){
-        System.out.println ("五口日三省吾身" );
         return powerService.getPowerTreeData();
     }
 }
