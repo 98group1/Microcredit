@@ -1,5 +1,6 @@
 package com.aaa.microcredit.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Apply {
@@ -9,15 +10,17 @@ public class Apply {
 
     private Integer loanType;
 
-    private Double loanMoney;
+    private BigDecimal loanMoney;
 
     private Integer loanDeadline;
+
+    private Integer repaymentType;
 
     private Integer repaymentId;
 
     private String bondsmanName;
 
-    private String bondsmanAge;
+    private Integer bondsmanAge;
 
     private String bondsmanSex;
 
@@ -69,11 +72,11 @@ public class Apply {
         this.loanType = loanType;
     }
 
-    public Double getLoanMoney() {
+    public BigDecimal getLoanMoney() {
         return loanMoney;
     }
 
-    public void setLoanMoney(Double loanMoney) {
+    public void setLoanMoney(BigDecimal loanMoney) {
         this.loanMoney = loanMoney;
     }
 
@@ -83,6 +86,14 @@ public class Apply {
 
     public void setLoanDeadline(Integer loanDeadline) {
         this.loanDeadline = loanDeadline;
+    }
+
+    public Integer getRepaymentType() {
+        return repaymentType;
+    }
+
+    public void setRepaymentType(Integer repaymentType) {
+        this.repaymentType = repaymentType;
     }
 
     public Integer getRepaymentId() {
@@ -101,12 +112,12 @@ public class Apply {
         this.bondsmanName = bondsmanName == null ? null : bondsmanName.trim();
     }
 
-    public String getBondsmanAge() {
+    public Integer getBondsmanAge() {
         return bondsmanAge;
     }
 
-    public void setBondsmanAge(String bondsmanAge) {
-        this.bondsmanAge = bondsmanAge == null ? null : bondsmanAge.trim();
+    public void setBondsmanAge(Integer bondsmanAge) {
+        this.bondsmanAge = bondsmanAge;
     }
 
     public String getBondsmanSex() {
