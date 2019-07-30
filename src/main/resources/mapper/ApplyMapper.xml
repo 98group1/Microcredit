@@ -7,9 +7,10 @@
     <result column="Loan_type" jdbcType="INTEGER" property="loanType" />
     <result column="Loan_money" jdbcType="DOUBLE" property="loanMoney" />
     <result column="loan_deadline" jdbcType="INTEGER" property="loanDeadline" />
+    <result column="Repayment_type" jdbcType="INTEGER" property="repaymentType" />
     <result column="Repayment_id" jdbcType="INTEGER" property="repaymentId" />
     <result column="bondsman_name" jdbcType="VARCHAR" property="bondsmanName" />
-    <result column="bondsman_age" jdbcType="VARCHAR" property="bondsmanAge" />
+    <result column="bondsman_age" jdbcType="INTEGER" property="bondsmanAge" />
     <result column="bondsman_sex" jdbcType="VARCHAR" property="bondsmanSex" />
     <result column="bondsman_tel" jdbcType="VARCHAR" property="bondsmanTel" />
     <result column="bondsman_zj" jdbcType="VARCHAR" property="bondsmanZj" />
@@ -25,7 +26,7 @@
     <result column="Reason" jdbcType="VARCHAR" property="reason" />
   </resultMap>
   <sql id="Base_Column_List">
-    Apply_Id, User_id, Loan_type, Loan_money, loan_deadline, Repayment_id, bondsman_name, 
+    Apply_Id, User_id, Loan_type, Loan_money, loan_deadline,Repayment_type, Repayment_id, bondsman_name,
     bondsman_age, bondsman_sex, bondsman_tel, bondsman_zj, bondsman_sfzz, bondsman_sfzf, 
     bondsman_add, income, describes, loan_status, Loan_time, first_careful, two_careful, 
     Reason
@@ -42,7 +43,7 @@
   </delete>
   <insert id="insert" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply (Apply_Id, User_id, Loan_type, 
-      Loan_money, loan_deadline, Repayment_id, 
+      Loan_money, loan_deadline, Repayment_type,Repayment_id,
       bondsman_name, bondsman_age, bondsman_sex, 
       bondsman_tel, bondsman_zj, bondsman_sfzz, 
       bondsman_sfzf, bondsman_add, income, 
@@ -50,8 +51,8 @@
       first_careful, two_careful, Reason
       )
     values (#{applyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{loanType,jdbcType=INTEGER}, 
-      #{loanMoney,jdbcType=DOUBLE}, #{loanDeadline,jdbcType=INTEGER}, #{repaymentId,jdbcType=INTEGER}, 
-      #{bondsmanName,jdbcType=VARCHAR}, #{bondsmanAge,jdbcType=VARCHAR}, #{bondsmanSex,jdbcType=VARCHAR}, 
+      #{loanMoney,jdbcType=DOUBLE}, #{loanDeadline,jdbcType=INTEGER}, #{repaymentType,jdbcType=INTEGER},#{repaymentId,jdbcType=INTEGER},
+      #{bondsmanName,jdbcType=VARCHAR}, #{bondsmanAge,jdbcType=INTEGER}, #{bondsmanSex,jdbcType=VARCHAR},
       #{bondsmanTel,jdbcType=VARCHAR}, #{bondsmanZj,jdbcType=VARCHAR}, #{bondsmanSfzz,jdbcType=VARCHAR}, 
       #{bondsmanSfzf,jdbcType=VARCHAR}, #{bondsmanAdd,jdbcType=VARCHAR}, #{income,jdbcType=VARCHAR}, 
       #{describes,jdbcType=VARCHAR}, #{loanStatus,jdbcType=INTEGER}, #{loanTime,jdbcType=DATE}, 
@@ -60,7 +61,9 @@
   </insert>
   <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply
+
     <trim prefix="(" suffix=")" suffixOverrides=",">
+       Loan_time,
       <if test="applyId != null">
         Apply_Id,
       </if>
@@ -75,6 +78,9 @@
       </if>
       <if test="loanDeadline != null">
         loan_deadline,
+      </if>
+      <if test="repaymentType != null">
+        Repayment_type,
       </if>
       <if test="repaymentId != null">
         Repayment_id,
@@ -112,9 +118,7 @@
       <if test="loanStatus != null">
         loan_status,
       </if>
-      <if test="loanTime != null">
-        Loan_time,
-      </if>
+
       <if test="firstCareful != null">
         first_careful,
       </if>
@@ -126,6 +130,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+        now(),
       <if test="applyId != null">
         #{applyId,jdbcType=INTEGER},
       </if>
@@ -141,6 +146,9 @@
       <if test="loanDeadline != null">
         #{loanDeadline,jdbcType=INTEGER},
       </if>
+      <if test="repaymentType != null">
+        #{repaymentId,jdbcType=INTEGER},
+      </if>
       <if test="repaymentId != null">
         #{repaymentId,jdbcType=INTEGER},
       </if>
@@ -148,7 +156,7 @@
         #{bondsmanName,jdbcType=VARCHAR},
       </if>
       <if test="bondsmanAge != null">
-        #{bondsmanAge,jdbcType=VARCHAR},
+        #{bondsmanAge,jdbcType=INTEGER},
       </if>
       <if test="bondsmanSex != null">
         #{bondsmanSex,jdbcType=VARCHAR},
@@ -177,9 +185,7 @@
       <if test="loanStatus != null">
         #{loanStatus,jdbcType=INTEGER},
       </if>
-      <if test="loanTime != null">
-        #{loanTime,jdbcType=DATE},
-      </if>
+
       <if test="firstCareful != null">
         #{firstCareful,jdbcType=VARCHAR},
       </if>
@@ -206,6 +212,9 @@
       <if test="loanDeadline != null">
         loan_deadline = #{loanDeadline,jdbcType=INTEGER},
       </if>
+      <if test="repaymentType != null">
+        Repayment_type = #{repaymentTpe,jdbcType=INTEGER},
+      </if>
       <if test="repaymentId != null">
         Repayment_id = #{repaymentId,jdbcType=INTEGER},
       </if>
@@ -213,7 +222,7 @@
         bondsman_name = #{bondsmanName,jdbcType=VARCHAR},
       </if>
       <if test="bondsmanAge != null">
-        bondsman_age = #{bondsmanAge,jdbcType=VARCHAR},
+        bondsman_age = #{bondsmanAge,jdbcType=INTEGER},
       </if>
       <if test="bondsmanSex != null">
         bondsman_sex = #{bondsmanSex,jdbcType=VARCHAR},
@@ -263,9 +272,10 @@
       Loan_type = #{loanType,jdbcType=INTEGER},
       Loan_money = #{loanMoney,jdbcType=DOUBLE},
       loan_deadline = #{loanDeadline,jdbcType=INTEGER},
+      Repayment_type = #{repaymentType,jdbcType=INTEGER},
       Repayment_id = #{repaymentId,jdbcType=INTEGER},
       bondsman_name = #{bondsmanName,jdbcType=VARCHAR},
-      bondsman_age = #{bondsmanAge,jdbcType=VARCHAR},
+      bondsman_age = #{bondsmanAge,jdbcType=INTEGER},
       bondsman_sex = #{bondsmanSex,jdbcType=VARCHAR},
       bondsman_tel = #{bondsmanTel,jdbcType=VARCHAR},
       bondsman_zj = #{bondsmanZj,jdbcType=VARCHAR},

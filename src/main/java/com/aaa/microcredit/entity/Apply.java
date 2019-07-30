@@ -11,25 +11,27 @@ public class Apply {
     private Integer userId;
     //还款方式
     private Integer repaymentId;
+    //还款类型
+    private Integer repaymentType;
     //贷款类型
     private Integer loanType;
     //担保人姓名
     private String bondsmanName;
-
-    private String bondsmanAge;
-
+    //担保人年龄
+    private int bondsmanAge;
+    //担保人性别
     private String bondsmanSex;
-
+    //担保人电话
     private String bondsmanTel;
-
+    //担保人身份证号
     private String bondsmanZj;
-
+    //担保人身份证正面照片url
     private String bondsmanSfzz;
-
+    //担保人身份证反面照片url
     private String bondsmanSfzf;
-
+    //担保人家庭住址
     private String bondsmanAdd;
-
+    //担保人年收入（单位：万元）
     private String income;
     //贷款状态   1未审核2审核中（一审通过二审还没开始期间）
     // 3审核通过（一审、二审都通过） 4审核不通过，即驳回（一审二审其中一个不通过就不通过）
@@ -74,6 +76,14 @@ public class Apply {
         this.repaymentId = repaymentId;
     }
 
+    public Integer getRepaymentType() {
+        return repaymentType;
+    }
+
+    public void setRepaymentType(Integer repaymentType) {
+        this.repaymentType = repaymentType;
+    }
+
     public Integer getLoanType() {
         return loanType;
     }
@@ -83,21 +93,20 @@ public class Apply {
     }
 
 
-
     public String getBondsmanName() {
         return bondsmanName;
     }
 
     public void setBondsmanName(String bondsmanName) {
-        this.bondsmanName = bondsmanName == null ? null : bondsmanName.trim();
+        this.bondsmanName = bondsmanName;
     }
 
-    public String getBondsmanAge() {
+    public int getBondsmanAge() {
         return bondsmanAge;
     }
 
-    public void setBondsmanAge(String bondsmanAge) {
-        this.bondsmanAge = bondsmanAge == null ? null : bondsmanAge.trim();
+    public void setBondsmanAge(int bondsmanAge) {
+        this.bondsmanAge = bondsmanAge;
     }
 
     public String getBondsmanSex() {
@@ -105,7 +114,7 @@ public class Apply {
     }
 
     public void setBondsmanSex(String bondsmanSex) {
-        this.bondsmanSex = bondsmanSex == null ? null : bondsmanSex.trim();
+        this.bondsmanSex = bondsmanSex;
     }
 
     public String getBondsmanTel() {
@@ -113,7 +122,7 @@ public class Apply {
     }
 
     public void setBondsmanTel(String bondsmanTel) {
-        this.bondsmanTel = bondsmanTel == null ? null : bondsmanTel.trim();
+        this.bondsmanTel = bondsmanTel;
     }
 
     public String getBondsmanZj() {
@@ -121,7 +130,7 @@ public class Apply {
     }
 
     public void setBondsmanZj(String bondsmanZj) {
-        this.bondsmanZj = bondsmanZj == null ? null : bondsmanZj.trim();
+        this.bondsmanZj = bondsmanZj;
     }
 
     public String getBondsmanSfzz() {
@@ -129,7 +138,7 @@ public class Apply {
     }
 
     public void setBondsmanSfzz(String bondsmanSfzz) {
-        this.bondsmanSfzz = bondsmanSfzz == null ? null : bondsmanSfzz.trim();
+        this.bondsmanSfzz = bondsmanSfzz;
     }
 
     public String getBondsmanSfzf() {
@@ -137,7 +146,7 @@ public class Apply {
     }
 
     public void setBondsmanSfzf(String bondsmanSfzf) {
-        this.bondsmanSfzf = bondsmanSfzf == null ? null : bondsmanSfzf.trim();
+        this.bondsmanSfzf = bondsmanSfzf;
     }
 
     public String getBondsmanAdd() {
@@ -145,7 +154,7 @@ public class Apply {
     }
 
     public void setBondsmanAdd(String bondsmanAdd) {
-        this.bondsmanAdd = bondsmanAdd == null ? null : bondsmanAdd.trim();
+        this.bondsmanAdd = bondsmanAdd;
     }
 
     public String getIncome() {
@@ -153,9 +162,8 @@ public class Apply {
     }
 
     public void setIncome(String income) {
-        this.income = income == null ? null : income.trim();
+        this.income = income;
     }
-
 
     public Integer getLoanStatus() {
         return loanStatus;
@@ -178,7 +186,7 @@ public class Apply {
     }
 
     public void setLoanDeadline(String loanDeadline) {
-        this.loanDeadline = loanDeadline == null ? null : loanDeadline.trim();
+        this.loanDeadline = loanDeadline;
     }
 
     public Date getLoanTime() {
@@ -194,7 +202,7 @@ public class Apply {
     }
 
     public void setFirstCareful(String firstCareful) {
-        this.firstCareful = firstCareful == null ? null : firstCareful.trim();
+        this.firstCareful = firstCareful;
     }
 
     public String getTwoCareful() {
@@ -202,7 +210,7 @@ public class Apply {
     }
 
     public void setTwoCareful(String twoCareful) {
-        this.twoCareful = twoCareful == null ? null : twoCareful.trim();
+        this.twoCareful = twoCareful;
     }
 
     public String getReason() {
@@ -210,14 +218,42 @@ public class Apply {
     }
 
     public void setReason(String reason) {
-        this.reason = reason == null ? null : reason.trim();
+        this.reason = reason;
     }
 
     public String getDescribes() {
         return describes;
     }
 
-    public void setDescribes(String describe) {
-        this.describes = describe == null ? null : describe.trim();
+    public void setDescribes(String describes) {
+        this.describes = describes;
+    }
+
+    @Override
+    public String toString() {
+        return "Apply{" +
+                "applyId=" + applyId +
+                ", userId=" + userId +
+                ", repaymentId=" + repaymentId +
+                ", repaymentType=" + repaymentType +
+                ", loanType=" + loanType +
+                ", bondsmanName='" + bondsmanName + '\'' +
+                ", bondsmanAge=" + bondsmanAge +
+                ", bondsmanSex='" + bondsmanSex + '\'' +
+                ", bondsmanTel='" + bondsmanTel + '\'' +
+                ", bondsmanZj='" + bondsmanZj + '\'' +
+                ", bondsmanSfzz='" + bondsmanSfzz + '\'' +
+                ", bondsmanSfzf='" + bondsmanSfzf + '\'' +
+                ", bondsmanAdd='" + bondsmanAdd + '\'' +
+                ", income='" + income + '\'' +
+                ", loanStatus=" + loanStatus +
+                ", loanMoney=" + loanMoney +
+                ", loanDeadline='" + loanDeadline + '\'' +
+                ", loanTime=" + loanTime +
+                ", firstCareful='" + firstCareful + '\'' +
+                ", twoCareful='" + twoCareful + '\'' +
+                ", reason='" + reason + '\'' +
+                ", describes='" + describes + '\'' +
+                '}';
     }
 }
