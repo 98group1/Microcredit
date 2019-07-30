@@ -1,153 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.microcredit.dao.CpInfoMapper">
-  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.CpInfo">
-    <id column="cp_id" jdbcType="INTEGER" property="cpId" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="cp_name" jdbcType="VARCHAR" property="cpName" />
-    <result column="cp_code" jdbcType="VARCHAR" property="cpCode" />
-    <result column="cp_address" jdbcType="VARCHAR" property="cpAddress" />
-    <result column="license_name" jdbcType="VARCHAR" property="licenseName" />
-    <result column="license_url" jdbcType="VARCHAR" property="licenseUrl" />
-    <result column="cp_tel" jdbcType="VARCHAR" property="cpTel" />
-    <result column="cp_account1" jdbcType="VARCHAR" property="cpAccount1" />
-    <result column="cp_account2" jdbcType="VARCHAR" property="cpAccount2" />
-    <result column="cp-email" jdbcType="VARCHAR" property="cpEmail" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    cp_id, username, cp_name, cp_code, cp_address, license_name, license_url, cp_tel, 
+    <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.CpInfo">
+
+
+        <id column="cp_id" jdbcType="INTEGER" property="cp_id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="cp_name" jdbcType="VARCHAR" property="cp_name" />
+        <result column="cp_code" jdbcType="VARCHAR" property="cp_code" />
+        <result column="cp_address" jdbcType="VARCHAR" property="cp_address" />
+        <result column="license_name" jdbcType="VARCHAR" property="license_name" />
+        <result column="license_url" jdbcType="VARCHAR" property="license_url" />
+        <result column="cp_tel" jdbcType="VARCHAR" property="cp_tel" />
+        <result column="cp_account1" jdbcType="VARCHAR" property="cp_account1" />
+        <result column="cp_account2" jdbcType="VARCHAR" property="cp_account2" />
+        <result column="cp_email" jdbcType="VARCHAR" property="cp_email" />
+
+        <result column="law_id" jdbcType="INTEGER" property="law_id"/>
+        <result column="law_person" jdbcType="VARCHAR" property="law_person"/>
+        <result column="law_sex" jdbcType="VARCHAR" property="law_sex"/>
+        <result column="law_age" jdbcType="INTEGER" property="law_age"/>
+        <result column="law_tel" jdbcType="VARCHAR" property="law_tel"/>
+        <result column="law_zj" jdbcType="VARCHAR" property="law_zj"/>
+        <result column="house_address" jdbcType="VARCHAR" property="house_address"/>
+        <result column="education" jdbcType="VARCHAR" property="education"/>
+        <result column="law_sfzz" jdbcType="VARCHAR" property="law_sfzz"/>
+        <result column="law_sfzf" jdbcType="VARCHAR" property="law_sfzf"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+    cp_id, username, cp_name, cp_code, cp_address, license_name, license_url, cp_tel,
     cp_account1, cp_account2, cp-email
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cp_info
-    where cp_id = #{cpId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cp_info
+        where cp_id = #{cpId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cp_info
     where cp_id = #{cpId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.aaa.microcredit.entity.CpInfo">
-    insert into cp_info (cp_id, username, cp_name, 
-      cp_code, cp_address, license_name, 
-      license_url, cp_tel, cp_account1, 
+    <insert id="insert" parameterType="com.aaa.microcredit.entity.CpInfo">
+    insert into cp_info (cp_id, username, cp_name,
+      cp_code, cp_address, license_name,
+      license_url, cp_tel, cp_account1,
       cp_account2, cp-email)
-    values (#{cpId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{cpName,jdbcType=VARCHAR}, 
-      #{cpCode,jdbcType=VARCHAR}, #{cpAddress,jdbcType=VARCHAR}, #{licenseName,jdbcType=VARCHAR}, 
-      #{licenseUrl,jdbcType=VARCHAR}, #{cpTel,jdbcType=VARCHAR}, #{cpAccount1,jdbcType=VARCHAR}, 
+    values (#{cpId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{cpName,jdbcType=VARCHAR},
+      #{cpCode,jdbcType=VARCHAR}, #{cpAddress,jdbcType=VARCHAR}, #{licenseName,jdbcType=VARCHAR},
+      #{licenseUrl,jdbcType=VARCHAR}, #{cpTel,jdbcType=VARCHAR}, #{cpAccount1,jdbcType=VARCHAR},
       #{cpAccount2,jdbcType=VARCHAR}, #{cpEmail,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.CpInfo">
-    insert into cp_info
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cpId != null">
-        cp_id,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="cpName != null">
-        cp_name,
-      </if>
-      <if test="cpCode != null">
-        cp_code,
-      </if>
-      <if test="cpAddress != null">
-        cp_address,
-      </if>
-      <if test="licenseName != null">
-        license_name,
-      </if>
-      <if test="licenseUrl != null">
-        license_url,
-      </if>
-      <if test="cpTel != null">
-        cp_tel,
-      </if>
-      <if test="cpAccount1 != null">
-        cp_account1,
-      </if>
-      <if test="cpAccount2 != null">
-        cp_account2,
-      </if>
-      <if test="cpEmail != null">
-        cp-email,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cpId != null">
-        #{cpId,jdbcType=INTEGER},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="cpName != null">
-        #{cpName,jdbcType=VARCHAR},
-      </if>
-      <if test="cpCode != null">
-        #{cpCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAddress != null">
-        #{cpAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="licenseName != null">
-        #{licenseName,jdbcType=VARCHAR},
-      </if>
-      <if test="licenseUrl != null">
-        #{licenseUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="cpTel != null">
-        #{cpTel,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAccount1 != null">
-        #{cpAccount1,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAccount2 != null">
-        #{cpAccount2,jdbcType=VARCHAR},
-      </if>
-      <if test="cpEmail != null">
-        #{cpEmail,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.CpInfo">
-    update cp_info
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="cpName != null">
-        cp_name = #{cpName,jdbcType=VARCHAR},
-      </if>
-      <if test="cpCode != null">
-        cp_code = #{cpCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAddress != null">
-        cp_address = #{cpAddress,jdbcType=VARCHAR},
-      </if>
-      <if test="licenseName != null">
-        license_name = #{licenseName,jdbcType=VARCHAR},
-      </if>
-      <if test="licenseUrl != null">
-        license_url = #{licenseUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="cpTel != null">
-        cp_tel = #{cpTel,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAccount1 != null">
-        cp_account1 = #{cpAccount1,jdbcType=VARCHAR},
-      </if>
-      <if test="cpAccount2 != null">
-        cp_account2 = #{cpAccount2,jdbcType=VARCHAR},
-      </if>
-      <if test="cpEmail != null">
-        cp-email = #{cpEmail,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where cp_id = #{cpId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.CpInfo">
+
+    <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.CpInfo">
+        insert into cp_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cpId != null">
+                cp_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="cpName != null">
+                cp_name,
+            </if>
+            <if test="cpCode != null">
+                cp_code,
+            </if>
+            <if test="cpAddress != null">
+                cp_address,
+            </if>
+            <if test="licenseName != null">
+                license_name,
+            </if>
+            <if test="licenseUrl != null">
+                license_url,
+            </if>
+            <if test="cpTel != null">
+                cp_tel,
+            </if>
+            <if test="cpAccount1 != null">
+                cp_account1,
+            </if>
+            <if test="cpAccount2 != null">
+                cp_account2,
+            </if>
+            <if test="cpEmail != null">
+                cp-email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cpId != null">
+                #{cpId,jdbcType=INTEGER},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="cpName != null">
+                #{cpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpCode != null">
+                #{cpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAddress != null">
+                #{cpAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="licenseName != null">
+                #{licenseName,jdbcType=VARCHAR},
+            </if>
+            <if test="licenseUrl != null">
+                #{licenseUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="cpTel != null">
+                #{cpTel,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAccount1 != null">
+                #{cpAccount1,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAccount2 != null">
+                #{cpAccount2,jdbcType=VARCHAR},
+            </if>
+            <if test="cpEmail != null">
+                #{cpEmail,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.CpInfo">
+        update cp_info
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="cpName != null">
+                cp_name = #{cpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpCode != null">
+                cp_code = #{cpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAddress != null">
+                cp_address = #{cpAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="licenseName != null">
+                license_name = #{licenseName,jdbcType=VARCHAR},
+            </if>
+            <if test="licenseUrl != null">
+                license_url = #{licenseUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="cpTel != null">
+                cp_tel = #{cpTel,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAccount1 != null">
+                cp_account1 = #{cpAccount1,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAccount2 != null">
+                cp_account2 = #{cpAccount2,jdbcType=VARCHAR},
+            </if>
+            <if test="cpEmail != null">
+                cp-email = #{cpEmail,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where cp_id = #{cpId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.CpInfo">
     update cp_info
     set username = #{username,jdbcType=VARCHAR},
       cp_name = #{cpName,jdbcType=VARCHAR},
@@ -161,4 +180,58 @@
       cp-email = #{cpEmail,jdbcType=VARCHAR}
     where cp_id = #{cpId,jdbcType=INTEGER}
   </update>
+
+
+
+
+    <!--  <select id="queryAll" resultMap="BaseResultMap">
+          select *
+          from cp_info
+          <where>
+              <if test="cp_name!=null and cp_name!=''">
+                  and (cp_name like "%"#{cp_name}"%"
+                  or cp_code like "%"#{cp_code}"%")
+              </if>
+          </where>  limit ${start},${pageSize}
+      </select>
+
+      <select id="queryPageCount" resultType="int">
+          select count(*)
+          from cp_info
+          <where>
+              <if test="cp_name!=null and cp_name!=''">
+                  and (cp_name like "%"#{cp_name}"%"
+                  or cp_code like "%"#{cp_code}"%")
+              </if>
+          </where>
+      </select>-->
+
+
+    <select id="queryAll" resultType="map">
+        select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
+        from cp_info cp join law_person law on cp.username=law.username
+        <where>
+            <if test="username!=null and username!=''">
+                and  (cp.username like "%"#{username}"%"
+                or cp.cp_code like "%"#{cp_code}"%")
+            </if>
+        </where> limit ${start},${pageSize}
+    </select>
+
+    <select id="queryPageCount" resultType="int">
+        select count(*)
+        from cp_info cp join law_person law on cp.username=law.username
+        <where>
+            <if test="username!=null and username!=''">
+                and (cp.username like "%"#{username}"%"
+                or cp.cp_code like "%"#{cp_code}"%")
+            </if>
+        </where>
+    </select>
+
+    <!--
+    <select id="queryAllTest" resultType="Map">
+        select * from cp_info
+    </select>-->
+    <!--    select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzf,law.law_sfzf,law.`status`  from cp_info cp join law_person law on cp.username=law.username-->
 </mapper>
