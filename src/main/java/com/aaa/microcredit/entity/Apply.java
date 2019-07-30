@@ -1,9 +1,7 @@
 package com.aaa.microcredit.entity;
 
-import lombok.Data;
-
 import java.util.Date;
-@Data
+
 public class Apply {
     //贷款id
     private Integer applyId;
@@ -44,8 +42,14 @@ public class Apply {
     //一审人
     private String firstCareful;
     //二审人
+
+    private Date firstTime;
+
     private String twoCareful;
     //驳回理由
+
+    private Date twoTime;
+
     private String reason;
     //借款描述
     private String describes;
@@ -157,6 +161,7 @@ public class Apply {
     }
 
 
+
     public Integer getLoanStatus() {
         return loanStatus;
     }
@@ -197,12 +202,28 @@ public class Apply {
         this.firstCareful = firstCareful == null ? null : firstCareful.trim();
     }
 
+    public Date getFirstTime() {
+        return firstTime;
+    }
+
+    public void setFirstTime(Date firstTime) {
+        this.firstTime = firstTime;
+    }
+
     public String getTwoCareful() {
         return twoCareful;
     }
 
     public void setTwoCareful(String twoCareful) {
         this.twoCareful = twoCareful == null ? null : twoCareful.trim();
+    }
+
+    public Date getTwoTime() {
+        return twoTime;
+    }
+
+    public void setTwoTime(Date twoTime) {
+        this.twoTime = twoTime;
     }
 
     public String getReason() {
