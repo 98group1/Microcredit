@@ -9,7 +9,9 @@ import java.util.List;
  * @Version 1.0
  */
 public class TreeNode {
-    private Integer id;
+
+
+    private Integer menuid;
     private String label;
     private Integer parentId;
     private List<TreeNode> children;
@@ -17,14 +19,14 @@ public class TreeNode {
     private String addUserName;
     private String addTime;
 
-    public Integer getId() {
-        return id;
+
+    public Integer getMenuid() {
+        return menuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMenuid(Integer menuid) {
+        this.menuid = menuid;
     }
-
     public String getLabel() {
         return label;
     }
@@ -76,7 +78,7 @@ public class TreeNode {
     @Override
     public String toString() {
         return "TreeNode{" +
-                "id=" + id +
+                "id=" + menuid +
                 ", label='" + label + '\'' +
                 ", parentId=" + parentId +
                 ", children=" + children +

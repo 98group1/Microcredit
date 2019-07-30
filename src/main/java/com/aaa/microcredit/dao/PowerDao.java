@@ -21,6 +21,6 @@ public interface PowerDao {
      * 获取所有权限
      * @return  as   可理解为：用作、当成，作为；一般是重命名列名或者表名。（主要为了查询方便）
       */
-    @Select("select id,name as label,parentid,url,add_username addUserName,add_time addTime   from tb_power")
+    @Select("select menuid,name as label,parentid,url,add_username addUserName,add_time addTime   from m_menu")
     List<TreeNode> getPowers();
 }
