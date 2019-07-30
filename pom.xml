@@ -13,7 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Microcredit</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -81,7 +80,6 @@
             <artifactId>shiro-core</artifactId>
             <version>1.4.0</version>
         </dependency>
-
         <!--ftp依赖包-->
         <dependency>
             <groupId>commons-net</groupId>
