@@ -58,5 +58,15 @@ public class CpInfoServiceImpl implements CpInfoService {
         return cpInfoMapper.queryAllTest();
     }
 
+    @Override
+    public List queryStatus1(Map map) {
+        return cpInfoMapper.queryStatus1(map);
+    }
+
+    @Override
+    public Integer updateStatus(Map map) {
+        return cpInfoMapper.updateStatus(map);
+    }
+
 
 }

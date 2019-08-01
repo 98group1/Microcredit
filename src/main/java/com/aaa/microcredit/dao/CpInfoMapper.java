@@ -36,4 +36,19 @@ public interface CpInfoMapper {
 
 
     List queryAllTest();
+
+    /**
+     * 查询一审
+     * @param map
+     * @return
+     */
+    List queryStatus1(Map map);
+
+    /**
+     * 修改法人表的状态
+     * @param map
+     * @return
+     */
+    Integer updateStatus(Map map);
+
 }

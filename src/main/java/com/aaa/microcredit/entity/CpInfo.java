@@ -45,8 +45,19 @@ public class CpInfo {
     private String lawSfzz;
     //法人身份证反面
     private String lawSfzf;
-
+//审核状态
     private Integer status;
+    //审核状态
+    private String law_status;
+
+
+    public String getLaw_status() {
+        return law_status;
+    }
+
+    public void setLaw_status(String law_status) {
+        this.law_status = law_status;
+    }
 
     public Integer getLawId() {
         return lawId;
