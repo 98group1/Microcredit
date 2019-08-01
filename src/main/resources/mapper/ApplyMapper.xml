@@ -313,4 +313,7 @@
       Reason = #{reason,jdbcType=VARCHAR}
     where Apply_Id = #{applyId,jdbcType=INTEGER}
   </update>
+  <select id="selectAll">
+
+  </select>
 </mapper>
