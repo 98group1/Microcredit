@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @description: TreeNode
- * @author: ${༺评༒生༻}
+ * @author: ${评生}
  * @date: 2019-07-29 19:29
  * @Version 1.0
  */
