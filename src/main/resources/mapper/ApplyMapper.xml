@@ -28,9 +28,9 @@
     <result column="Reason" jdbcType="VARCHAR" property="reason" />
   </resultMap>
   <sql id="Base_Column_List">
-    Apply_Id, User_id, Loan_type, Loan_money, loan_deadline, Repayment_type, Repayment_id, 
-    bondsman_name, bondsman_age, bondsman_sex, bondsman_tel, bondsman_zj, bondsman_sfzz, 
-    bondsman_sfzf, bondsman_add, income, describes, loan_status, Loan_time, first_careful, 
+    Apply_Id, User_id, Loan_type, Loan_money, loan_deadline, Repayment_type, Repayment_id,
+    bondsman_name, bondsman_age, bondsman_sex, bondsman_tel, bondsman_zj, bondsman_sfzz,
+    bondsman_sfzf, bondsman_add, income, describes, loan_status, Loan_time, first_careful,
     first_time, two_careful, two_time, Reason
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -45,27 +45,29 @@
   </delete>
   <insert id="insert" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply (Apply_Id, User_id, Loan_type, 
-      Loan_money, loan_deadline, Repayment_type, 
-      Repayment_id, bondsman_name, bondsman_age, 
-      bondsman_sex, bondsman_tel, bondsman_zj, 
-      bondsman_sfzz, bondsman_sfzf, bondsman_add, 
-      income, describes, loan_status, 
-      Loan_time, first_careful, first_time, 
+      Loan_money, loan_deadline, Repayment_type,
+      Repayment_id, bondsman_name, bondsman_age,
+      bondsman_sex, bondsman_tel, bondsman_zj,
+      bondsman_sfzz, bondsman_sfzf, bondsman_add,
+      income, describes, loan_status,
+      Loan_time, first_careful, first_time,
       two_careful, two_time, Reason
       )
     values (#{applyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{loanType,jdbcType=INTEGER}, 
-      #{loanMoney,jdbcType=DECIMAL}, #{loanDeadline,jdbcType=INTEGER}, #{repaymentType,jdbcType=INTEGER}, 
-      #{repaymentId,jdbcType=INTEGER}, #{bondsmanName,jdbcType=VARCHAR}, #{bondsmanAge,jdbcType=INTEGER}, 
-      #{bondsmanSex,jdbcType=VARCHAR}, #{bondsmanTel,jdbcType=VARCHAR}, #{bondsmanZj,jdbcType=VARCHAR}, 
-      #{bondsmanSfzz,jdbcType=VARCHAR}, #{bondsmanSfzf,jdbcType=VARCHAR}, #{bondsmanAdd,jdbcType=VARCHAR}, 
-      #{income,jdbcType=VARCHAR}, #{describes,jdbcType=VARCHAR}, #{loanStatus,jdbcType=INTEGER}, 
-      #{loanTime,jdbcType=TIMESTAMP}, #{firstCareful,jdbcType=VARCHAR}, #{firstTime,jdbcType=TIMESTAMP}, 
+      #{loanMoney,jdbcType=DECIMAL}, #{loanDeadline,jdbcType=INTEGER}, #{repaymentType,jdbcType=INTEGER},
+      #{repaymentId,jdbcType=INTEGER}, #{bondsmanName,jdbcType=VARCHAR}, #{bondsmanAge,jdbcType=INTEGER},
+      #{bondsmanSex,jdbcType=VARCHAR}, #{bondsmanTel,jdbcType=VARCHAR}, #{bondsmanZj,jdbcType=VARCHAR},
+      #{bondsmanSfzz,jdbcType=VARCHAR}, #{bondsmanSfzf,jdbcType=VARCHAR}, #{bondsmanAdd,jdbcType=VARCHAR},
+      #{income,jdbcType=VARCHAR}, #{describes,jdbcType=VARCHAR}, #{loanStatus,jdbcType=INTEGER},
+      #{loanTime,jdbcType=TIMESTAMP}, #{firstCareful,jdbcType=VARCHAR}, #{firstTime,jdbcType=TIMESTAMP},
       #{twoCareful,jdbcType=VARCHAR}, #{twoTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply
+
     <trim prefix="(" suffix=")" suffixOverrides=",">
+       Loan_time,
       <if test="applyId != null">
         Apply_Id,
       </if>
@@ -120,9 +122,6 @@
       <if test="loanStatus != null">
         loan_status,
       </if>
-      <if test="loanTime != null">
-        Loan_time,
-      </if>
       <if test="firstCareful != null">
         first_careful,
       </if>
@@ -140,6 +139,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+        now(),
       <if test="applyId != null">
         #{applyId,jdbcType=INTEGER},
       </if>
@@ -193,9 +193,6 @@
       </if>
       <if test="loanStatus != null">
         #{loanStatus,jdbcType=INTEGER},
-      </if>
-      <if test="loanTime != null">
-        #{loanTime,jdbcType=TIMESTAMP},
       </if>
       <if test="firstCareful != null">
         #{firstCareful,jdbcType=VARCHAR},

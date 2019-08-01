@@ -1,10 +1,8 @@
-package com.aaa.microcredit.dao;
+package com.aaa.microcredit.service;
 
 import com.aaa.microcredit.entity.Photo;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface PhotoMapper {
+public interface PhotoService {
     //根据主键删除上传的公司资料
     int deleteByPrimaryKey(Integer id);
     //录入

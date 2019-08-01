@@ -52,7 +52,7 @@ import java.util.List;
             //遍历全部树形菜单
             for (TreeNode power : powers) {
                 //判断一级菜单的Id是否和另一节点的ParentId相等
-                if(treeNode.getId()==power.getParentId()){//如果节点的父节点等于当前节点的id,该节点就是当前节点的孩子
+                if(treeNode.getMenuid()==power.getParentId()){//如果节点的父节点等于当前节点的id,该节点就是当前节点的孩子
 
                     List<TreeNode> childrens = treeNode.getChildren();
 

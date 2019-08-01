@@ -12,12 +12,6 @@ import java.io.*;
 import java.net.SocketException;
 import java.util.UUID;
 
-/**
- * className:FtpUtil
- * discriptoin:通用的FTP上传下载工具类
- * author:zz
- * createTime:2018-12-03 14:13
- */
 @Component
 public class FtpUtil {
 
@@ -56,7 +50,9 @@ public class FtpUtil {
             //String absolutePath = multipartFile.getResource().getFile().getAbsolutePath();
             //System.out.println(absolutePath+"绝对路径。。。。。。。。。。。");
             //获取源文件名称
+
             String originalFilename = multipartFile.getOriginalFilename();
+
             //组装新名称   UUID.randomUUID生成随机数
             // originalFilename.substring(originalFilename.lastIndexOf("."))截取源文件后缀
             String newFileName= UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));

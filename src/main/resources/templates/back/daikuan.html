@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <style>
+       .demo-table-expand {
+           font-size: 0;
+       }
+       .demo-table-expand label {
+           width: 90px;
+           color: #99a9bf;
+       }
+       .demo-table-expand .el-form-item {
+           margin-right: 0;
+           margin-bottom: 0;
+           width: 50%;
+       }
+   </style>
+
+</head>
+
+<body>
+
+<div id="app">
+    <template>
+        <el-table
+                :data="tableData"
+                style="width: 100%">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-table
+                                :data="props.row.tab"
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="name"
+                                    label="姓名"
+                                    width="120">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="sex"
+                                    label="姓别"
+                                    width="120">
+                            </el-table-column>
+                        </el-table>
+                    </el-form>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    label="商品 ID"
+                    prop="id">
+            </el-table-column>
+            <el-table-column
+                    label="商品名称"
+                    prop="name">
+            </el-table-column>
+            <el-table-column
+                    label="描述"
+                    prop="desc">
+            </el-table-column>
+        </el-table>
+
+    </template>
+</div>
+<script>
+    var Main =new Vue({
+        el:"#app",
+        data: {
+            tableData: [{
+                id: '12987122',
+                name: '好滋好味鸡蛋仔',
+                category: '江浙小吃、小吃零食',
+                desc: '荷兰优质淡奶，奶香浓而不腻',
+                address: '上海市普陀区真北路',
+                shop: '王小虎夫妻店',
+                shopId: '10333',
+                tab : [{
+                    name: 'A123',
+                    sex: '男'
+                },{
+                    name: 'A456',
+                    sex: '男'
+                },{
+                    name: 'A789',
+                    sex: '男'
+                }]
+            }, {
+                id: '12987123',
+                name: '好滋好味鸡蛋仔1',
+                category: '江浙小吃、小吃零食',
+                desc: '荷兰优质淡奶，奶香浓而不腻',
+                address: '上海市普陀区真北路',
+                shop: '王小虎夫妻店',
+                shopId: '10333',
+                tab : [{
+                    name: 'B123',
+                    sex: '男'
+                },{
+                    name: 'B456',
+                    sex: '女'
+                },{
+                    name: 'B789',
+                    sex: '女'
+                }]
+            }, {
+                id: '12987125',
+                name: '好滋好味鸡蛋仔2',
+                category: '江浙小吃、小吃零食',
+                desc: '荷兰优质淡奶，奶香浓而不腻',
+                address: '上海市普陀区真北路',
+                shop: '王小虎夫妻店',
+                shopId: '10333'
+            }, {
+                id: '12987126',
+                name: '好滋好味鸡蛋仔',
+                category: '江浙小吃、小吃零食',
+                desc: '荷兰优质淡奶，奶香浓而不腻',
+                address: '上海市普陀区真北路',
+                shop: '王小虎夫妻店',
+                shopId: '10333'
+            }]
+        }
+    })
+
+    // var Ctor = Vue.extend(Main)
+    // new Ctor().$mount('#app')
+</script>
+</body>
+</html>
