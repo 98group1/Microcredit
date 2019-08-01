@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.User">
+    <id column="empid" jdbcType="INTEGER" property="empid" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="epassword" jdbcType="VARCHAR" property="epassword" />
+    <result column="etel" jdbcType="VARCHAR" property="etel" />
+    <result column="ezj" jdbcType="VARCHAR" property="ezj" />
+    <result column="eaddress" jdbcType="VARCHAR" property="eaddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    empid, ename, epassword, etel, ezj, eaddress
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_user
+    where empid = #{empid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from m_user
+    where empid = #{empid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.User">
+    insert into m_user (empid, ename, epassword, 
+      etel, ezj, eaddress
+      )
+    values (#{empid,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{epassword,jdbcType=VARCHAR}, 
+      #{etel,jdbcType=VARCHAR}, #{ezj,jdbcType=VARCHAR}, #{eaddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.User">
+    insert into m_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        empid,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="epassword != null">
+        epassword,
+      </if>
+      <if test="etel != null">
+        etel,
+      </if>
+      <if test="ezj != null">
+        ezj,
+      </if>
+      <if test="eaddress != null">
+        eaddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        #{empid,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="epassword != null">
+        #{epassword,jdbcType=VARCHAR},
+      </if>
+      <if test="etel != null">
+        #{etel,jdbcType=VARCHAR},
+      </if>
+      <if test="ezj != null">
+        #{ezj,jdbcType=VARCHAR},
+      </if>
+      <if test="eaddress != null">
+        #{eaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.User">
+    update m_user
+    <set>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="epassword != null">
+        epassword = #{epassword,jdbcType=VARCHAR},
+      </if>
+      <if test="etel != null">
+        etel = #{etel,jdbcType=VARCHAR},
+      </if>
+      <if test="ezj != null">
+        ezj = #{ezj,jdbcType=VARCHAR},
+      </if>
+      <if test="eaddress != null">
+        eaddress = #{eaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where empid = #{empid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.User">
+    update m_user
+    set ename = #{ename,jdbcType=VARCHAR},
+      epassword = #{epassword,jdbcType=VARCHAR},
+      etel = #{etel,jdbcType=VARCHAR},
+      ezj = #{ezj,jdbcType=VARCHAR},
+      eaddress = #{eaddress,jdbcType=VARCHAR}
+    where empid = #{empid,jdbcType=INTEGER}
+  </update>
+</mapper>

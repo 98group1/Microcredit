@@ -45,14 +45,14 @@ public class Apply {
     private Date loanTime;
     //一审人
     private String firstCareful;
-    //二审人
+   //一身时间
     private Date firstTime;
-
+    //二审人
     private String twoCareful;
-    //驳回理由
 
+    //二审时间
     private Date twoTime;
-
+    //驳回理由
     private String reason;
     //借款描述
     private String describes;
