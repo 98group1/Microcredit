@@ -205,17 +205,17 @@
               </if>
           </where>
       </select>-->
-
+<!--    select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
+    from cp_info cp join law_person law on cp.username=law.username-->
 
     <select id="queryAll" resultType="map">
-        select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
-        from cp_info cp join law_person law on cp.username=law.username
-        <where>
+        select  cl.*,dictionary_name
+        from (select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
+        from cp_info cp join law_person law on cp.username=law.username) as cl join dictionary as dic  where dic.dictionary_value=cl.status and keyword='law_status'
             <if test="username!=null and username!=''">
-                and  (cp.username like "%"#{username}"%"
-                or cp.cp_code like "%"#{cp_code}"%")
+                and  (cl.username like "%"#{username}"%"  or cl.cp_code like "%"#{cp_code}"%")
             </if>
-        </where> limit ${start},${pageSize}
+         limit ${start},${pageSize}
     </select>
 
     <select id="queryPageCount" resultType="int">
@@ -228,9 +228,34 @@
             </if>
         </where>
     </select>
+    <update id="updateStatus" parameterType="map">
+        update law_person set status=#{status} where law_id=#{lawId}
+    </update>
 
-    <!--
-    <select id="queryAllTest" resultType="Map">
+<!--查询状态一审-->
+    <!--<select id="queryStatus1" resultType="map" parameterType="map">
+        select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
+        from cp_info cp join law_person law on cp.username=law.username
+<where>
+    <if test="status!=null " >
+         law.status=#{status}
+    </if>
+</where> limit ${start},${pageSize}
+    </select>-->
+
+<!--    dic.dictionary_value=cl.status-->
+    <select id="queryStatus1" resultType="map" parameterType="map">
+        select  cl.*,dictionary_name
+        from (select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzz,law.law_sfzf,law.`status`
+        from cp_info cp join law_person law on cp.username=law.username) as cl join dictionary as dic  where dic.dictionary_value=cl.status and keyword='law_status'
+        and status=#{status}
+    </select>
+
+    <!--<insert id="addcpinfo" parameterType="com.aaa.microcredit.entity.CpInfo">
+
+    </insert>-->
+
+    <!--<select id="queryAllTest" resultType="Map">
         select * from cp_info
     </select>-->
     <!--    select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzf,law.law_sfzf,law.`status`  from cp_info cp join law_person law on cp.username=law.username-->

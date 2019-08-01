@@ -100,8 +100,9 @@ public class FtpUtil {
     /**
      * FTP文件下载
      * @param fileName
+     *
      */
-    public   void downLoad(String fileName,HttpServletResponse response){
+    public   void downLoad(String fileName, HttpServletResponse response){
         InputStream local = null;
         OutputStream outputStream =null;
         try {
@@ -159,6 +160,7 @@ public class FtpUtil {
      * 通用下载
      * @param file
      * @param response
+     *
      * @return
      */
     public static String downloadFile(File file, HttpServletResponse response) {
