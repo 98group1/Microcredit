@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>个人中心</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .el-header, .el-footer {
+            background-color:white;
+            color: #333;
+            text-align: center;
+            line-height: 80px;
+            height: 50px;
+        }
+        .el-aside {
+            color: #333;
+            text-align: center;
+            line-height: 26px;
+            height: 650px;
+        }
+
+        .el-main {
+            background-color: white;
+            color: #333;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        body > .el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 260px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 320px;
+        }
+        .el-row {
+            margin-bottom: 20px;
+        }
+        .el-col {
+            border-radius: 4px;
+
+        }
+        .bg-purple-dark {
+            background: #99a9bf;
+        }
+        .bg-purple {
+            background: #d3dce6;
+        }
+        .bg-purple-light {
+            background: #e5e9f2;
+        }
+        .grid-content {
+            border-radius: 4px;
+            min-height: 10px;
+            font-size: large;
+        }
+        .row-bg {
+            padding: 10px 0;
+            background-color: #f9fafc;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header style="height: 50px;background-color: #92B8B1;text-align: center">
+                <el-row :gutter="25" style="padding-left: 470px;">
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a> </div></el-col>
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a> </div></el-col>
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a> </div></el-col>
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a> </div></el-col>
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="contactus.html" style="color: white;text-decoration:none;">联系我们</a> </div></el-col>
+                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="Pcenter.html" style="color: white;text-decoration:none;">个人中心</a> </div></el-col>
+                </el-row>
+        </el-header>
+
+        <el-container>
+
+            <el-aside width="300px">
+
+            </el-aside>
+
+                <el-aside width="200px">
+                    <div>
+                        放照片
+
+                    </div>
+                    <div style="margin-top: 120px">
+                        <el-row height="50px">
+                        </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="1">
+                                    <a href="contactus.html" target="tab1" style="text-decoration:none;"><span slot="title">完善资料</span></a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="2">
+                                    <a href="PcenterPage1/changePWD.html" target="tab1" style="text-decoration:none;"><span slot="title">更改密码</span></a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="3">
+                                    <a href="view.html" target="tab1" style="text-decoration:none;"><span slot="title">资金记录</span></a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                        <el-row>
+                        <el-menu>
+                            <el-menu-item index="4">
+                                <a href="cooperation.html" target="tab1" style="text-decoration:none;"><span slot="title">贷款记录</span></a>
+                            </el-menu-item>
+                        </el-menu>
+                    </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="5">
+                                    <a href="aboutus.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="6">
+                                    <a href="index.html" target="tab1" style="text-decoration:none;"><span slot="title">提现</span></a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                    </div>
+
+                </el-aside>
+                <el-main>
+                    <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
+                        <el-tab-pane>
+                            <iframe width="100%" style="border: 0px;" height="650px;" src="PcenterPage1/completeData.html" width="100%" name="tab1"></iframe>
+                        </el-tab-pane>
+                    </el-tabs>
+                </el-main>
+        </el-container>
+
+
+    </el-container>
+
+
+</div>
+<script>
+    var vue =new Vue({
+        el:"#app",
+        data:{
+                    editableTabsValue: '1',
+                    editableTabs: [{
+                        title: '首页',
+                        name: '1',
+                        url: 'http://localhost:8888/demo/firstPage.html'
+                    }],
+                    tabIndex: 1
+        },
+        created:function(){
+
+        },
+        methods: {
+            handleNodeClick:function(data) {
+                if(data.url!=null&&data.url!='null'&&data.url!=''&&data.url!='undefined') {
+                    this.addTab(data.label,data.url);
+                }
+            },
+            addTab: function (targetName,url) {
+                var oldTabs = JSON.stringify(this.editableTabs);
+                //  var newTabName = ++this.tabIndex + '';
+                if(oldTabs.indexOf(targetName)==-1) {
+                    this.editableTabs.push({
+                        title: targetName,
+                        name: targetName,
+                        //content: 'New Tab content'
+                        url: url
+                    });
+                }
+                this.editableTabsValue = targetName;
+            },
+            removeTab: function (targetName) {
+                var tabs = this.editableTabs;
+                var activeName = this.editableTabsValue;
+                if (activeName === targetName) {
+                    tabs.forEach(function (tab, index) {
+                        if (tab.name === targetName) {
+                            var nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                activeName = nextTab.name;
+                            }
+                        }
+                    });
+                }
+                this.editableTabsValue = activeName;
+                this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+            }
+        }
+    });
+</script>
+</body>
+</html>

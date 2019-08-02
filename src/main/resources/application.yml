@@ -5,21 +5,29 @@ server:
     context-path: /demo
 #配置数据源
 spring:
+  messages:
+    encoding: utf-8
   datasource:
-    url: jdbc:mysql://192.168.11.118:3306/microcredit
+    url: jdbc:mysql://192.168.11.118:3306/microcredit?useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 201314
     #设置日期格式
     jackson:
       date-format: yyyy-MM-dd
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   #允许重启，自动刷新
   devtools:
     remote:
       restart:
         enabled: true
   resources:
-    static-locations: classpath:/templates/,classpath:/static/
+    static-locations: classpath:/templates/,classpath:/static/,classpath:/layui/,classpath:/PcenterPage/
 
 
 #配置mybatis

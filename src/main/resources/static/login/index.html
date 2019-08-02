@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="../layui/layui.all.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".name input").focus(function(){
+                $(this).prev("i").css({"background-image":"url(img/user2.png)"});
+            });
+            $(".name input").blur(function(){
+                $(this).prev("i").css({"background-image":"url(img/user1.png)"});
+            });
+            $(".password input").focus(function(){
+                $(this).prev("i").css({"background-image":"url(img/password2.png)"});
+            });
+            $(".password input").blur(function(){
+                $(this).prev("i").css({"background-image":"url(img/password1.png)"});
+            });
+        });
+    </script>
+
+    <script>
+        //判断要登陆的用户名是否已经存在
+        function equalsName1() {
+            var userName = $("#userName").val();
+                $.ajax({
+                    url: "/demo/register/queryName",
+                    type: "POST",
+                    data: {userName: userName},
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == false) {
+                            layer.msg('该用户不存在', {icon: 5});
+                        }
+                    }
+                })
+        }
+    </script>
+
+    <script>
+        $(function () {
+            $("#btn2").click(function () {
+                $.ajax({
+                    url:"/demo/register/login",
+                    type:"POST",
+                    data:{userName:$("#userName").val(),passWord:$("#password").val()},
+                    // dataType:"json",
+                    success:function (data) {
+                        if (data == 'success'){
+                            layer.msg('登陆成功', {icon: 6});
+                            location.href='../index.html';
+                        }else{
+                            layer.msg(data, {icon: 5});
+                            $("#password").val(null);
+                        }
+                    }
+                })
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="wrap">
+            <header><span style="font-size: 50px;text-align: center;margin-left: 895px;color: red;">客户登陆</span></header>
+            <article>
+                <section>
+                    <aside>
+                        <em>
+                            <img src="img/user.png">
+                        </em>
+                         <form id="form2">
+                            <p class="name"><i></i><input type="text" name="userName" onblur="equalsName1()" id="userName"  class="userName" placeholder="请输入用户名"></p>
+                            <p class="password"><i></i><input type="passWord" name="passWord" id="password" class="pwd" placeholder="请输入密码"></p>
+                            <button type="button" id="btn2">登录</button>
+                            <p class="remember"><input type="checkbox" name="remember">记住密码</p>
+                            <p class="regist"><span>没有账号?</span><a href="../regist/regist.html">立即注册</a></p>
+                            <div class="clear"></div>
+                        </form>
+                    </aside>
+                   
+                </section>               
+            </article>
+            <footer>
+                <ul>
+                    <li><a href="../index.html">网站首页</a></li>
+                    <li><a href="../aboutus.html">企业简介</a></li>
+                    <li><a href="../view.html">行业新闻</a></li>
+                    <li><a href="../cooperation.html">商务合作</a></li>
+                    <li><a href="../contactus.html">联系我们</a></li>
+                    <li><a href="../Pcenter.html">个人中心</a></li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
