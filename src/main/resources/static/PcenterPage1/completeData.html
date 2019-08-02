@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心首页</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app" style="width:100%;height: 100%">
+    <el-container>
+        <el-form ref="form" :label-position="left" :inline="true" label-width="120px" :model="sizeForm" label-width="80px" size="medium">
+            <el-title><h4 style="text-align: center">完善公司信息</h4></el-title>
+            <el-row>
+                    <el-form-item label="公司名称">
+                        <el-input v-model="form.cpName" :span="30"></el-input>
+                    </el-form-item>
+                    <el-form-item label="公司地址">
+                        <el-input v-model="form.cpAddress" :span="30"></el-input>
+                    </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="公司电话">
+                    <el-input v-model="form.cpTel" :span="30"></el-input>
+                </el-form-item>
+                <el-form-item label="营业执照编号">
+                    <el-input v-model="form.cpCode" :span="30"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="公司账户1">
+                    <el-input v-model="form.cpAccount1" :span="30"></el-input>
+                </el-form-item>
+                <el-form-item label="公司账户2">
+                    <el-input v-model="form.cpAccount2" :span="30"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="公司邮编">
+                    <el-input v-model="form.cpEmail" :span="30"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="营业执照">
+                    <el-input v-model="form.licenseName" :span="30"></el-input>
+                </el-form-item>
+                <el-form-item label="">
+                    <el-input v-model="form.licenseUrl" :span="30"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">下一步</el-button>
+                <el-button>保存</el-button>
+            </el-form-item>
+
+        </el-form>
+    </el-container>
+</div>
+<script>
+    var vue=new Vue( {
+        el:"#app",
+        data: {
+            form: {
+                cpName: '',
+                cpAddress: '',
+                cpTel: '',
+                cpCode:'',
+                cpAccount1:'',
+                cpAccount2:'',
+                cpEmail:'',
+                licenseName: '',
+                licenseUrl: ''
+            }
+        },
+        methods: {
+            onSubmit:function() {
+                console.log('submit!');
+            }
+        }
+    });
+</script>
+</body>
+</html>

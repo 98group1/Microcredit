@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <link rel="stylesheet" type="text/css" href="css/regist.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <!--<link rel="stylesheet" href="../layui/css/layui.css">-->
+   <!-- <link rel="stylesheet" href="/demo/regist/css/register.css">-->
+    <script type="text/javascript" src="../layui/layui.all.js"></script>
+    <script>
+        $(function () {
+            $("#btn1").click(function () {
+              $.ajax({
+                    url: "/demo/register/reg1",
+                    type:"POST",
+                    data:{tel:$("#tel").val(),userName:$("#userName").val(),passWord:$("#password").val()},
+                    dataType:"json",
+                    success:function (response) {
+                        if (response==1){
+                            layer.msg('注册成功', {icon: 6});
+                            location.href='../login/index.html';
+                        }
+                    }
+                })
+            })
+        })
+        //判断注册的用户名是否已经存在
+        function equalsName() {
+            var userName = $("#userName").val();
+            if(userName.length<5||userName.length>12||userName==''||userName==null){
+                // alert("用户名不符合规范");
+                layer.msg('用户名不符合规范', {icon: 5});
+                $("#userName").val(null);
+            }else {
+                $.ajax({
+                    url: "/demo/register/queryName",
+                    type: "POST",
+                    data: {userName: userName},
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == true) {
+                            // alert("用户名已存在，不可用");
+                            layer.msg('用户名已存在', {icon: 5});
+                            $("#userName").val(null);
+                        } else {
+                            //alert("用户名可以使用");
+                            layer.msg('该名称可以使用', {icon: 6});
+                        }
+                    }
+                })
+            }
+        }
+        //第一次判断密码是否符合规范
+        function ifpassword() {
+            var password= $("#password").val();
+            if(password.length<6||password.length>12){
+                layer.msg('密码不符合规范', {icon: 5});
+            }
+        }
+        //判断两次密码是否一致
+        function equalsPass() {
+           var password= $("#password").val();
+            var passwordTwo= $("#passwordTwo").val();
+                if(password!=passwordTwo){
+                    // alert("密码不一致");
+                    layer.alert('两次输入的密码不一致，请重新输入',{
+                        icon: 5,
+                        title: "温馨提示"
+                    });
+                }
+        }
+        //判断手机号是否符合规定要求
+        function equalsPass1() {
+            var tel= $("#tel").val();
+            var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+            if(tel.length!=11||!myreg.test(tel)){
+               layer.msg('手机号不符合规范', {icon: 5});
+                $("#tel").val(null);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <article>
+            <h1><span style="font-size: 50px;text-align: center">客户注册</span></h1>
+            <div class="main">
+                <form id="form1">
+                    <div class="tel">
+                        <input type="tel" name="tel" id="tel" onblur="equalsPass1()" placeholder="手机号"><em>由11个字符组成！</em>
+                    </div>
+                    <div class="userName">
+                        <input type="text" id="userName" name="userName" onblur="equalsName()" placeholder="用户名"><em>由5-12个字符组成！</em>
+                    </div>
+                    <div class="password">
+                        <input type="password" id="password" name="passWord" onblur="ifpassword()" placeholder="密码"><em>使用字母、数字、符号两种及以上的组合，6-12个字符</em>
+                    </div>
+                    <div class="againpwd">
+                        <input type="password" id="passwordTwo"name="passWord" onblur="equalsPass()" placeholder="再次输入密码"><em>两次密码不一致</em>
+                    </div>
+                    <div><input type="text" id="password1" name="password1" placeholder="请输入验证码"></div>
+                    <button type="button" id="btn" style="background-color: #00F7DE">获取验证码</button>
+                    <button type="button" id="btn1">注册</button>
+                </form>
+            </div>
+        </article>
+        <footer>
+            <ul>
+                <li><a href="../index.html">网站首页</a></li>
+                <li><a href="../aboutus.html">企业简介</a></li>
+                <li><a href="../view.html">行业新闻</a></li>
+                <li><a href="../cooperation.html">商务合作</a></li>
+                <li><a href="../contactus.html">联系我们</a></li>
+                <li><a href="../Pcenter.html">个人中心</a></li>
+            </ul>
+        </footer>
+    </div>
+<script>
+
+</script>
+</body>
+</html>
