@@ -1,7 +1,11 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.Apply;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ApplyMapper {
@@ -17,4 +21,8 @@ public interface ApplyMapper {
     int updateByPrimaryKeySelective(Apply record);
     //根据申请id修改资料
     int updateByPrimaryKey(Apply record);
+    //联合字典表单个查询对应的申请信息
+    Map selectByApplyId(Integer applyId);
+    //根据用户id查询申请信息
+    List<Map> selectByUserId(Integer userId);
 }

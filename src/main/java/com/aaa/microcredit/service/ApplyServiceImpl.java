@@ -5,6 +5,9 @@ import com.aaa.microcredit.entity.Apply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class ApplyServiceImpl implements ApplyService {
     //自动注入AppleMapper
@@ -23,7 +26,10 @@ public class ApplyServiceImpl implements ApplyService {
     //录入申请信息，可以允许某列的值为空进行录入
     @Override
     public int insertSelective(Apply record) {
-        return applyMapper.insertSelective(record);
+        applyMapper.insertSelective(record);
+        System.out.println(record.getApplyId());
+        //返回录入数据对应的主键
+        return record.getApplyId();
     }
     //根据申请id进行查询出对应的申请信息
     @Override
@@ -39,5 +45,15 @@ public class ApplyServiceImpl implements ApplyService {
     @Override
     public int updateByPrimaryKey(Apply record) {
         return applyMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public Map selectByApplyId(Integer applyId) {
+        return applyMapper.selectByApplyId(applyId);
+    }
+    //根据用户id查询申请信息
+    @Override
+    public List<Map> selectByUserId(Integer userId) {
+        return applyMapper.selectByUserId(userId);
     }
 }

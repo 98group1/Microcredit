@@ -69,4 +69,14 @@ public class PhotoServiceImpl implements PhotoService {
     public int updateByPrimaryKey(Photo record) {
         return photoMapper.updateByPrimaryKey(record);
     }
+
+    /**
+     * 根据申请id查询
+     * @param ApplyId
+     * @return
+     */
+    @Override
+    public Photo selectByApply(Integer ApplyId) {
+        return photoMapper.selectByApply(ApplyId);
+    }
 }
