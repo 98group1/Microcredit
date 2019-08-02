@@ -3,8 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
+<div id="app">
+    <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
 
+    <el-dialog
+            title="公司信息"
+            :visible.sync="dialogVisible"
+            width="50%"
+            >
+        <el-form :inline="true" :label-position="left" :model="formInline" class="demo-form-inline">
+            <template slot-scope="tableData">
+                <el-form label-position="left" inline class="demo-table-expand">
+                    <el-form-item label="法人代表：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="法人性别：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="法人年龄：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="法人电话：">
+                        <span>{{ tableData.name}}</span>
+                    </el-form-item>
+                    <el-form-item label="法人证件：">
+                        <span>{{ tableData.name}}</span>
+                    </el-form-item>
+                    <el-form-item label="法人地址：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="法人学历：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="公司地址：">
+                        <span>{{ ptableData.name}}</span>
+                    </el-form-item>
+                    <el-form-item label="公司账户1：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="公司账户2：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="公司电话：">
+                        <span>{{tableData.name}}</span>
+                    </el-form-item>
+                    <el-form-item label="公司邮箱：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                    <el-form-item label="营业执照：">
+                        <span>{{tableData.name}}</span>
+                    </el-form-item>
+                    <el-form-item label="执照名称：">
+                        <span>{{ tableData.name }}</span>
+                    </el-form-item>
+                </el-form>
+            </template>
+            <el-row>
+                <el-form-item label="公司名称">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+                <el-form-item label="机构代码号">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+                <el-form-item label="公司电话">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="公司账号1">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+                <el-form-item label="公司账号2">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+                <el-form-item label="公司邮箱">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row>
+                <el-form-item label="公司">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+                <el-form-item label="公司地址">
+                    <el-input v-model="formInline.user" ></el-input>
+                </el-form-item>
+            </el-row>
+
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
+
+
+</div>
 </body>
+<script>
+   var vue =new Vue({
+       el:"#app",
+       data:{
+           formInline: {
+               user: '',
+               region: ''
+           },
+           dialogVisible: false,
+           tableData:{name:'yanglongkun'}
+       },
+       methods: {
+           onSubmit:function(){
+               console.log('submit!');
+           }
+
+       }
+   })
+</script>
 </html>

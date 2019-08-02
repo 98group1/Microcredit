@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <script src="/demo/resources/js/jquery.js"></script>
+    <script src="/demo/resources/vue/vue.js"></script>
+    <script src="/demo/resources/antd/moment.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/demo/resources/antd/antd.min.js"></script>
+    <script src="/demo/resources/antd/ant-design-vue.js"></script>
+    <link href="/demo/resources/antd/antd.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="app">
+    <template>
+        <a-layout id="components-layout-demo-top-side">
+            <a-layout-header class="header">
+                <div class="logo" />
+                <a-menu
+                        theme="dark"
+                        mode="horizontal"
+                        :defaultSelectedKeys="['2']"
+                        :style="{ lineHeight: '64px' }"
+                >
+                    <a-menu-item key="1">nav 1</a-menu-item>
+                    <a-menu-item key="2">nav 2</a-menu-item>
+                    <a-menu-item key="3">nav 3</a-menu-item>
+                </a-menu>
+            </a-layout-header>
+            <a-layout-content style="padding: 0 0px ;height: 750px; ">
+                <a-breadcrumb style="margin: 16px 0">
+                </a-breadcrumb>
+                <a-layout style="padding: 0px 0; height: 80%; background:#fff">
+                    <a-layout-sider width="200" style="background: #fff">
+                        <a-menu
+                                v-mode="menuDate"
+                                mode="inline"
+                                style="height: 100%"
+                        >
+                            <a-sub-menu v-for="item in menuDate"
+                                        :key="item.menuid"
+                                        :title="item.label" >
+                                <a-menu-item v-for="item in item.children"
+                                             :key="item.menuid"
+                                             :title="item.label">
+                                     <a  :href="item.url" target="main"> {{item.label}}</a>
+                                </a-menu-item>
+
+                            </a-sub-menu>
+                        </a-menu>
+                    </a-layout-sider>
+                    <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+                        <iframe align="left" style="margin: 0px" frameborder="0" scrolling="yes" src="daikuan.html" name="main" height="100%" width="100%" overflow=""> </iframe>
+                    </a-layout-content>
+                </a-layout>
+            </a-layout-content>
+        </a-layout>
+    </template>
+</div>
+
+
+<script>
+  var vue=new Vue({
+      el:"#app",
+      data:{
+          collapsed: false,
+          menuDate:[]
+      },
+      created:function(){
+          this.tree();
+      },
+      methods: {
+          tree:function () {
+              var self=this;
+              axios.post("/demo/power/tree")
+                  .then(function (response) {
+                      self.menuDate=response.data;
+                  })
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                })
+                  .then(function () {
+                      // always executed
+                  });
+          }
+      },
+  })
+</script>
+</body>
+</html>
