@@ -5,6 +5,9 @@ import com.aaa.microcredit.entity.CpInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class CpInfoServiceImpl implements CpInfoService {
     @Autowired
@@ -38,4 +41,32 @@ public class CpInfoServiceImpl implements CpInfoService {
     public int updateByPrimaryKey(CpInfo record) {
         return cpInfoMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int queryPageCount(Map map) {
+        return cpInfoMapper.queryPageCount(map);
+    }
+
+    @Override
+    public List<CpInfo> queryAll(Map map) {
+        return cpInfoMapper.queryAll(map);
+    }
+
+
+    @Override
+    public List queryAllTest() {
+        return cpInfoMapper.queryAllTest();
+    }
+
+    @Override
+    public List queryStatus1(Map map) {
+        return cpInfoMapper.queryStatus1(map);
+    }
+
+    @Override
+    public Integer updateStatus(Map map) {
+        return cpInfoMapper.updateStatus(map);
+    }
+
+
 }

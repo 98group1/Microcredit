@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>证件上传</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: black;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            background-color: gainsboro;
+            width: 240px;
+            height: 180px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 240px;
+            height: 180px;
+            display: block;
+        }
+        #app{
+            width:850px;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px black solid;
+            background-color:ghostwhite;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <h2>请上传公司相关资料</h2>
+    </div>
+    <el-form :inline="true" :model="form" label-width="150px" class="demo-form-inline">
+        <!--隐藏主键-->
+        <el-input v-model="form.id" type="hidden" autocomplete="off"></el-input>
+        <el-input v-model="form.applyId" type="hidden" autocomplete="off"></el-input>
+        <el-row>
+            <el-form-item label="年度报表" >
+                <el-upload
+                        name="ndbb"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/ndbb"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="公司章程" >
+                <el-upload
+                        name="gszc"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/gszc"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess1"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl1" :src="imageUrl1" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="经营场地合同" >
+                <el-upload
+                        name="jycdht"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/jycdht"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess2"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl2" :src="imageUrl2" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="开户许可证" >
+                <el-upload
+                        name="khxk"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/khxk"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess3"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl3" :src="imageUrl3" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+        </el-row>
+        <el-row>
+            <el-form-item label="税务登记" >
+                <el-upload
+                        name="swdj"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/swdj"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess4"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl4" :src="imageUrl4" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+            <el-form-item label="验资报告" >
+                <el-upload
+                        name="yzbj"
+                        class="avatar-uploader"
+                        action="/demo/uploadZj/yzbj"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess5"
+                        :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl5" :src="imageUrl5" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="12">
+                <div class="grid-content bg-purple">
+                    <el-form-item label="组织机构代码" >
+                        <el-upload
+                                name="zzjgdm"
+                                class="avatar-uploader"
+                                action="/demo/uploadZj/zzjgdm"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess6"
+                                :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl6" :src="imageUrl6" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>
+                </div>
+            </el-col>
+            <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+        </el-row>
+    </el-form>
+    <div id="footer" slot="footer" class="dialog-footer">
+        <el-button id="prev" type="danger" @click="prev">上一步</el-button>
+        <el-button id="close" type="danger" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button id="sure" type="primary" @click="over">完成</el-button>
+    </div>
+</div>
+<script>
+    var vue=new Vue({
+        el:"#app",
+        data:{
+            form:{
+                applyId:'',
+                ndbbName:'',
+                ndbbUrl:'',
+                gszcName:'',
+                gszcUrl:'',
+                jycdhtName:'',
+                jycdhtUrl:'',
+                khxkName:'',
+                khxkUrl:'',
+                swdjName:'',
+                swdjUrl:'',
+                yzbjName:'',
+                yzbjUrl:'',
+                zzjgdmName:'',
+                zzjgdmUrl:''
+            },
+            url:'',
+            imageUrl:'',
+            imageUrl1:'',
+            imageUrl2:'',
+            imageUrl3:'',
+            imageUrl4:'',
+            imageUrl5:'',
+            imageUrl6:''
+        },
+        created:function(){
+            this.loadData();
+        },
+        methods:{
+            loadData:function(){
+              var con=window.location.search;
+              var applyId=decodeURI(con.substring(con.indexOf("=")+1));
+              alert(applyId);
+              this.form.applyId=applyId;
+              alert(this.form.applyId);
+            },
+            prev:function(){
+                location.href="applyForm.html";
+            },
+            over:function(){
+                var self=this;
+                this.url="/demo/uploadZj/save";
+                axios.post(this.url,this.form)
+                    .then(function (response) {
+                        //添加或者修改成功
+                        if(response.data==1){
+                            self.$message({
+                                message:'恭喜你，操作成功！',
+                                type:'success'
+                            });
+                            location.href="applyList.html";
+                        }else{
+                            //添加或者修改错误
+                            self.$message.error('错了哦，操作错误');
+                        }
+                    });
+            },
+            handleAvatarSuccess:function(res, file) {
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.form.ndbbName = file.response.originalFilename;
+                this.form.ndbbUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess1:function(res, file) {
+                this.imageUrl1 = URL.createObjectURL(file.raw);
+                this.form.gszcName = file.response.originalFilename;
+                this.form.gszcUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess2:function(res, file) {
+                this.imageUrl2 = URL.createObjectURL(file.raw);
+                this.form.jycdhtName = file.response.originalFilename;
+                this.form.jycdhtUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess3:function(res, file) {
+                this.imageUrl3 = URL.createObjectURL(file.raw);
+                this.form.khxkName = file.response.originalFilename;
+                this.form.khxkUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess4:function(res, file) {
+                this.imageUrl4 = URL.createObjectURL(file.raw);
+                this.form.swdjName = file.response.originalFilename;
+                this.form.swdjUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess5:function(res, file) {
+                this.imageUrl5 = URL.createObjectURL(file.raw);
+                this.form.yzbjName = file.response.originalFilename;
+                this.form.yzbjUrl =file.response.newFileName;
+            },
+            handleAvatarSuccess6:function(res, file) {
+                this.imageUrl6 = URL.createObjectURL(file.raw);
+                this.form.zzjgdmName = file.response.originalFilename;
+                this.form.zzjgdmUrl =file.response.newFileName;
+            },
+            beforeAvatarUpload:function(file) {
+                var isJPG = file.type === 'image/jpeg';
+                var isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.PhotoMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Photo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="apply_id" jdbcType="INTEGER" property="applyId" />
+    <result column="ndbb_name" jdbcType="VARCHAR" property="ndbbName" />
+    <result column="ndbb_url" jdbcType="VARCHAR" property="ndbbUrl" />
+    <result column="gszc_name" jdbcType="VARCHAR" property="gszcName" />
+    <result column="gszc_url" jdbcType="VARCHAR" property="gszcUrl" />
+    <result column="jycdht_name" jdbcType="VARCHAR" property="jycdhtName" />
+    <result column="jycdht_url" jdbcType="VARCHAR" property="jycdhtUrl" />
+    <result column="khxk_name" jdbcType="VARCHAR" property="khxkName" />
+    <result column="khxk_url" jdbcType="VARCHAR" property="khxkUrl" />
+    <result column="swdj_name" jdbcType="VARCHAR" property="swdjName" />
+    <result column="swdj_url" jdbcType="VARCHAR" property="swdjUrl" />
+    <result column="yzbj_name" jdbcType="VARCHAR" property="yzbjName" />
+    <result column="yzbj_url" jdbcType="VARCHAR" property="yzbjUrl" />
+    <result column="zzjgdm_name" jdbcType="VARCHAR" property="zzjgdmName" />
+    <result column="zzjgdm_url" jdbcType="VARCHAR" property="zzjgdmUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, apply_id, ndbb_name, ndbb_url, gszc_name, gszc_url, jycdht_name, jycdht_url, 
+    khxk_name, khxk_url, swdj_name, swdj_url, yzbj_name, yzbj_url, zzjgdm_name, zzjgdm_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from photo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from photo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.Photo">
+    insert into photo (id, apply_id, ndbb_name, 
+      ndbb_url, gszc_name, gszc_url, 
+      jycdht_name, jycdht_url, khxk_name, 
+      khxk_url, swdj_name, swdj_url, 
+      yzbj_name, yzbj_url, zzjgdm_name, 
+      zzjgdm_url)
+    values (#{id,jdbcType=INTEGER}, #{applyId,jdbcType=INTEGER}, #{ndbbName,jdbcType=VARCHAR}, 
+      #{ndbbUrl,jdbcType=VARCHAR}, #{gszcName,jdbcType=VARCHAR}, #{gszcUrl,jdbcType=VARCHAR}, 
+      #{jycdhtName,jdbcType=VARCHAR}, #{jycdhtUrl,jdbcType=VARCHAR}, #{khxkName,jdbcType=VARCHAR}, 
+      #{khxkUrl,jdbcType=VARCHAR}, #{swdjName,jdbcType=VARCHAR}, #{swdjUrl,jdbcType=VARCHAR}, 
+      #{yzbjName,jdbcType=VARCHAR}, #{yzbjUrl,jdbcType=VARCHAR}, #{zzjgdmName,jdbcType=VARCHAR}, 
+      #{zzjgdmUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Photo">
+    insert into photo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="applyId != null">
+        apply_id,
+      </if>
+      <if test="ndbbName != null">
+        ndbb_name,
+      </if>
+      <if test="ndbbUrl != null">
+        ndbb_url,
+      </if>
+      <if test="gszcName != null">
+        gszc_name,
+      </if>
+      <if test="gszcUrl != null">
+        gszc_url,
+      </if>
+      <if test="jycdhtName != null">
+        jycdht_name,
+      </if>
+      <if test="jycdhtUrl != null">
+        jycdht_url,
+      </if>
+      <if test="khxkName != null">
+        khxk_name,
+      </if>
+      <if test="khxkUrl != null">
+        khxk_url,
+      </if>
+      <if test="swdjName != null">
+        swdj_name,
+      </if>
+      <if test="swdjUrl != null">
+        swdj_url,
+      </if>
+      <if test="yzbjName != null">
+        yzbj_name,
+      </if>
+      <if test="yzbjUrl != null">
+        yzbj_url,
+      </if>
+      <if test="zzjgdmName != null">
+        zzjgdm_name,
+      </if>
+      <if test="zzjgdmUrl != null">
+        zzjgdm_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="applyId != null">
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="ndbbName != null">
+        #{ndbbName,jdbcType=VARCHAR},
+      </if>
+      <if test="ndbbUrl != null">
+        #{ndbbUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gszcName != null">
+        #{gszcName,jdbcType=VARCHAR},
+      </if>
+      <if test="gszcUrl != null">
+        #{gszcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jycdhtName != null">
+        #{jycdhtName,jdbcType=VARCHAR},
+      </if>
+      <if test="jycdhtUrl != null">
+        #{jycdhtUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkName != null">
+        #{khxkName,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkUrl != null">
+        #{khxkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="swdjName != null">
+        #{swdjName,jdbcType=VARCHAR},
+      </if>
+      <if test="swdjUrl != null">
+        #{swdjUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="yzbjName != null">
+        #{yzbjName,jdbcType=VARCHAR},
+      </if>
+      <if test="yzbjUrl != null">
+        #{yzbjUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="zzjgdmName != null">
+        #{zzjgdmName,jdbcType=VARCHAR},
+      </if>
+      <if test="zzjgdmUrl != null">
+        #{zzjgdmUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.Photo">
+    update photo
+    <set>
+      <if test="applyId != null">
+        apply_id = #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="ndbbName != null">
+        ndbb_name = #{ndbbName,jdbcType=VARCHAR},
+      </if>
+      <if test="ndbbUrl != null">
+        ndbb_url = #{ndbbUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gszcName != null">
+        gszc_name = #{gszcName,jdbcType=VARCHAR},
+      </if>
+      <if test="gszcUrl != null">
+        gszc_url = #{gszcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jycdhtName != null">
+        jycdht_name = #{jycdhtName,jdbcType=VARCHAR},
+      </if>
+      <if test="jycdhtUrl != null">
+        jycdht_url = #{jycdhtUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkName != null">
+        khxk_name = #{khxkName,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkUrl != null">
+        khxk_url = #{khxkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="swdjName != null">
+        swdj_name = #{swdjName,jdbcType=VARCHAR},
+      </if>
+      <if test="swdjUrl != null">
+        swdj_url = #{swdjUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="yzbjName != null">
+        yzbj_name = #{yzbjName,jdbcType=VARCHAR},
+      </if>
+      <if test="yzbjUrl != null">
+        yzbj_url = #{yzbjUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="zzjgdmName != null">
+        zzjgdm_name = #{zzjgdmName,jdbcType=VARCHAR},
+      </if>
+      <if test="zzjgdmUrl != null">
+        zzjgdm_url = #{zzjgdmUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.Photo">
+    update photo
+    set apply_id = #{applyId,jdbcType=INTEGER},
+      ndbb_name = #{ndbbName,jdbcType=VARCHAR},
+      ndbb_url = #{ndbbUrl,jdbcType=VARCHAR},
+      gszc_name = #{gszcName,jdbcType=VARCHAR},
+      gszc_url = #{gszcUrl,jdbcType=VARCHAR},
+      jycdht_name = #{jycdhtName,jdbcType=VARCHAR},
+      jycdht_url = #{jycdhtUrl,jdbcType=VARCHAR},
+      khxk_name = #{khxkName,jdbcType=VARCHAR},
+      khxk_url = #{khxkUrl,jdbcType=VARCHAR},
+      swdj_name = #{swdjName,jdbcType=VARCHAR},
+      swdj_url = #{swdjUrl,jdbcType=VARCHAR},
+      yzbj_name = #{yzbjName,jdbcType=VARCHAR},
+      yzbj_url = #{yzbjUrl,jdbcType=VARCHAR},
+      zzjgdm_name = #{zzjgdmName,jdbcType=VARCHAR},
+      zzjgdm_url = #{zzjgdmUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByApply" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from photo
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+</mapper>

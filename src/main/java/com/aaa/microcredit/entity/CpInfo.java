@@ -4,7 +4,7 @@ public class CpInfo {
     //公司id
     private Integer cpId;
     //登录的用户名
-    private String username;
+    private String userName;
     //公司名称
     private String cpName;
     //公司机构代码号
@@ -24,6 +24,129 @@ public class CpInfo {
     //公司邮箱
     private String cpEmail;
 
+
+    //法人Id
+    private Integer lawId;
+    //法人代表
+    private String lawPerson;
+    //法人性别
+    private String lawSex;
+    //法人年龄
+    private Integer lawAge;
+    //法人电话
+    private String lawTel;
+    //法人证件
+    private String lawZj;
+    //法人住址
+    private String houseAddress;
+    //法人学历
+    private String education;
+    //法人身份证正面
+    private String lawSfzz;
+    //法人身份证反面
+    private String lawSfzf;
+//审核状态
+    private Integer status;
+    //审核状态
+    private String law_status;
+
+
+    public String getLaw_status() {
+        return law_status;
+    }
+
+    public void setLaw_status(String law_status) {
+        this.law_status = law_status;
+    }
+
+    public Integer getLawId() {
+        return lawId;
+    }
+
+    public void setLawId(Integer lawId) {
+        this.lawId = lawId;
+    }
+
+    public String getLawPerson() {
+        return lawPerson;
+    }
+
+    public void setLawPerson(String lawPerson) {
+        this.lawPerson = lawPerson;
+    }
+
+    public String getLawSex() {
+        return lawSex;
+    }
+
+    public void setLawSex(String lawSex) {
+        this.lawSex = lawSex;
+    }
+
+    public Integer getLawAge() {
+        return lawAge;
+    }
+
+    public void setLawAge(Integer lawAge) {
+        this.lawAge = lawAge;
+    }
+
+    public String getLawTel() {
+        return lawTel;
+    }
+
+    public void setLawTel(String lawTel) {
+        this.lawTel = lawTel;
+    }
+
+    public String getLawZj() {
+        return lawZj;
+    }
+
+    public void setLawZj(String lawZj) {
+        this.lawZj = lawZj;
+    }
+
+    public String getHouseAddress() {
+        return houseAddress;
+    }
+
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getLawSfzz() {
+        return lawSfzz;
+    }
+
+    public void setLawSfzz(String lawSfzz) {
+        this.lawSfzz = lawSfzz;
+    }
+
+    public String getLawSfzf() {
+        return lawSfzf;
+    }
+
+    public void setLawSfzf(String lawSfzf) {
+        this.lawSfzf = lawSfzf;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Integer getCpId() {
         return cpId;
     }
@@ -32,12 +155,12 @@ public class CpInfo {
         this.cpId = cpId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getCpName() {
