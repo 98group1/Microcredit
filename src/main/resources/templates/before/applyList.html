@@ -370,7 +370,7 @@
                 axios.post('/demo/uploadZj/selectByApplyId',{applyId:applyId})
                     .then(function (response) {
                         self.photoForm=response.data.photo;
-                        if(self.photoForm!=null&&self!=''){
+                        if(self.photoForm!=null&&self.photoForm!=''){
                             self.url = "/demo/apply/show";
                             //让弹出框显示
                             self.dialogFormVisible1 = true;
