@@ -34,7 +34,7 @@
     first_time, two_careful, two_time, Reason
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from apply
     where Apply_Id = #{applyId,jdbcType=INTEGER}
@@ -63,7 +63,7 @@
       #{twoCareful,jdbcType=VARCHAR}, #{twoTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Apply">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="applyId" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply
 
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -313,7 +313,37 @@
       Reason = #{reason,jdbcType=VARCHAR}
     where Apply_Id = #{applyId,jdbcType=INTEGER}
   </update>
-  <select id="selectAll">
 
+  <select id="selectByApplyId" resultType="Map">
+    SELECT c.*,d.dictionary_name repaymentType1
+from(
+SELECT b.*,d.dictionary_name repaymentId1
+from (
+SELECT a.Apply_Id ApplyId,a.User_id UserId,a.Loan_type loanType,a.Loan_money loanMoney,
+a.loan_deadline loanDeadline,a.Repayment_type,a.Repayment_id,a.bondsman_name bondsmanName,
+a.bondsman_age bondsmanAge,a.bondsman_sex bondsmanSex,a.bondsman_tel bondsmanTel,a.bondsman_zj bondsmanZj,
+a.bondsman_sfzz bondsmanSfzz,a.bondsman_sfzf bondsmanSfzf,a.bondsman_add bondsmanAdd,
+a.income,a.describes,a.Loan_time applyTime,a.loan_status loanStatus,d.dictionary_name loanType1
+from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='loan_type'
+) b join dictionary d on d.dictionary_value=b.Repayment_id where keyword='Repayment'
+) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type' and ApplyId=#{applyId}
+  </select>
+
+  <select id="selectByUserId" resultType="Map">
+    SELECT e.*,d.dictionary_name loanStatus1
+from (
+SELECT c.*,d.dictionary_name repaymentType1
+from(
+SELECT b.*,d.dictionary_name repaymentId1
+from (
+SELECT a.Apply_Id ApplyId,a.User_id UserId,a.Loan_type loanType,a.Loan_money loanMoney,
+a.loan_deadline loanDeadline,a.Repayment_type,a.Repayment_id,a.bondsman_name bondsmanName,
+a.bondsman_age bondsmanAge,a.bondsman_sex bondsmanSex,a.bondsman_tel bondsmanTel,a.bondsman_zj bondsmanZj,
+a.bondsman_sfzz bondsmanSfzz,a.bondsman_sfzf bondsmanSfzf,a.bondsman_add bondsmanAdd,
+a.income,a.describes,a.Loan_time applyTime,a.loan_status loanStatus,d.dictionary_name loanType1
+from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='loan_type'
+) b join dictionary d on d.dictionary_value=b.Repayment_id where keyword='Repayment'
+) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type'
+) e JOIN dictionary d on d.dictionary_value=e.loanStatus where keyword='loan_status' and UserId=#{userId}
   </select>
 </mapper>

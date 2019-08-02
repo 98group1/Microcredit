@@ -1,6 +1,7 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.Photo;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,4 +18,7 @@ public interface PhotoMapper {
     int updateByPrimaryKeySelective(Photo record);
     //修改
     int updateByPrimaryKey(Photo record);
+    //根据申请id查询信息
+//    @Select("select * from photo where apply_id=#{applyId}")
+    Photo selectByApply(Integer ApplyId);
 }

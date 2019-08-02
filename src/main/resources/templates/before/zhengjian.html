@@ -165,7 +165,7 @@
         el:"#app",
         data:{
             form:{
-                applyId:'1',
+                applyId:'',
                 ndbbName:'',
                 ndbbUrl:'',
                 gszcName:'',
@@ -190,13 +190,22 @@
             imageUrl5:'',
             imageUrl6:''
         },
+        created:function(){
+            this.loadData();
+        },
         methods:{
+            loadData:function(){
+              var con=window.location.search;
+              var applyId=decodeURI(con.substring(con.indexOf("=")+1));
+              alert(applyId);
+              this.form.applyId=applyId;
+              alert(this.form.applyId);
+            },
             prev:function(){
                 location.href="applyForm.html";
             },
             over:function(){
                 var self=this;
-                alert("****");
                 this.url="/demo/uploadZj/save";
                 axios.post(this.url,this.form)
                     .then(function (response) {
@@ -206,6 +215,7 @@
                                 message:'恭喜你，操作成功！',
                                 type:'success'
                             });
+                            location.href="applyList.html";
                         }else{
                             //添加或者修改错误
                             self.$message.error('错了哦，操作错误');
