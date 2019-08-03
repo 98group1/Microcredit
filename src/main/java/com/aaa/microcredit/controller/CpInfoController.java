@@ -175,6 +175,7 @@ public class CpInfoController {
         Map map=new HashMap();
         map.put("originalFilename",originalFilename);
         map.put("newFileName",newFileName);
+        System.out.println(map);
         return map;
     }
 
