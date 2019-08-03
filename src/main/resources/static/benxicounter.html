@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>等额本息贷款计算器</title>
+    <script src="js/jquery-2.1.0.js"></script>
+    <script>
+        function benxi() {
+            $.ajax({
+                url:'counter/benxi',
+                type:"POST",
+                data:{
+                    invest:$("#loanMoney").val(),
+                    yearRate:($("#lilv").val())/100,
+                    totalMonth:$("#loanDeadline").val()},
+                dataType:"json",
+                success:function (msg) {
+                    $("#tb").empty();
+                    var perMonthPrincipalInterest=msg.perMonthPrincipalInterest;
+                    var perMonthInterest=msg.perMonthInterest;
+                    var perMonthPrincipal=msg.perMonthPrincipal;
+                    var interestCount=msg.interestCount;
+                    //遍历取出perMonthInterest中的值
+                    for (var key in perMonthInterest){
+                        var tr="<tr>";
+                        tr+="<td>"+perMonthPrincipal[key]+"元</td>";
+                        tr+="<td>"+perMonthInterest[key]+"元</td>";
+                        tr+="</tr>";
+                        $("#tb").append(tr);
+                    }
+                    var tr="<tr>";
+                    tr+="<th>需还的总利息</th>";
+                    tr+="<td>"+interestCount+"元</td>";
+                    tr+="</tr>";
+                    $("#tb").append(tr);
+                }
+            });
+        }
+    </script>
+    <style>
+        td{
+            border-collapse: collapse;
+            width: 400px;
+            height: 40px;
+            font-size: 18px;
+        }
+        th{
+            border-collapse: collapse;
+            width: 400px;
+            height: 40px;
+            font-size: 25px;
+            background-color: gainsboro;
+        }
+        #top{
+            text-align: center;
+            background-color: gainsboro;
+            font-size: 25px;
+        }
+        .td1{
+            text-align: right;
+        }
+        .td2{text-align: left}
+        input{
+            height: 35px;
+        }
+        #table2 td{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td colspan="2" id="top">等额本金还款</td>
+    </tr>
+    <tr>
+        <td class="td1">贷款金额</td>
+        <td class="td2">
+            <input type="text" name="loanMoney" id="loanMoney"/>元
+        </td>
+    </tr>
+    <tr>
+        <td class="td1">贷款期限</td>
+        <!--<td class="td2">
+            <input type="text" name="loanDeadline" id="loanDeadline"/>月(6~12)
+        </td>-->
+        <td class="td2">
+            <select id="loanDeadline" style="font-size: 18px">
+                <option value="6">6   期   </option>
+                <option value="7">7   期   </option>
+                <option value="8">8   期   </option>
+                <option value="9">9   期   </option>
+                <option value="10">10 期   </option>
+                <option value="11">11 期   </option>
+                <option value="12">12 期   </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="td1">贷款年利率</td>
+        <td class="td2">
+            <input type="text" name="lilv" value="4.5" id="lilv"/>%
+        </td>
+    </tr>
+    <tr>
+        <td class="td1">还款方式</td>
+        <td class="td2">
+            <input type="text" value="等额本息还款">
+            <input type="button" value="计算" id="btn" onclick="benxi()"/>
+        </td>
+    </tr>
+</table>
+<table border="1"  id="table2">
+    <tr>
+        <th>每月需还本金</th>
+        <th>每月需还利息</th>
+    </tr>
+    <tbody id="tb">
+
+    </tbody>
+</table>
+</body>
+</html>
