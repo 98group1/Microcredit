@@ -126,8 +126,15 @@ public class ApplyController {
         map.put("RemoteIp",RemoteIp);
         map.put("RemotePath",RemotePath);
         request.getSession().setAttribute("ftpUrl",map);
+        System.out.println("ftp://"+ftpConfig.getFtpUserName()+":"+
+                ftpConfig.getFtpPassWord()+"@"+ftpConfig.getRemoteIp()+ftpConfig.getRemotePath()+"/"+fileName);
         return ResponseEntity.ok(resourceLoader.getResource("ftp://"+ftpConfig.getFtpUserName()+":"+
                 ftpConfig.getFtpPassWord()+"@"+ftpConfig.getRemoteIp()+ftpConfig.getRemotePath()+"/"+fileName));
     }
 
+    @ResponseBody
+    @RequestMapping("selectApplyAll")
+    public Map selectApplyAll(){
+        return applyService.selectApplyAll();
+    }
 }

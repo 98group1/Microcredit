@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.microcredit.dao.CpInfoMapper">
     <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.CpInfo">
-
-
         <id column="cp_id" jdbcType="INTEGER" property="cp_id" />
         <result column="username" jdbcType="VARCHAR" property="username" />
         <result column="cp_name" jdbcType="VARCHAR" property="cp_name" />
@@ -15,7 +13,6 @@
         <result column="cp_account1" jdbcType="VARCHAR" property="cp_account1" />
         <result column="cp_account2" jdbcType="VARCHAR" property="cp_account2" />
         <result column="cp_email" jdbcType="VARCHAR" property="cp_email" />
-
         <result column="law_id" jdbcType="INTEGER" property="law_id"/>
         <result column="law_person" jdbcType="VARCHAR" property="law_person"/>
         <result column="law_sex" jdbcType="VARCHAR" property="law_sex"/>

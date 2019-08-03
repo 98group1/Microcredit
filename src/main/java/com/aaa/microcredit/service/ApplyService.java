@@ -22,4 +22,7 @@ public interface ApplyService {
     Map selectByApplyId(Integer applyId);
     //根据用户id查询申请信息
     List<Map> selectByUserId(Integer userId);
+
+    // 后台根据用户id查询申请信息
+    Map selectApplyAll();
 }

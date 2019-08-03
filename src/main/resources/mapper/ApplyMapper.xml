@@ -313,6 +313,23 @@
       Reason = #{reason,jdbcType=VARCHAR}
     where Apply_Id = #{applyId,jdbcType=INTEGER}
   </update>
+   <!--查询全部-->
+  <select id="selectApplyAll" resultType="map">
+SELECT ndbb_url ndbbUrl,gszc_url gszcUrl,jycdht_url jycdhtUrl,khxk_url khxkUrl,swdj_url swdjUrl,yzbj_url yzbjUrl,zzjgdm_url zzjgdmUrl,
+law_person lawPerson,law_sex lawSex,law_age lawAge,law_tel lawTel ,law_zj lawZj ,house_address lawAddress ,education education ,law_sfzz lawSfzz,law_sfzf lawSfzf,d4.dictionary_name lawStatus,
+cp_name cpName,cp_code cpCode,cp_address cpAddress,cp_tel cpTel,cp_account1 cpAccount1,cp_account2 cpAccount2,cp_email cpEmail,license_url licenseUrl,
+a.Apply_Id applyId , a.loan_money loanMoney,a.loan_deadline loanDeadline ,d.dictionary_name loanType,d1.dictionary_name repaymentType,d2.dictionary_name repaymentId,
+bondsman_name bondsmanName,bondsman_age bondsmanAge,bondsman_sex bondsmanSex,bondsman_tel bondsmanTel,bondsman_zj bondsmanZj,bondsman_add bondsmanAdd,bondsman_sfzz bondsmanSfzz,
+bondsman_sfzf bondsmanSfzf,income income,a.describes applyDes,a.loan_time applyTime,d3.dictionary_name loanType
+from apply a,dictionary d, dictionary d1, dictionary d2 , dictionary d3, dictionary d4,cp_info cp,login,law_person law,photo p
+WHERE( a.loan_type=d.dictionary_value and d.keyword='loan_type')
+and ( a.repayment_type=d1.dictionary_value and d1.keyword='repayment_type')
+and ( a.repayment_id=d2.dictionary_value and d2.keyword='Repayment')
+and ( a.loan_status=d3.dictionary_value and d3.keyword='loan_status')
+and ( law.status=d4.dictionary_value and d4.keyword='law_status')
+and (cp.username=login.username and login.id=a.user_id)
+ and (cp.username=law.username) and(a.apply_id=p.apply_id  )and a.apply_id=1
+ </select>
 
   <select id="selectByApplyId" resultType="Map">
     SELECT c.*,d.dictionary_name repaymentType1
@@ -326,7 +343,9 @@ a.bondsman_sfzz bondsmanSfzz,a.bondsman_sfzf bondsmanSfzf,a.bondsman_add bondsma
 a.income,a.describes,a.Loan_time applyTime,a.loan_status loanStatus,d.dictionary_name loanType1
 from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='loan_type'
 ) b join dictionary d on d.dictionary_value=b.Repayment_id where keyword='Repayment'
-) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type' and ApplyId=#{applyId}
+) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type' and
+   ApplyId=#{applyId}
+
   </select>
 
   <select id="selectByUserId" resultType="Map">
