@@ -169,30 +169,14 @@
                     width="80"
                     prop="status">
             </el-table-column>
-            <el-table-column label="操作" width="200" >
-                <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="primary"
-                            @click="mx(scope.row.lId)">查看公司</el-button>
-                    <template >
-                        <el-button
-                                size="mini"
-                                type="primary"
-                                @click="mx(scope.row.lId)">查看材料</el-button>
-                    </template>
-                </template>
-
-            </el-table-column>
         </el-table>
-
     </template>
     <el-row>
         <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="currentPage"
-                :page-sizes="[2,3,4,5,10,15,100, 200, 300, 400]"
+                :page-sizes="[2,3,4,5,10,15]"
                 :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="total">
@@ -224,14 +208,6 @@
             this.loadData();
         },
         methods:{
-            // loadData:function(){
-            //     var self= this;
-            //     axios.post("/demo/loan/selectLoanMxAll")
-            //         .then(function (response) {
-            //             //添加或者修改成功
-            //             self.tableData=response.data;
-            //         });
-            // },
             loadData: function () {
                 var self = this;
                 //开始位置  (currentPage-1)*pageSize
@@ -239,13 +215,6 @@
                 this.form.pageSize=this.pageSize;
                 axios.post('/demo/loan/selectLoanMxAll', this.form)
                     .then(function (response) {
-                        // handle success
-                        console.log(response);
-                        //JSON.stringify  把json对象转换为json字符串
-                        console.log(JSON.stringify(response.data));
-
-                        //JSON.parse()把json字符串转换为json对象
-                        console.log(response);
                         self.tableData = response.data.mapList;
                         self.total = response.data.total;
                     })
@@ -261,7 +230,6 @@
                 this.loadData()
             },
             toflush:function(){
-
                 this.form={
                     cpName:'',
                     rType:'',
@@ -272,22 +240,18 @@
                 };
                 this.loadData();
             },
-            mx:function (lId) {
-                alert("成功！！"+JSON.stringify(lId))
-            },
             handleSizeChange: function (val) {
                 console.log('每页条数:' + val);
                 this.pageSize = val;
                 this.loadData();
-            }
-            ,
+            },
             handleCurrentChange: function (val) {
                 console.log('当前页:' + val);
                 this.currentPage = val;
                 this.loadData();
             }
         }
-    })
+    });
 </script>
 </body>
 </html>
