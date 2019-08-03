@@ -46,7 +46,7 @@
             line-height: 320px;
         }
         .el-row {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .el-col {
             border-radius: 4px;
@@ -70,32 +70,70 @@
             padding: 10px 0;
             background-color: #f9fafc;
         }
+        .el-menu-item{
+            font-size: 18px;
+            padding:0 auto;
+        }
+        .el-menu{
+            margin: auto;
+
+        }
+        .el-submenu__title{
+            font-size: 18px;
+        }
+
     </style>
 </head>
 <body>
 <div id="app">
-    <el-container>
-        <el-header style="height: 50px;background-color: #92B8B1;text-align: center">
+    <el-container >
+        <!--<el-header style="height: 50px;background-color: rgba(21, 45, 71, 0.78);text-align: center">
                 <el-row :gutter="25" style="padding-left: 470px;">
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a> </div></el-col>
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a> </div></el-col>
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a> </div></el-col>
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a> </div></el-col>
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="contactus.html" style="color: white;text-decoration:none;">联系我们</a> </div></el-col>
-                    <el-col :span="2"><div class="grid-content" style="line-height: 50px;"><a href="Pcenter.html" style="color: white;text-decoration:none;">个人中心</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="contactus.html" style="color: white;text-decoration:none;">联系我们</a> </div></el-col>
+                    <el-col :span="3"><div class="grid-content" style="line-height: 50px;"><a href="Pcenter.html" style="color: white;text-decoration:none;">个人中心</a> </div></el-col>
+                    <el-col :span="3">
+                        <div class="grid-content" style="line-height: 50px;">
+                            <a href="counter.html" target="tab1" style="color: white;text-decoration:none;">贷款计算器</a>
+                        </div>
+                    </el-col>
                 </el-row>
+        </el-header>-->
+        <el-header>
+            <el-menu
+                    class="el-menu-demo"
+                    mode="horizontal"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b">
+                <el-menu-item index="1" style="padding-left: 500px"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a></el-menu-item>
+                <el-menu-item index="2"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a></el-menu-item>
+                <el-menu-item index="3"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a></el-menu-item>
+                <el-menu-item index="4"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a></el-menu-item>
+                <el-menu-item index="5"><a href="Pcenter.html" style="color: white;text-decoration:none;">个人中心</a></el-menu-item>
+                <el-submenu index="6">
+                    <template slot="title" style="font-size: 18px">贷款计算器</template>
+                    <el-menu-item index="6-1">
+                        <a href="counter.html" target="tab1" style="color: white;text-decoration:none;">等额本金还款</a>
+                    </el-menu-item>
+                    <el-menu-item index="6-2">
+                        <a href="benxicounter.html" target="tab1" style="color: white;text-decoration:none;">等额本息还款</a>
+                    </el-menu-item>
+                </el-submenu>
+            </el-menu>
         </el-header>
 
         <el-container>
 
-            <el-aside width="300px">
-
+            <el-aside width="200px">
             </el-aside>
 
-                <el-aside width="200px">
+                <el-aside width="150px">
                     <div>
                         放照片
-
                     </div>
                     <div style="margin-top: 120px">
                         <el-row height="50px">
@@ -103,41 +141,58 @@
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="1">
-                                    <a href="contactus.html" target="tab1" style="text-decoration:none;"><span slot="title">完善资料</span></a>
+                                    <a href="PcenterPage1/completeData.html" target="tab1" style="text-decoration:none;">
+                                        <span slot="title">完善资料</span>
+                                    </a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="2">
-                                    <a href="PcenterPage1/changePWD.html" target="tab1" style="text-decoration:none;"><span slot="title">更改密码</span></a>
+                                    <a href="PcenterPage1/changePWD.html" target="tab1" style="text-decoration:none;">
+                                        <span slot="title">更改密码</span>
+                                    </a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="3">
-                                    <a href="view.html" target="tab1" style="text-decoration:none;"><span slot="title">资金记录</span></a>
+                                    <a href="/demo/before/applyForm.html" target="tab1" style="text-decoration:none;">
+                                        <span slot="title">申请贷款</span>
+                                    </a>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-row>
+                        <el-row>
+                            <el-menu>
+                                <el-menu-item index="4">
+                                    <a href="/demo/before/applyList.html" target="tab1" style="text-decoration:none;">
+                                        <span slot="title">查看申请记录</span>
+                                    </a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
                         <el-row>
                         <el-menu>
-                            <el-menu-item index="4">
-                                <a href="cooperation.html" target="tab1" style="text-decoration:none;"><span slot="title">贷款记录</span></a>
+                            <el-menu-item index="5">
+                                <a href="cooperation.html" target="tab1" style="text-decoration:none;">
+                                    <span slot="title">借款/贷款查询</span>
+                                </a>
                             </el-menu-item>
                         </el-menu>
                     </el-row>
                         <el-row>
                             <el-menu>
-                                <el-menu-item index="5">
+                                <el-menu-item index="6">
                                     <a href="aboutus.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
                         <el-row>
                             <el-menu>
-                                <el-menu-item index="6">
+                                <el-menu-item index="7">
                                     <a href="index.html" target="tab1" style="text-decoration:none;"><span slot="title">提现</span></a>
                                 </el-menu-item>
                             </el-menu>
@@ -146,11 +201,7 @@
 
                 </el-aside>
                 <el-main>
-                    <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
-                        <el-tab-pane>
-                            <iframe width="100%" style="border: 0px;" height="650px;" src="PcenterPage1/completeData.html" width="100%" name="tab1"></iframe>
-                        </el-tab-pane>
-                    </el-tabs>
+                    <iframe width="100%" style="border: 0px;" height="650px;" src="PcenterPage1/completeData.html" width="100%" name="tab1"></iframe>
                 </el-main>
         </el-container>
 
@@ -163,19 +214,19 @@
     var vue =new Vue({
         el:"#app",
         data:{
-                    editableTabsValue: '1',
-                    editableTabs: [{
-                        title: '首页',
-                        name: '1',
-                        url: 'http://localhost:8888/demo/firstPage.html'
-                    }],
-                    tabIndex: 1
+                    // editableTabsValue: '1',
+                    // editableTabs: [{
+                    //     title: '首页',
+                    //     name: '1',
+                    //     url: 'http://localhost:8888/demo/firstPage.html'
+                    // }],
+                    // tabIndex: 1
         },
         created:function(){
 
         },
         methods: {
-            handleNodeClick:function(data) {
+            /*handleNodeClick:function(data) {
                 if(data.url!=null&&data.url!='null'&&data.url!=''&&data.url!='undefined') {
                     this.addTab(data.label,data.url);
                 }
@@ -208,7 +259,7 @@
                 }
                 this.editableTabsValue = activeName;
                 this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-            }
+            }*/
         }
     });
 </script>

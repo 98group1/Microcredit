@@ -22,7 +22,7 @@ import static org.apache.logging.log4j.message.MapMessage.MapFormat.JSON;
  * className:MyShiroRealm
  * discriptoin:
  * author:
- * createTime:2018-11-29 18:37
+ * createTime:2019-7-29 18:37
  */
 public class MyShiroRealm extends AuthorizingRealm implements Serializable{
 
