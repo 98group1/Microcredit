@@ -12,101 +12,327 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
+<style>
+    #tab1 td{
+        width: 100px;}
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: black;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        background-color: gainsboro;
+        width: 300px;
+        height: 200px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 200px;
+        height: 200px;
+        display: block;
+    }
+</style>
 <body>
-<div id="app">
-    <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
+<div id="app" style="width: 100%;margin: 0px auto">
 
-    <el-dialog
-            title="公司信息"
-            :visible.sync="dialogVisible"
-            width="50%"
-            >
-        <el-form :inline="true" :label-position="left" :model="formInline" class="demo-form-inline">
-            <template slot-scope="tableData">
-                <el-form label-position="left" inline class="demo-table-expand">
-                    <el-form-item label="法人代表：">
-                        <span>{{ tableData.name }}</span>
+
+        <el-divider content-position="left">公司信息</el-divider>
+        <el-form :inline="true"  :model="tableData" class="demo-form-inline">
+            <template >
+                <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <el-form-item label="公司名称：">
+                                        <span>{{ tableData.cpName }}</span>
+                                    </el-form-item>
+                                </td>
+                                <td>
+                                    <el-form-item label="机构代码号：">
+                                        <span>{{ tableData.cpCode }}</span>
+                                    </el-form-item>
+                                </td>
+                                <td>
+                                    <el-form-item label="公司邮箱：">
+                                        <span>{{ tableData.cpEmail }}</span>
+                                    </el-form-item>
+                                </td>
+                                <td>
+                                    <el-form-item label="公司电话：">
+                                        <span>{{ tableData.cpTel}}</span>
+                                    </el-form-item>
+                                </td>
+                                <td rowspan="2">
+                                            <el-form-item  v-if="tableData.licenseUrl" :label-width="formLabelWidth">
+                                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.licenseUrl" target="_blank">
+                                                    <img v-if="tableData.licenseUrl" :src="'/demo/apply/show?fileName='+tableData.licenseUrl" height="200px;" width="200px;">
+                                                </a>
+                                            </el-form-item>
+                                </td>
+                                <td rowspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <el-form-item label="公司账户：">
+                                        <span>{{ tableData.cpAccount1}}</span>
+                                    </el-form-item>
+                                </td>
+                                <td>
+                                    <el-form-item label="公司账户2：">
+                                        <span>{{ tableData.cpAccount2 }}</span>
+                                    </el-form-item>
+                                </td>
+                                <td colspan="2">
+                                    <el-form-item label="公司地址：">
+                                        <span>{{ tableData.cpAddress }}</span>
+                                    </el-form-item>
+                                </td>
+                            </tr>
+                </table>
+                <el-divider content-position="right">法人信息</el-divider>
+                <table style="width: 100%">
+
+                <tr>
+                    <td>
+                        <el-form-item label="法人姓名：">
+                            <span>{{ tableData.lawPerson }}</span>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item label="法人性别：">
+                            <span>{{ tableData.lawSex }}</span>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item label="法人年龄：">
+                            <span>{{ tableData.lawAge }}</span>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item label="法人电话：">
+                            <span>{{ tableData.lawTel }}</span>
+                        </el-form-item>
+                    </td>
+                    <td rowspan="2">
+                        <el-form-item  v-if="tableData.lawSfzz" :label-width="formLabelWidth">
+                            <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.lawSfzz" target="_blank">
+                                <img v-if="tableData.lawSfzz" :src="'/demo/apply/show?fileName='+tableData.lawSfzz" height="200px;" width="200px;">
+                            </a>
+                        </el-form-item>
+                    </td>
+                    <td rowspan="2">
+                        <el-form-item  v-if="tableData.lawSfzf" :label-width="formLabelWidth">
+                            <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.lawSfzf" target="_blank">
+                                <img v-if="tableData.lawSfzf" :src="'/demo/apply/show?fileName='+tableData.lawSfzf" height="200px;" width="200px;">
+                            </a>
+                        </el-form-item>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <el-form-item label="法人证件号：">
+                            <span>{{ tableData.lawZj}}</span>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item label="法人学历：">
+                            <span>{{ tableData.education }}</span>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item label="法人家庭地址：">
+                            <span>{{ tableData.lawAddress}}</span>
+                        </el-form-item>
+                    </td>
+                </tr>
+            </table>
+                <el-divider content-position="left">申请信息</el-divider>
+                <table style="width: 100%">
+
+                    <tr>
+                        <td>
+                            <el-form-item label="申请编号：">
+                                <span>{{ tableData.applyId}}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="贷款类型：">
+                                <span>{{ tableData.loanType}}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="还款类型：">
+                                <span>{{ tableData.repaymentType }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="还款方式：">
+                                <span>{{ tableData.repaymentId }}</span>
+                            </el-form-item>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                        <el-form-item label="贷款金额/元：">
+                            <span>{{ tableData.loanMoney }}</span>
+                        </el-form-item>
+                    </td>
+                        <td>
+                            <el-form-item label="贷款期限/月：">
+                                <span>{{ tableData.loanDeadline }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="申请时间：">
+                                <span>{{ tableData.applyTime }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="贷款描述：">
+                                <span>{{ tableData.applyDes}}</span>
+                            </el-form-item>
+                        </td>
+                    </tr>
+                </table>
+                <el-divider content-position="right">担保人信息</el-divider>
+                <table style="width: 100%">
+
+                    <tr>
+                        <td>
+                            <el-form-item label="担保人姓名：">
+                                <span>{{ tableData.bondsmanName }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="担保人性别：">
+                                <span>{{ tableData.bondsmanSex }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="担保人年龄：">
+                                <span>{{ tableData.bondsmanAge }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="担保人电话：">
+                                <span>{{ tableData.bondsmanTel }}</span>
+                            </el-form-item>
+                        </td>
+                        <td rowspan="2">
+                            <el-form-item  v-if="tableData.bondsmanSfzz" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.bondsmanSfzz" target="_blank">
+                                    <img v-if="tableData.bondsmanSfzz" :src="'/demo/apply/show?fileName='+tableData.bondsmanSfzz" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                        <td rowspan="2">
+                            <el-form-item  v-if="tableData.bondsmanSfzf" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.bondsmanSfzf" target="_blank">
+                                    <img v-if="tableData.bondsmanSfzf" :src="'/demo/apply/show?fileName='+tableData.bondsmanSfzf" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <el-form-item label="担保人证件号：">
+                                <span>{{ tableData.bondsmanZj }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="担保人收入/月：">
+                                <span>{{ tableData.income }}</span>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item label="担保人家庭地址：">
+                                <span>{{ tableData.bondsmanAdd}}</span>
+                            </el-form-item>
+                        </td>
+                    </tr>
+                </table>
+                <el-divider content-position="left">图片信息</el-divider>
+                <table style="width: 100%">
+                        <td>
+                            <el-form-item  v-if="tableData.ndbbUrl" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.ndbbUrl" target="_blank">
+                                    <img v-if="tableData.ndbbUrl" :src="'/demo/apply/show?fileName='+tableData.ndbbUrl" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item  v-if="tableData.khxkUrl" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.khxkUrl" target="_blank">
+                                    <img v-if="tableData.khxkUrl" :src="'/demo/apply/show?fileName='+tableData.khxkUrl" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                    <td>
+                        <el-form-item  v-if="tableData.swdjUrl" :label-width="formLabelWidth">
+                            <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.swdjUrl" target="_blank">
+                                <img v-if="tableData.swdjUrl" :src="'/demo/apply/show?fileName='+tableData.swdjUrl" height="200px;" width="200px;">
+                            </a>
+                        </el-form-item>
+                    </td>
+                    <td>
+                        <el-form-item  v-if="tableData.lawSfzz" :label-width="formLabelWidth">
+                            <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.lawSfzz" target="_blank">
+                                <img v-if="tableData.lawSfzz" :src="'/demo/apply/show?fileName='+tableData.lawSfzz" height="200px;" width="200px;">
+                            </a>
+                        </el-form-item>
+                    </td>
+                    <td>
+                    <el-form-item  v-if="tableData.yzbjUrl" :label-width="formLabelWidth">
+                        <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.yzbjUrl" target="_blank">
+                            <img v-if="tableData.yzbjUrl" :src="'/demo/apply/show?fileName='+tableData.yzbjUrl" height="200px;" width="200px;">
+                        </a>
                     </el-form-item>
-                    <el-form-item label="法人性别：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="法人年龄：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="法人电话：">
-                        <span>{{ tableData.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="法人证件：">
-                        <span>{{ tableData.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="法人地址：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="法人学历：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="公司地址：">
-                        <span>{{ ptableData.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="公司账户1：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="公司账户2：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="公司电话：">
-                        <span>{{tableData.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="公司邮箱：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                    <el-form-item label="营业执照：">
-                        <span>{{tableData.name}}</span>
-                    </el-form-item>
-                    <el-form-item label="执照名称：">
-                        <span>{{ tableData.name }}</span>
-                    </el-form-item>
-                </el-form>
+                </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <el-form-item  v-if="tableData.lawSfzf" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.lawSfzf" target="_blank">
+                                    <img v-if="tableData.lawSfzf" :src="'/demo/apply/show?fileName='+tableData.lawSfzf" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item  v-if="tableData.gszcUrl" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.gszcUrl" target="_blank">
+                                    <img v-if="tableData.gszcUrl" :src="'/demo/apply/show?fileName='+tableData.gszcUrl" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item  v-if="tableData.zzjgdmUrl" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.zzjgdmUrl" target="_blank">
+                                    <img v-if="tableData.zzjgdmUrl" :src="'/demo/apply/show?fileName='+tableData.zzjgdmUrl" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                        <td>
+                            <el-form-item  v-if="tableData.jycdhtUrl" :label-width="formLabelWidth">
+                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+tableData.jycdhtUrl" target="_blank">
+                                    <img v-if="tableData.jycdhtUrl" :src="'/demo/apply/show?fileName='+tableData.jycdhtUrl" height="200px;" width="200px;">
+                                </a>
+                            </el-form-item>
+                        </td>
+                    </tr>
+                </table>
             </template>
-            <el-row>
-                <el-form-item label="公司名称">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-                <el-form-item label="机构代码号">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-                <el-form-item label="公司电话">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-            </el-row>
-            <el-row>
-                <el-form-item label="公司账号1">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-                <el-form-item label="公司账号2">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-                <el-form-item label="公司邮箱">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-            </el-row>
-            <el-row>
-                <el-form-item label="公司">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-                <el-form-item label="公司地址">
-                    <el-input v-model="formInline.user" ></el-input>
-                </el-form-item>
-            </el-row>
-
         </el-form>
-        <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-    </el-dialog>
-
-
+                <el-button type="primary">上一步</el-button>
+                <el-button type="primary" >下一步</el-button>
 </div>
 </body>
 <script>
@@ -115,16 +341,27 @@
        data:{
            formInline: {
                user: '',
-               region: ''
+               region: '',
            },
+           formLabelWidth:"200px",
            dialogVisible: false,
-           tableData:{name:'yanglongkun'}
+           tableData:"",
+           imageUrl:''
+       },
+       created:function(){
+           this.loadtable()
        },
        methods: {
-           onSubmit:function(){
-               console.log('submit!');
-           }
+           loadtable:function(){
+               var self=this;
+               axios.post("/demo/apply/selectApplyAll")
+                   .then(function (response) {
+                       alert(response.data)
+                       self.tableData=response.data;
+                       alert(JSON.stringify(self.tableData))
 
+                   });
+           }
        }
    })
 </script>

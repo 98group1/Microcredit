@@ -8,7 +8,7 @@ spring:
   messages:
     encoding: utf-8
   datasource:
-    url: jdbc:mysql://192.168.11.118:3306/microcredit
+    url: jdbc:mysql://192.168.11.118:3306/microcredit?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 201314
@@ -34,8 +34,3 @@ spring:
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.aaa.microcredit.entity
-
-
-
-
-

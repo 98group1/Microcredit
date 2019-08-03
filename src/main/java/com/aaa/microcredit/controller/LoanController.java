@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,5 +36,18 @@ public class LoanController {
         mappage.put("mapList",mapList);
         mappage.put("total",loanService.selectAllCount(map));
         return mappage;
+    }
+
+    /**
+     * 后台取出session中的数据并返回到前台
+     * @param map  前台传的需要取出来的字段
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getSession")
+    @ResponseBody
+    public Object getSession(@RequestBody Map map,HttpServletRequest request){
+        String s= (String) map.get("getSession");
+        return  request.getSession().getAttribute(s);
     }
 }
