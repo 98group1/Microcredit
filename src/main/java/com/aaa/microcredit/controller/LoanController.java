@@ -17,15 +17,7 @@ import java.util.Map;
 public class LoanController {
     @Autowired
     private LoanService loanService;
-//    @ResponseBody
-////    @RequestMapping("/selectLoanAll")
-////    public List<Map> selectloanAll(){
-////        System.out.println("查询贷款");
-//////        Map map=new HashMap();
-//////        map.put("loan",loanService.selectAll());
-////        List<Map> mapList = loanService.selectAll();
-////        return mapList;
-////    }
+
     @ResponseBody
     @RequestMapping("/selectLoanMxAll")
     public Map selectloanMxAll(@RequestBody Map map){
