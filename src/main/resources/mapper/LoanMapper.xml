@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.LoanMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Loan">
+    <id column="l_id" jdbcType="INTEGER" property="lId" />
+    <result column="Apply_Id" jdbcType="INTEGER" property="applyId" />
+    <result column="cp_id" jdbcType="INTEGER" property="cpId" />
+    <result column="loan_type" jdbcType="INTEGER" property="loanType" />
+    <result column="r_type" jdbcType="INTEGER" property="rType" />
+    <result column="Repayment_id" jdbcType="INTEGER" property="repaymentId" />
+    <result column="loan_money" jdbcType="DECIMAL" property="loanMoney" />
+    <result column="r_money" jdbcType="DECIMAL" property="rMoney" />
+    <result column="z_periobs" jdbcType="INTEGER" property="zPeriobs" />
+    <result column="r_capital" jdbcType="DECIMAL" property="rCapital" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="loan_time" jdbcType="TIMESTAMP" property="loanTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    l_id, Apply_Id, cp_id, loan_type, r_type, Repayment_id, loan_money, r_money, z_periobs, 
+    r_capital, apply_time, loan_time, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from loan
+    where l_id = #{lId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from loan
+    where l_id = #{lId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.Loan">
+    insert into loan (l_id, Apply_Id, cp_id, 
+      loan_type, r_type, Repayment_id, 
+      loan_money, r_money, z_periobs, 
+      r_capital, apply_time, loan_time, 
+      status)
+    values (#{lId,jdbcType=INTEGER}, #{applyId,jdbcType=INTEGER}, #{cpId,jdbcType=INTEGER}, 
+      #{loanType,jdbcType=INTEGER}, #{rType,jdbcType=INTEGER}, #{repaymentId,jdbcType=INTEGER}, 
+      #{loanMoney,jdbcType=DECIMAL}, #{rMoney,jdbcType=DECIMAL}, #{zPeriobs,jdbcType=INTEGER}, 
+      #{rCapital,jdbcType=DECIMAL}, #{applyTime,jdbcType=TIMESTAMP}, #{loanTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Loan">
+    insert into loan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        l_id,
+      </if>
+      <if test="applyId != null">
+        Apply_Id,
+      </if>
+      <if test="cpId != null">
+        cp_id,
+      </if>
+      <if test="loanType != null">
+        loan_type,
+      </if>
+      <if test="rType != null">
+        r_type,
+      </if>
+      <if test="repaymentId != null">
+        Repayment_id,
+      </if>
+      <if test="loanMoney != null">
+        loan_money,
+      </if>
+      <if test="rMoney != null">
+        r_money,
+      </if>
+      <if test="zPeriobs != null">
+        z_periobs,
+      </if>
+      <if test="rCapital != null">
+        r_capital,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="loanTime != null">
+        loan_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lId != null">
+        #{lId,jdbcType=INTEGER},
+      </if>
+      <if test="applyId != null">
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="cpId != null">
+        #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="loanType != null">
+        #{loanType,jdbcType=INTEGER},
+      </if>
+      <if test="rType != null">
+        #{rType,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentId != null">
+        #{repaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null">
+        #{loanMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rMoney != null">
+        #{rMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="zPeriobs != null">
+        #{zPeriobs,jdbcType=INTEGER},
+      </if>
+      <if test="rCapital != null">
+        #{rCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanTime != null">
+        #{loanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.Loan">
+    update loan
+    <set>
+      <if test="applyId != null">
+        Apply_Id = #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="cpId != null">
+        cp_id = #{cpId,jdbcType=INTEGER},
+      </if>
+      <if test="loanType != null">
+        loan_type = #{loanType,jdbcType=INTEGER},
+      </if>
+      <if test="rType != null">
+        r_type = #{rType,jdbcType=INTEGER},
+      </if>
+      <if test="repaymentId != null">
+        Repayment_id = #{repaymentId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null">
+        loan_money = #{loanMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="rMoney != null">
+        r_money = #{rMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="zPeriobs != null">
+        z_periobs = #{zPeriobs,jdbcType=INTEGER},
+      </if>
+      <if test="rCapital != null">
+        r_capital = #{rCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="applyTime != null">
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanTime != null">
+        loan_time = #{loanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.Loan">
+    update loan
+    set Apply_Id = #{applyId,jdbcType=INTEGER},
+      cp_id = #{cpId,jdbcType=INTEGER},
+      loan_type = #{loanType,jdbcType=INTEGER},
+      r_type = #{rType,jdbcType=INTEGER},
+      Repayment_id = #{repaymentId,jdbcType=INTEGER},
+      loan_money = #{loanMoney,jdbcType=DECIMAL},
+      r_money = #{rMoney,jdbcType=DECIMAL},
+      z_periobs = #{zPeriobs,jdbcType=INTEGER},
+      r_capital = #{rCapital,jdbcType=DECIMAL},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      loan_time = #{loanTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where l_id = #{lId,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectCpAndLoan" resultType="map" parameterType="map">
+        SELECT a.apply_id,a.loan_type,a.Repayment_type,a.Repayment_id,a.first_careful,date_format(a.first_time,'%Y-%m-%d %H:%i:%s') first_time ,a.two_careful,date_format(a.two_time,'%Y-%m-%d %H:%i:%s') two_time,dy.dictionary_name loanType,dy1.dictionary_name repaymentType,a.Loan_money,a.loan_deadline
+        ,dy2.dictionary_name repaymentId,dy3.dictionary_name loanStatus,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime, cp.cp_name,cp.cp_id
+        FROM apply a,dictionary dy ,dictionary dy1,dictionary dy2,dictionary dy3,cp_info cp,login lo
+        where (a.loan_type=dy.dictionary_value and dy.keyword='loan_type')
+        and (a.Repayment_type=dy1.dictionary_value and dy1.keyword='repayment_type')
+        and (a.Repayment_id=dy2.dictionary_value and dy2.keyword='Repayment')
+        and (a.loan_status=dy3.dictionary_value and dy3.keyword='loan_status')
+        and (a.User_id=lo.id and lo.username=cp.username )and a.loan_status=3 limit ${start},${pageSize}
+
+<!--<where>
+    <if test="r_type!=null">
+        and r_type=#{r_type} and status=#{status} and loan_type=#{loan_type}
+    </if>
+    limit  ${start},${pageSize}
+    </where>-->
+    </select>
+
+
+
+    <select id="queryPageCount" resultType="int">
+        select count(*)
+        from
+        (  SELECT a.apply_id,a.loan_type,a.Repayment_type,a.Repayment_id,a.first_careful,date_format(a.first_time,'%Y-%m-%d %H:%i:%s') first_time ,a.two_careful,date_format(a.two_time,'%Y-%m-%d %H:%i:%s') two_time,dy.dictionary_name loanType,dy1.dictionary_name repaymentType,a.Loan_money,a.loan_deadline
+        ,dy2.dictionary_name repaymentId,dy3.dictionary_name loanStatus,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime, cp.cp_name,cp.cp_id
+        FROM apply a,dictionary dy ,dictionary dy1,dictionary dy2,dictionary dy3,cp_info cp,login lo
+        where (a.loan_type=dy.dictionary_value and dy.keyword='loan_type')
+        and (a.Repayment_type=dy1.dictionary_value and dy1.keyword='repayment_type')
+        and (a.Repayment_id=dy2.dictionary_value and dy2.keyword='Repayment')
+        and (a.loan_status=dy3.dictionary_value and dy3.keyword='loan_status')
+        and (a.User_id=lo.id and lo.username=cp.username )and a.loan_status=3)as temp
+
+<!--    r_type=${r_type} and status=${status} and loan_type=${loan_type}
+    <if test="username!=null and username!=''">
+                and (cp.cp_name like "%"#{cp_name}"%"
+                or cp.cp_code like "%"#{cp_code}"%")
+            </if>-->
+    </select>
+
+    <insert id="insertLoan"  keyProperty="l_id" useGeneratedKeys="true" parameterType="map">
+insert into loan(cp_id,apply_id,loan_type,r_type,Repayment_id,loan_money,r_money,z_periobs,r_capital,apply_time,loan_time,status)
+values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_money},#{r_money},#{loan_deadline},#{r_capital},#{apply_time},#{datanow},#{status})
+    </insert>
+
+
+</mapper>
