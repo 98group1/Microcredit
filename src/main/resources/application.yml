@@ -5,14 +5,22 @@ server:
     context-path: /demo
 #配置数据源
 spring:
+  messages:
+    encoding: utf-8
   datasource:
-    url: jdbc:mysql://192.168.11.141:3306/microcredit?serverTimezone=UTC
+    url: jdbc:mysql://192.168.11.118:3306/microcredit
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 201314
     #设置日期格式
     jackson:
       date-format: yyyy-MM-dd
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   #允许重启，自动刷新
   devtools:
     remote:
@@ -21,7 +29,13 @@ spring:
   resources:
     static-locations: classpath:/templates/,classpath:/static/
 
+
 #配置mybatis
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.aaa.microcredit.entity
+
+
+
+
+

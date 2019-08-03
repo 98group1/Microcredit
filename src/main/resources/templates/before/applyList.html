@@ -21,6 +21,16 @@
         .el-table__header{
            text-align: center;
        }
+        .el-form-item__label{
+            text-align: left;
+            width: 80px;
+            margin: 0px;
+            padding: 0px;
+        }
+        .el-col{
+            margin: 0px;
+            padding: 0px;
+        }
     </style>
 </head>
 <body>
@@ -154,14 +164,14 @@
                 <el-col :span="12">
                     <div class="grid-content bg-purple">
                         <el-form-item label="身份证正面" v-if="form.bondsmanSfzz" :label-width="formLabelWidth">
-                            <img v-if="form.bondsmanSfzz" :src="'/demo/apply/show?fileName='+form.bondsmanSfzz" height="200px;" width="160px;">
+                            <img v-if="form.bondsmanSfzz" :src="'/demo/apply/show?fileName='+form.bondsmanSfzz" height="150px;" width="180px;" style="margin-left: 0px">
                         </el-form-item>
                     </div>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content bg-purple">
                         <el-form-item label="身份证反面" v-if="form.bondsmanSfzf" :label-width="formLabelWidth">
-                            <img v-if="form.bondsmanSfzf" :src="'/demo/apply/show?fileName='+form.bondsmanSfzf" height="200px;" width="160px;">
+                            <img v-if="form.bondsmanSfzf" :src="'/demo/apply/show?fileName='+form.bondsmanSfzf" height="150px;" width="180px;">
                         </el-form-item>
                     </div>
                 </el-col>
@@ -234,7 +244,7 @@
                         <div class="grid-content bg-purple">
                             <el-form-item label="年度报表" v-if="photoForm.ndbbUrl" :label-width="formLabelWidth">
                                <a :href="'ftp://zyf:123456@192.168.11.141/image-serv/'+photoForm.ndbbUrl" target="_blank">
-                                   <img v-if="photoForm.ndbbUrl" :src="'/demo/apply/show?fileName='+photoForm.ndbbUrl" height="200px;" width="200px;">
+                                   <img v-if="photoForm.ndbbUrl" :src="'/demo/apply/show?fileName='+photoForm.ndbbUrl" height="150px;" width="180px;">
                                </a>
                             </el-form-item>
                         </div>
@@ -242,7 +252,7 @@
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <el-form-item label="公司章程" v-if="photoForm.gszcUrl" :label-width="formLabelWidth">
-                                <img v-if="photoForm.gszcUrl" :src="'/demo/apply/show?fileName='+photoForm.gszcUrl" height="200px;" width="200px;">
+                                <img v-if="photoForm.gszcUrl" :src="'/demo/apply/show?fileName='+photoForm.gszcUrl" height="150px;" width="180px;">
                             </el-form-item>
                         </div>
                     </el-col>
@@ -251,14 +261,14 @@
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <el-form-item label="经营场地合同" v-if="photoForm.jycdhtUrl" :label-width="formLabelWidth">
-                                <img v-if="photoForm.jycdhtUrl" :src="'/demo/apply/show?fileName='+photoForm.jycdhtUrl" height="200px;" width="200px;">
+                                <img v-if="photoForm.jycdhtUrl" :src="'/demo/apply/show?fileName='+photoForm.jycdhtUrl" height="150px;" width="180px;">
                             </el-form-item>
                         </div>
                     </el-col>
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <el-form-item label="开户许可证" v-if="photoForm.khxkUrl" :label-width="formLabelWidth">
-                                <img v-if="photoForm.khxkUrl" :src="'/demo/apply/show?fileName='+photoForm.khxkUrl" height="200px;" width="200px;">
+                                <img v-if="photoForm.khxkUrl" :src="'/demo/apply/show?fileName='+photoForm.khxkUrl" height="150px;" width="180px;">
                             </el-form-item>
                         </div>
                     </el-col>
@@ -267,14 +277,14 @@
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <el-form-item label="税务登记" v-if="photoForm.swdjUrl" :label-width="formLabelWidth">
-                                <img v-if="photoForm.swdjUrl" :src="'/demo/apply/show?fileName='+photoForm.swdjUrl" height="200px;" width="200px;">
+                                <img v-if="photoForm.swdjUrl" :src="'/demo/apply/show?fileName='+photoForm.swdjUrl" height="150px;" width="180px;">
                             </el-form-item>
                         </div>
                     </el-col>
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <el-form-item label="验资报告" v-if="photoForm.yzbjUrl" :label-width="formLabelWidth">
-                                <img v-if="photoForm.yzbjUrl" :src="'/demo/apply/show?fileName='+photoForm.yzbjUrl" height="200px;" width="200px;">
+                                <img v-if="photoForm.yzbjUrl" :src="'/demo/apply/show?fileName='+photoForm.yzbjUrl" height="150px;" width="180px;">
                             </el-form-item>
                         </div>
                     </el-col>
@@ -302,7 +312,7 @@
         el:"#app",
         data:{
             form:{
-                userId:'1',
+                userId:'',
                 loanType1:'',
                 loanMoney:'',
                 loanDeadline:'',
@@ -334,16 +344,14 @@
             dialogFormVisible1:false,
             formLabelWidth:'130px',
             url:''
-
         },
         created:function(){
-          this.loadApply();
+            this.getUserId();
         },
         methods: {
             loadApply:function(){
                 var self= this;
-
-                axios.post('/demo/apply/selectByUserId',{userId:1})
+                axios.post('/demo/apply/selectByUserId',{userId:self.form.userId})
                     .then(function (response) {
                         //添加或者修改成功
                         self.tableData=response.data;
@@ -370,14 +378,13 @@
                 axios.post('/demo/uploadZj/selectByApplyId',{applyId:applyId})
                     .then(function (response) {
                         self.photoForm=response.data.photo;
-                        if(self.photoForm!=null&&self!=''){
+                        if(self.photoForm!=null&&self.photoForm!=''){
                             self.url = "/demo/apply/show";
                             //让弹出框显示
                             self.dialogFormVisible1 = true;
                         }else {
                             self.$message.error('没有上传图片');
                         }
-
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -386,10 +393,14 @@
                     .then(function () {
                         // always executed
                     });
-
-
-
-
+            },
+            getUserId:function () {
+                var self=this;
+                axios.post('/demo/apply/getUserId').then(function (response){
+                    self.form.userId=response.data.id;
+                    //在该函数中调用loadApply(),避免异步请求造成的不等待使取得的值为空
+                    self.loadApply();
+                });
 
             }
 

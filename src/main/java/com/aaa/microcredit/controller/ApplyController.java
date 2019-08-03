@@ -130,4 +130,16 @@ public class ApplyController {
                 ftpConfig.getFtpPassWord()+"@"+ftpConfig.getRemoteIp()+ftpConfig.getRemotePath()+"/"+fileName));
     }
 
+    /**
+     * 从session中获取userid
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("getUserId")
+    public Object getUserId(HttpServletRequest request){
+        System.out.println(request.getSession().getAttribute("login1").toString());
+        return request.getSession().getAttribute("login1");
+    }
+
 }

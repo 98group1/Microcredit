@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <!--<link rel="stylesheet" type="text/css" href="../regist/css/regist.css">-->
+    <!--<script type="text/javascript" src="../regist/js/jquery.min.js"></script>-->
+    <script type="text/javascript" src="../layui/layui.all.js"></script>
+    <script>
+        $(function () {
+            $("#btn6").click(function () {
+                $.ajax({
+                    url: "/demo/register/change",
+                    type:"POST",
+                    data:{passWord:$("#password2").val()},
+                    dataType:"json",
+                    success:function (response) {
+                        if (response==1){
+                            layer.msg('修改成功', {icon: 6});
+                            location.href='#';
+                        }
+                    }
+                })
+            })
+        })
+        //判断两次密码是否一致
+        function equalsPass() {
+            var password1= $("#password1").val();
+            var password2= $("#password2").val();
+            if(password1!=password2){
+                layer.alert('两次输入的密码不一致，请重新输入',{
+                    icon: 5,
+                    title: "温馨提示"
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div>
+        <form style="padding-left: 150px">
+            <div><h1 style="padding-left: 70px">更改密码</h1></div>
+            <div>
+                <table>
+                    <tr style="height: 10px"></tr>
+                    <tr>
+                        <td>旧密码：</td>
+                        <td><input type="text" id="password" name="passWord" style="height: 30px;width: 300px"></td>
+                    </tr>
+                    <tr style="height: 30px"></tr>
+                    <tr>
+                        <td>新密码：</td>
+                        <td><input type="text" id="password1" name="passWord" style="height: 30px;width: 300px"></td>
+                    </tr>
+                    <tr style="height: 30px"></tr>
+                    <tr>
+                        <td>确认密码：</td>
+                        <td><input type="text" id="password2" name="passWord" onblur="equalsPass()" style="height: 30px;width: 300px"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <input type="button" id="btn6" value="确定" style="height: 30px;width: 100px;margin-top: 50px">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+</div>
+</body>
+</html>

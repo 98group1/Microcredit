@@ -68,5 +68,10 @@ public class CpInfoServiceImpl implements CpInfoService {
         return cpInfoMapper.updateStatus(map);
     }
 
+    @Override
+    public int insertInfo(Map map) {
+        return cpInfoMapper.insertInfo(map);
+    }
+
 
 }
