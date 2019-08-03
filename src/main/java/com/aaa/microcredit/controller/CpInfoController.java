@@ -5,17 +5,17 @@ import com.aaa.microcredit.entity.CpInfo;
 import com.aaa.microcredit.service.CpInfoService;
 import com.aaa.microcredit.util.FtpConfig;
 import com.aaa.microcredit.util.FtpUtil;
+import com.aaa.microcredit.util.PhoneCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -135,5 +135,57 @@ public class CpInfoController {
     public void downLoad(String fileName, String originalName, HttpServletResponse response){
         //调用封装方法
         ftpUtil.downLoad(fileName,response);
+    }
+
+
+    /**
+     * 获取手机验证码,放在session中
+     */
+    @RequestMapping("phone")
+     public void getPhone(String tel, HttpServletRequest request){
+        String s = PhoneCodeUtil.phoneCode(tel);
+        request.getSession().setAttribute("s",s);
+    }
+
+    /**
+     * 把session中的验证码和页面传过来的做对比
+     * @param request
+     * @param passWord1
+     * @return
+     */
+    @RequestMapping("tocompare")
+    public Object comparePassWord(HttpServletRequest request,String passWord1){
+        String s = (String) request.getSession().getAttribute("s");
+        if (passWord1.equals(s)){
+            return "true";
+        }
+        return "false";
+    }
+
+    /*
+     *
+     * 营业执照图片上传
+     * @param
+     * @return
+     */
+    @RequestMapping("/uploadYyzz")
+    public Object uploadYyzz(@RequestParam MultipartFile  yyzz){
+        String originalFilename=yyzz.getOriginalFilename();
+        String newFileName=ftpUtil.upLoad(yyzz);
+        Map map=new HashMap();
+        map.put("originalFilename",originalFilename);
+        map.put("newFileName",newFileName);
+        return map;
+    }
+
+    /**
+     * 完善公司信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("cpInfo1")
+    public Object cpInfo1(@RequestBody Map map){
+        int i = cpInfoService.insertInfo(map);
+        return i;
     }
 }

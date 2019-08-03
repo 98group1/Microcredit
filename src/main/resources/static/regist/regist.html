@@ -12,20 +12,72 @@
     <script>
         $(function () {
             $("#btn1").click(function () {
-              $.ajax({
-                    url: "/demo/register/reg1",
+                $.ajax({
+                    url: "/demo/cpInfo/tocompare",
                     type:"POST",
-                    data:{tel:$("#tel").val(),userName:$("#userName").val(),passWord:$("#password").val()},
+                    data:{passWord1:$("#password1").val()},
+                    dataType:"json",
+                    success:function (resp) {
+                        if (resp==true){
+                            alert("成功");
+                            $.ajax({
+                                url: "/demo/register/reg1",
+                                type:"POST",
+                                data:{tel:$("#tel").val(),userName:$("#userName").val(),passWord:$("#password").val()},
+                                dataType:"json",
+                                success:function (response) {
+                                    if (response==1){
+                                        layer.msg('注册成功', {icon: 6});
+                                        location.href='../login/index.html';
+                                    }
+                                }
+                            });
+                        }else {
+                            layer.msg('验证码不正确', {icon: 5});
+                            $("#password1").val(null);
+                            var tel=$("#tel").val();
+                            var userName=$("#userName").val();
+                            var password=$("#password").val();
+                            var passwordTwo=$("#passwordTwo").val();
+                            var password1=$("#password1").val();
+                            if (tel==null||tel==""||userName==null||userName==""||password==null||password==""||passwordTwo==null||passwordTwo==""||password1==null||password1==""){
+                                layer.msg('请完善所有信息', {icon: 5});
+                            } else{
+                                $.ajax({
+                                    url: "/demo/register/reg1",
+                                    type:"POST",
+                                    data:{tel:$("#tel").val(),userName:$("#userName").val(),passWord:$("#password").val()},
+                                    dataType:"json",
+                                    success:function (response) {
+                                        if (response==1){
+                                            layer.msg('注册成功', {icon: 6});
+                                            location.href='../login/index.html';
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            })
+        });
+        //获取验证码
+        $(function () {
+            $("#btn").click(function () {
+                $.ajax({
+                    url: "/demo/cpInfo/phone",
+                    type:"POST",
+                    data:{tel:$("#tel").val()},
                     dataType:"json",
                     success:function (response) {
-                        if (response==1){
-                            layer.msg('注册成功', {icon: 6});
-                            location.href='../login/index.html';
-                        }
+
                     }
                 })
             })
         })
+
+
+
         //判断注册的用户名是否已经存在
         function equalsName() {
             var userName = $("#userName").val();
@@ -41,12 +93,10 @@
                     dataType: "json",
                     success: function (response) {
                         if (response == true) {
-                            // alert("用户名已存在，不可用");
                             layer.msg('用户名已存在', {icon: 5});
                             $("#userName").val(null);
                         } else {
-                            //alert("用户名可以使用");
-                            layer.msg('该名称可以使用', {icon: 6});
+
                         }
                     }
                 })
@@ -100,7 +150,7 @@
                     <div class="againpwd">
                         <input type="password" id="passwordTwo"name="passWord" onblur="equalsPass()" placeholder="再次输入密码"><em>两次密码不一致</em>
                     </div>
-                    <div><input type="text" id="password1" name="password1" placeholder="请输入验证码"></div>
+                    <div><input type="text" id="password1" name="passWord1" placeholder="请输入验证码"></div>
                     <button type="button" id="btn" style="background-color: #00F7DE">获取验证码</button>
                     <button type="button" id="btn1">注册</button>
                 </form>
