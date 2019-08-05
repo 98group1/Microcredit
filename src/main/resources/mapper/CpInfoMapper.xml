@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.microcredit.dao.CpInfoMapper">
     <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.CpInfo">
-        <id column="cp_id" jdbcType="INTEGER" property="cp_id" />
-        <result column="username" jdbcType="VARCHAR" property="username" />
-        <result column="cp_name" jdbcType="VARCHAR" property="cp_name" />
-        <result column="cp_code" jdbcType="VARCHAR" property="cp_code" />
-        <result column="cp_address" jdbcType="VARCHAR" property="cp_address" />
-        <result column="license_name" jdbcType="VARCHAR" property="license_name" />
-        <result column="license_url" jdbcType="VARCHAR" property="license_url" />
-        <result column="cp_tel" jdbcType="VARCHAR" property="cp_tel" />
-        <result column="cp_account1" jdbcType="VARCHAR" property="cp_account1" />
-        <result column="cp_account2" jdbcType="VARCHAR" property="cp_account2" />
-        <result column="cp_email" jdbcType="VARCHAR" property="cp_email" />
+        <id column="cp_id" jdbcType="INTEGER" property="cpId" />
+        <result column="username" jdbcType="VARCHAR" property="userName" />
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName" />
+        <result column="cp_code" jdbcType="VARCHAR" property="cpCode" />
+        <result column="cp_address" jdbcType="VARCHAR" property="cpAddress" />
+        <result column="license_name" jdbcType="VARCHAR" property="licenseName" />
+        <result column="license_url" jdbcType="VARCHAR" property="licenseUrl" />
+        <result column="cp_tel" jdbcType="VARCHAR" property="cpTel" />
+        <result column="cp_account1" jdbcType="VARCHAR" property="cpAccount1" />
+        <result column="cp_account2" jdbcType="VARCHAR" property="cpAccount2" />
+        <result column="cp_email" jdbcType="VARCHAR" property="cpEmail" />
 
         <result column="law_id" jdbcType="INTEGER" property="law_id"/>
         <result column="law_person" jdbcType="VARCHAR" property="law_person"/>
@@ -257,4 +257,8 @@
         select * from cp_info
     </select>-->
     <!--    select cp.*,law.law_id,law.law_person,law.law_sex,law.law_age,law.law_tel,law.law_zj,law.house_address,law.education,law.law_sfzf,law.law_sfzf,law.`status`  from cp_info cp join law_person law on cp.username=law.username-->
+    <insert id="insertInfo" parameterType="Map">
+        insert into cp_info(username,cp_name,cp_code,cp_address,license_name,license_url,cp_tel,cp_account1,cp_account2,cp_email)
+        values (#{userName},#{cpName},#{cpCode},#{cpAddress},#{licenseName},#{licenseUrl},#{cpTel},#{cpAccount1},#{cpAccount2},#{cpEmail})
+    </insert>
 </mapper>

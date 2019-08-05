@@ -2,6 +2,9 @@ package com.aaa.microcredit.service;
 
 import com.aaa.microcredit.entity.Apply;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ApplyService {
     //根据申请id删除
     int deleteByPrimaryKey(Integer applyId);
@@ -15,4 +18,11 @@ public interface ApplyService {
     int updateByPrimaryKeySelective(Apply record);
     //根据申请id修改资料
     int updateByPrimaryKey(Apply record);
+    //联合字典表
+    Map selectByApplyId(Integer applyId);
+    //根据用户id查询申请信息
+    List<Map> selectByUserId(Integer userId);
+
+    // 后台根据用户id查询申请信息
+    Map selectApplyAll();
 }

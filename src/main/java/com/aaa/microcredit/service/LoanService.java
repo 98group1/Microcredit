@@ -5,10 +5,6 @@ import com.aaa.microcredit.entity.Loan;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Author: 孟浩阳
- * @Date: 2019/8/1 21:04
- */
 public interface LoanService {
     int deleteByPrimaryKey(Integer lId);
 
@@ -23,6 +19,26 @@ public interface LoanService {
     int updateByPrimaryKey(Loan record);
 
     /**
+     * 查询贷款信息
+     * @return
+     */
+    List<Map> selectAll(Map map);
+    /**
+     * 联合明细表查询
+     * @return
+     */
+    List<Map> selectMxAll();
+    /**
+     * 查询贷款条数
+     * @return
+     */
+    Integer selectAllCount(Map map);
+    /**
+     * 用Map拼接还款表和明细表
+     * @return
+     */
+    List<Map> selectMxPjAll(Map map);
+    /*
      *     查询cp_info loan dictionary表
      * @param map
      * @return

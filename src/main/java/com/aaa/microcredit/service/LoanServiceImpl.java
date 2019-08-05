@@ -5,16 +5,11 @@ import com.aaa.microcredit.entity.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-/**
- * @Author: 孟浩阳
- * @Date: 2019/8/1 21:04
- */
 @Service
-public class LoanServiceImpl  implements LoanService{
+public class LoanServiceImpl implements LoanService {
     @Autowired
     private LoanMapper loanMapper;
     @Override
@@ -61,5 +56,54 @@ public class LoanServiceImpl  implements LoanService{
     public int insertLoan(Map map) {
 
         return loanMapper.insertLoan(map);
+    }
+
+    @Override
+    public List<Map> selectAll(Map map) {
+        return loanMapper.selectAll(map);
+    }
+
+    @Override
+    public List<Map> selectMxAll() {
+        return loanMapper.selectMxAll();
+    }
+
+    @Override
+    public Integer selectAllCount(Map map) {
+        return loanMapper.selectAllCount(map);
+    }
+
+    /**
+     * 拼接还款表和明细表
+     * @return
+     */
+    @Override
+    public List<Map> selectMxPjAll(Map map) {
+        //先查询出贷款表
+        List<Map> listloan = loanMapper.selectAll(map);
+        //判断不为空
+        if (listloan!=null&&listloan.size()>0){
+            //遍历
+            for (Map maploan : listloan) {
+                //查询出明细表
+                List<Map> listmx = loanMapper.selectMxAll();
+                //创建新的数组，用与拼接
+                List listpj=new ArrayList();
+                //判断并遍历
+                if (listmx!=null&&listmx.size()>0){
+                    for (Map mapmx : listmx) {
+                        //当贷款表的id等于明细表中的贷款id时
+                        if(mapmx.get("lId").equals(maploan.get("lId"))){
+                            //将明细表中的这条数据添加到拼接的数组中
+                            listpj.add(mapmx);
+                        }
+                    }
+                }
+                //将拼接的数组添加到贷款表中的这条数据中
+                maploan.put("tab",listpj);
+            }
+        }
+
+        return listloan;
     }
 }

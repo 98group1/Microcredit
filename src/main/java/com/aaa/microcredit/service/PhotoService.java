@@ -15,4 +15,6 @@ public interface PhotoService {
     int updateByPrimaryKeySelective(Photo record);
     //修改
     int updateByPrimaryKey(Photo record);
+    //根据申请id查询信息
+    Photo selectByApply(Integer ApplyId);
 }

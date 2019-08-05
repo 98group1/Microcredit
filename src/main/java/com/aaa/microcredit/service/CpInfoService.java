@@ -47,4 +47,11 @@ public interface CpInfoService {
      * @return
      */
     Integer updateStatus(Map map);
+
+    /**
+     * 完善公司信息方法
+     * @param map
+     * @return
+     */
+    int insertInfo(Map map);
 }

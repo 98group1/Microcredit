@@ -1,11 +1,10 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.Loan;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-
+import org.springframework.stereotype.Repository;
 @Repository
 public interface LoanMapper {
     int deleteByPrimaryKey(Integer lId);
@@ -19,6 +18,26 @@ public interface LoanMapper {
     int updateByPrimaryKeySelective(Loan record);
 
     int updateByPrimaryKey(Loan record);
+    /**
+     * 查询贷款信息
+     * @return
+     */
+    List<Map> selectAll(Map map);
+    /**
+     * 联合明细表查询
+     * @return
+     */
+    List<Map> selectMxAll();
+    /**
+     * 查询贷款条数
+     * @return
+     */
+    Integer selectAllCount(Map map);
+    /**
+     * 用Map拼接还款表和明细表
+     * @return
+     */
+    List<Map> selectMxPjAll(Map map);
 
     /**
      *     查询cp_info loan dictionary表
