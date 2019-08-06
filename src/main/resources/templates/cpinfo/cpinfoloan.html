@@ -29,8 +29,11 @@
     </style>
 </head>
 <body>
+<div>
+    <h3>审核通过公司</h3>
+</div>
 <div id="app">
-    <el-input
+  <!--  <el-input
             v-model="formInline.like"
             placeholder="根据公司名称或者机构代码号"
             style="width: 30%">
@@ -39,7 +42,7 @@
 
 
     <el-button type="primary" @click="flush">刷新</el-button>
-
+-->
 
 
 <!--    <el-button type="primary" @click="status1(2)">白名单</el-button>-->
@@ -89,6 +92,10 @@
             <el-table-column
                     label="公司名称"
                     prop="cp_name">
+            </el-table-column>
+            <el-table-column
+                    label="user_id"
+                    prop="user_id">
             </el-table-column>
             <el-table-column
                     label="贷款金额"
@@ -141,7 +148,7 @@
                     <template >
                         <el-button type="primary"
                                    size="mini"
-                                   @click="handleEdit(6, scope.row,'放款')">放款
+                                   @click="handleEdit(6, scope.row,'放款',scope.row)">放款
                         </el-button>
                        <!-- <el-button
                                 size="mini"
@@ -253,7 +260,7 @@
                 // this.formInline.cp_code = '';
                 this.loadData();
             },
-            handleEdit: function (status,row,name) {
+            handleEdit: function (status,row,name,applyId3) {
                 var self = this;
                 this.$confirm('确定给该公司'+name+', 是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -272,19 +279,18 @@
                             r_money:     0, //已还金额
                         loan_deadline:row.loan_deadline,  //贷款期限
                        r_capital:row.Loan_money/row.loan_deadline,   //每个月应还金额
-
-
                         apply_time:row.loanTime,           //申请时间
                        datanow:'2016-08-12', // 贷款时间
-                        status:status
-
+                        status:status,
+                        applyId3:row.apply_id,
+                        user_id:row.user_id
                     })
                         .then(function (response) {
                             //添加或者修改成功
                             if (response.data == 1) {
                                 self.$message({
                                     type: 'success',
-                                    message: ''+name+'成功!'
+                                    message: ''+name+'成功!',
                                 });
                                 //刷新页面
                                 self.loadData();

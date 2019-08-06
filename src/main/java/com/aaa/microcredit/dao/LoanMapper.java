@@ -59,4 +59,28 @@ public interface LoanMapper {
      * @return
      */
     int insertLoan(Map map);
+
+    /**
+     放款成功修改贷款状态为待还款
+
+     * @return
+     */
+
+    int updateLoStatus(Map map);
+
+    /**
+     *     放款成功根据分期数添加明细表
+     * @param map
+     * @return
+     */
+
+
+  int insertMX(Map map);
+
+    /**
+     * 根据查询loan所有信息
+     *
+     * @return
+     */
+    Map selectLoan(Integer l_id);
 }

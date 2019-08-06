@@ -59,6 +59,21 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public int updateLoStatus(Map map) {
+        return loanMapper.updateLoStatus(map);
+    }
+
+    @Override
+    public int insertMX(Map map) {
+        return loanMapper.insertMX(map);
+    }
+
+    @Override
+    public Map selectLoan(Integer l_id) {
+        return loanMapper.selectLoan(l_id);
+    }
+
+    @Override
     public List<Map> selectAll(Map map) {
         return loanMapper.selectAll(map);
     }
