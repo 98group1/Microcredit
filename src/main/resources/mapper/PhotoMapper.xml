@@ -220,4 +220,10 @@
       zzjgdm_url = #{zzjgdmUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByApply" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from photo
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
 </mapper>

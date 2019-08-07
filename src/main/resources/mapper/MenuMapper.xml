@@ -26,7 +26,7 @@
     where menuid = #{menuid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.aaa.microcredit.entity.TreeNode">
-    insert into m_menu (menuid, name, parentid, 
+    insert into m_menu (menuid, name, parentid,
       url, add_username, add_time
       )
     values (#{menuid,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER},

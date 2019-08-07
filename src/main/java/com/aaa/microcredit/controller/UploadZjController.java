@@ -1,5 +1,6 @@
 package com.aaa.microcredit.controller;
 
+import com.aaa.microcredit.entity.Apply;
 import com.aaa.microcredit.entity.Photo;
 import com.aaa.microcredit.service.PhotoService;
 import com.aaa.microcredit.util.FtpUtil;
@@ -136,6 +137,7 @@ public class UploadZjController {
         return map;
     }
 
+
     /**
      * 录入
      * @param photo
@@ -145,6 +147,21 @@ public class UploadZjController {
     public Object save(@RequestBody Photo photo){
         int result = photoService.insertSelective(photo);
         return result;
+    }
+
+    /**
+     * 根据申请id查询
+     * @param apply 传的参数为实体
+     * @return
+     */
+    @RequestMapping("/selectByApplyId")
+    public Object selecByApplyId(@RequestBody Apply apply){
+        Integer applyId = apply.getApplyId();
+        System.out.println("id为："+applyId);
+        Photo photo = photoService.selectByApply(applyId);
+        Map map=new HashMap();
+        map.put("photo",photo);
+        return map;
     }
 
 
