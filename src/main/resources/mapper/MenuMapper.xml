@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aaa.microcredit.dao.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Menu">
+<mapper namespace="com.aaa.microcredit.dao.PowerDao">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.TreeNode">
     <id column="menuid" jdbcType="INTEGER" property="menuid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name" jdbcType="VARCHAR" property="label" />
     <result column="parentid" jdbcType="INTEGER" property="parentid" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="add_username" jdbcType="VARCHAR" property="addUsername" />
+    <result column="add_username" jdbcType="VARCHAR" property="addUserName" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
   </resultMap>
+
+
+
   <sql id="Base_Column_List">
     menuid, name, parentid, url, add_username, add_time
   </sql>
@@ -22,21 +25,21 @@
     delete from m_menu
     where menuid = #{menuid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.aaa.microcredit.entity.Menu">
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.TreeNode">
     insert into m_menu (menuid, name, parentid, 
       url, add_username, add_time
       )
-    values (#{menuid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, 
-      #{url,jdbcType=VARCHAR}, #{addUsername,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
+    values (#{menuid,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER},
+      #{url,jdbcType=VARCHAR}, #{addUserName,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Menu">
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.TreeNode">
     insert into m_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="menuid != null">
         menuid,
       </if>
-      <if test="name != null">
+      <if test="label != null">
         name,
       </if>
       <if test="parentid != null">
@@ -45,7 +48,7 @@
       <if test="url != null">
         url,
       </if>
-      <if test="addUsername != null">
+      <if test="addUserName != null">
         add_username,
       </if>
       <if test="addTime != null">
@@ -56,8 +59,8 @@
       <if test="menuid != null">
         #{menuid,jdbcType=INTEGER},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
       </if>
       <if test="parentid != null">
         #{parentid,jdbcType=INTEGER},
@@ -65,19 +68,19 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="addUsername != null">
-        #{addUsername,jdbcType=VARCHAR},
+      <if test="addUserName != null">
+        #{addUserName,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null">
         #{addTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.Menu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.TreeNode">
     update m_menu
     <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="label != null">
+        name = #{label,jdbcType=VARCHAR},
       </if>
       <if test="parentid != null">
         parentid = #{parentid,jdbcType=INTEGER},
@@ -85,8 +88,8 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="addUsername != null">
-        add_username = #{addUsername,jdbcType=VARCHAR},
+      <if test="addUserName != null">
+        add_username = #{addUserName,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null">
         add_time = #{addTime,jdbcType=TIMESTAMP},
@@ -94,13 +97,16 @@
     </set>
     where menuid = #{menuid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.Menu">
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.TreeNode">
     update m_menu
-    set name = #{name,jdbcType=VARCHAR},
+    set name = #{label,jdbcType=VARCHAR},
       parentid = #{parentid,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
-      add_username = #{addUsername,jdbcType=VARCHAR},
+      add_username = #{addUserName,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=TIMESTAMP}
     where menuid = #{menuid,jdbcType=INTEGER}
   </update>
+  <select id="queryAll" resultType="map">
+        select  mm.menuid,mm.`name`,mm.parentid,mm.url,mm.add_username,date_format(mm.add_time,'%Y-%m-%d %H:%i:%s') addTime  from m_menu mm
+  </select>
 </mapper>
