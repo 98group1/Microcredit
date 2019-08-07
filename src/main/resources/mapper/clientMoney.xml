@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.ClientMoneyMapper">
+<!--    根据用户id查询流水表中的最新一条数据-->
+    <select id="selectUserId" parameterType="Integer" resultType="map">
+    select c_availmoney availMoney from client_money where c_id=(SELECT Max(c_id) from client_money where user_id=#{UserId})
+    </select>
+<!--        向客户流水表中添加一条数据-->
+    <insert id="insert" parameterType="map">
+        insert into  client_money(user_id,c_moneytype,c_changeMoney,c_changetime,c_availmoney,c_describes)
+        values (#{userId},#{moneyType},#{changeMoney},#{changeTime},#{availMoney},#{describes})
+    </insert>
+
+<!--        查询当前平台可用资金-->
+    <select id="selectPingtai" parameterType="Integer" resultType="map">
+    select availmoney availMoney from platform_money where p_id=(SELECT Max(P_id) from platform_money )
+    </select>
+<!--    向平台流水表中添加一条数据-->
+    <insert id="insertPingtai" parameterType="map">
+        insert into  platform_money(loanid,moneytype,changeMoney,change_time,availmoney,describes)
+        values (#{loanId},#{moneyType},#{changeMoney},#{changeTime},#{availMoney},#{describes})
+    </insert>
+<!--向news表添加数据-->
+    <insert id="insertNews" parameterType="map">
+        insert into news(user_id,n_type,n_content,n_status,n_time)
+         values (#{user_id},#{n_type},#{n_content},#{n_status},#{n_time})
+    </insert>
+    <select id="selectApply" resultType="map" parameterType="map">
+       SELECT a.user_id , a.apply_id,a.loan_type,a.Repayment_type,a.Repayment_id,a.first_careful,date_format(a.first_time,'%Y-%m-%d %H:%i:%s') first_time ,a.two_careful,date_format(a.two_time,'%Y-%m-%d %H:%i:%s') two_time,dy.dictionary_name loanType,dy1.dictionary_name repaymentType,a.Loan_money,a.loan_deadline
+        ,dy2.dictionary_name repaymentId,dy3.dictionary_name loanStatus,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime, cp.cp_name,cp.cp_id
+        FROM apply a,dictionary dy ,dictionary dy1,dictionary dy2,dictionary dy3,cp_info cp,login lo
+        where (a.loan_type=dy.dictionary_value and dy.keyword='loan_type')
+        and (a.Repayment_type=dy1.dictionary_value and dy1.keyword='repayment_type')
+        and (a.Repayment_id=dy2.dictionary_value and dy2.keyword='Repayment')
+        and (a.loan_status=dy3.dictionary_value and dy3.keyword='loan_status')
+        and (a.User_id=lo.id and lo.username=cp.username )and a.loan_status=3
+    </select>
+
+    <select id="selectNews" parameterType="Integer" resultType="map">
+        select *  from news where n_id=(SELECT Max(n_id) from news where user_id=2)
+    </select>
+</mapper>

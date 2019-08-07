@@ -280,7 +280,7 @@
                         loan_deadline:row.loan_deadline,  //贷款期限
                        r_capital:row.Loan_money/row.loan_deadline,   //每个月应还金额
                         apply_time:row.loanTime,           //申请时间
-                       datanow:'2016-08-12', // 贷款时间
+                       // datanow:'2016-08-12', // 贷款时间
                         status:status,
                         applyId3:row.apply_id,
                         user_id:row.user_id
@@ -290,7 +290,7 @@
                             if (response.data == 1) {
                                 self.$message({
                                     type: 'success',
-                                    message: ''+name+'成功!',
+                                    message: ''+name+'成功!'
                                 });
                                 //刷新页面
                                 self.loadData();

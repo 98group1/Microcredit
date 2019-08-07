@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
+
 public class LoanServiceImpl implements LoanService {
     @Autowired
     private LoanMapper loanMapper;
@@ -73,6 +75,8 @@ public class LoanServiceImpl implements LoanService {
         return loanMapper.selectLoan(l_id);
     }
 
+
+
     @Override
     public List<Map> selectAll(Map map) {
         return loanMapper.selectAll(map);
@@ -121,4 +125,6 @@ public class LoanServiceImpl implements LoanService {
 
         return listloan;
     }
+
+
 }

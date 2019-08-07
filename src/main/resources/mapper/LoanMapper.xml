@@ -302,6 +302,9 @@ values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_m
     <select id="selectLoan" resultType="map" parameterType="map">
         select * from loan where l_id=#{l_id}
     </select>
-    
 
+<insert id="insertC_money" parameterType="map">
+    insert into  client_money(user_id,c_Moneytype,c_changemoney,c_changetime,c_availmoney,c_describes)
+     values(#{user_id},)
+</insert>
  </mapper>
