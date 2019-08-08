@@ -181,7 +181,7 @@ public class LoanController {
     public Map selectloan(@RequestBody Map map){
         Integer userId= (Integer) map.get("userId");
         System.out.println("查询贷款明细");
-        List<Map> mapList = loanService.selectLoan1(userId);
+        List<Map> mapList = loanService.selectLoan1(map);
         Map mappage=new HashMap();
         mappage.put("mapList",mapList);
         mappage.put("total",loanService.selectLoanCount(userId));

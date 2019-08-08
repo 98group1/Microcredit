@@ -1,6 +1,7 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.CpInfo;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -59,4 +60,32 @@ public interface CpInfoMapper {
      * @return
      */
     int insertInfo(Map map);
+
+    /**
+     * 根据用户名更换相应头像
+     * @param userName
+     * @return
+     */
+    @Update("update login set head_portrait=#{headPortrait} where username=#{userName}")
+    int changeHead(String userName,String headPortrait);
+
+    /**
+     * 查询公司信息
+     * @return
+     */
+    Map selectCpInfo(String userName);
+
+    /**
+     * 修改公司信息
+     * @param map
+     * @return
+     */
+    int updataCpInfo(Map map);
+
+    /**
+     * 查询头像并显示
+     * @param userName
+     * @return
+     */
+    Map selectHead(String userName);
 }

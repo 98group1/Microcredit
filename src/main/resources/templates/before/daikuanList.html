@@ -177,10 +177,14 @@
             NewAvailMoney:'',
             Changetime:'',
             Describes:'分期还款',
-            rMoney:''
+            rMoney:'',
+            PTNewAvailMoney:'',
+            PTOldAvailMoney:'',
+
         },
         created:function(){
             this.getUserId();
+            this.getPTAvailMoney();
         },
         methods:{
             getUserId:function () {
@@ -197,7 +201,7 @@
                 //开始位置  (currentPage-1)*pageSize
                 this.form.start = (this.currentPage - 1) * this.pageSize;
                 this.form.pageSize=this.pageSize;
-                axios.post('/demo/loan/selectLoan',{userId:self.userId})
+                axios.post('/demo/loan/selectLoan1',{userId:self.userId,start:this.form.start ,pageSize:this.form.pageSize})
                     .then(function (response) {
                         self.tableData = response.data.mapList;
                         self.total = response.data.total;
@@ -228,36 +232,67 @@
                         self.OldAvailMoney=response.data.c_availmoney;
                     });
             },
+            //查询平台流水表里的可用余额
+            getPTAvailMoney:function(){
+                var self=this;
+                axios.post('/demo/hk/selectPTAvailMoney')
+                    .then(function (response){
+                        self.PTOldAvailMoney=response.data.availmoney;
+                    });
+            },
+            //还款操作
             hk:function (row1,row2) {
                 var self=this;
-                var rMoney=row2.rMoney;
-                var beAccrual=row2.beAccrual;
 
-                //将需还本金和需还利息加起来，就是每次还款的金额变动数
-                self.ChangeMoney=parseInt(rMoney)+parseInt(beAccrual);
-                self.rMoney=parseInt(row1.rMoney)+self.ChangeMoney;
-                //将字符串转化为数字格式，进行减法计算
-                self.NewAvailMoney=parseInt(self.OldAvailMoney)-self.ChangeMoney;
-                axios.post('/demo/hk/updateStatus',{loanId:row2.lId,bePeriods:row2.bePeriods,
-                    zPeriobs:row1.zPeriobs,user_id:self.userId, c_Moneytype:self.CMoneyType,
-                    c_changemoney:self.ChangeMoney, c_changetime:self.Changetime,
-                    c_availmoney:self.NewAvailMoney,c_describes:'第'+row2.bePeriods+'期'+self.Describes,
-                    rMoney:self.rMoney})
-                    .then(function (response) {
-                        if(response.data>0){
-                            self.$message("还款成功");
-                            // $(".bt").attr("disabled","disabled");
-                            self.loadData();
-                        }else {
-                            alert("失败");
+                axios.post('/demo/hk/selectAvailMoney',{userId:self.userId})
+                    .then(function (response){
+                        self.OldAvailMoney=response.data.c_availmoney;
+                        var rMoney=row2.rMoney;
+                        var beAccrual=row2.beAccrual;
+                        //将需还本金和需还利息加起来，就是每次还款的金额变动数
+                        self.ChangeMoney=parseInt(rMoney)+parseInt(beAccrual);
+                        //条件判断，如果账户余额大于等于当期还款金额，才可进行还款
+                        if(self.OldAvailMoney>=self.ChangeMoney){
+                            axios.post('/demo/hk/selectPTAvailMoney')
+                                .then(function (response){
+                                    self.PTOldAvailMoney=response.data.availmoney;
+
+                                    //已还款金额
+                                    self.rMoney=parseInt(row1.rMoney)+self.ChangeMoney;
+                                    //将字符串转化为数字格式，进行减法计算，个人换一次，少一次，用减法
+                                    self.NewAvailMoney=parseInt(self.OldAvailMoney)-self.ChangeMoney;
+                                    //平台最新可用余额变动，还一次，多一次，用加法
+                                    self.PTNewAvailMoney=parseInt(self.PTOldAvailMoney)+self.ChangeMoney;
+                                    axios.post('/demo/hk/updateStatus',{loanId:row2.lId,bePeriods:row2.bePeriods,
+                                        zPeriobs:row1.zPeriobs,user_id:self.userId, c_Moneytype:self.CMoneyType,
+                                        c_changemoney:self.ChangeMoney, c_changetime:self.Changetime,
+                                        c_availmoney:self.NewAvailMoney,c_describes:'第'+row2.bePeriods+'期'+self.Describes,
+                                        rMoney:self.rMoney,MoneyType:self.CMoneyType,changemoney:self.ChangeMoney,
+                                        Change_time:self.Changetime,availmoney:self.PTNewAvailMoney,describes:'第'+row2.bePeriods+'期'+self.Describes})
+                                        .then(function (response) {
+                                            if(response.data>0){
+                                                self.$message("还款成功");
+                                                // $(".bt").attr("disabled","disabled");
+                                                self.loadData();
+                                            }else {
+                                                alert("失败");
+                                            }
+                                        })
+                                        .catch(function (error) {
+                                            // handle error
+                                            console.log(error);
+                                        })
+                                        .then(function () {
+                                            // always executed
+                                        });
+                                });
                         }
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })
-                    .then(function () {
-                        // always executed
+                        else{
+                            self.$message({
+                                message: '余额不足，请充值！',
+                                type: 'warning'
+                            });
+                        }
                     });
             }
         }

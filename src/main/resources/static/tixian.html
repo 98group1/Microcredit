@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提现</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <style type="text/css">
+        ul,li{
+            list-style: none;
+        }
+        .password-div input{
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            border: 0;
+        }
+        .password-lable{
+            height: 30px;
+            clear: both;
+        }
+        .password-lable li{
+            float: left;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #dedede;
+            margin-left: -1px;
+        }
+        #app{
+            margin: 0 auto;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-form :label-position="labelPosition"ref="form" :rules="rules" label-width="80px" :model="form" >
+        <el-form-item label="提现金额" prop="ChangeMoney">
+            <el-input v-model.number="form.ChangeMoney" style="width: 200px;"></el-input><span>元</span>
+        </el-form-item>
+        <el-form-item label="银行卡号" prop="count">
+            <el-input v-model="form.count" style="width: 300px;"></el-input>
+        </el-form-item>
+    </el-form>
+    <div class="bank-check" id="bank-check2">
+        <input type="checkbox" class="selected" id="bankProtocol1" checked/>
+        <span class="bank-agree">我同意并接受
+        <a href="#" target="_blank">《贷款电子协议》</a>
+    </span>
+    </div>
+    <el-button type="primary" @click="mima">提现</el-button>
+    <!--密码支付框-->
+    <el-dialog :visible.sync="dialogFormVisible">
+        <div class="password-div">
+            <label for="password" class="password-lable">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <input id="password" type="password" name="password" maxlength="6" @input="inputFuc">
+            </label>
+        </div>
+    </el-dialog>
+</div>
+
+<script>
+    //验证银行卡,
+    var countyz = (rule, value, callback) => {
+        var reg= /^([1-9]{1})(\d{14}|\d{18})$/;
+        if (value === '') {
+            callback(new Error('银行卡号不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的银行卡号'));
+        } else {
+            callback();
+        }
+    };
+
+    var vue=new Vue( {
+        el:"#app",
+        data: {
+            labelPosition: 'left',
+            form: {
+                ChangeMoney: '',
+                count: ''
+            },
+            rules:{
+                ChangeMoney:[{
+                    required: true,
+                    message: '提现金额不能为空',
+                    trigger: 'blur'
+                }, {
+                    type: 'number',
+                    message: '提现金额必须为数字值'
+                }],
+                count:[{validator: countyz, trigger: 'blur'}],
+            },
+            userId:'',
+            paymentCode:'',
+            CMoneyType:'4',
+            OldAvailMoney:'',
+            NewAvailMoney:'',
+            Changetime:'',
+            Describes:'提现',
+            dialogFormVisible:false
+        },
+        created:function(){
+            this.getUserId();
+        },
+        methods:{
+            getUserId:function () {
+                var self=this;
+                axios.post('/demo/apply/getUserId').then(function (response){
+                    self.userId=response.data.id;
+                    self.paymentCode=response.data.payment_code;
+                    self.getAvailMoney();
+                });
+            },
+            getAvailMoney:function(){
+                var self=this;
+                axios.post('/demo/hk/selectAvailMoney',{userId:self.userId})
+                    .then(function (response){
+                    self.OldAvailMoney=response.data.c_availmoney;
+                });
+            },
+            mima:function(){
+                this.dialogFormVisible=true;
+            },
+            chongzhi:function () {
+                var self=this;
+                //将字符串转化为数字格式，提现进行减法计算
+                var old=parseInt(self.OldAvailMoney);
+                var cg=parseInt(self.form.ChangeMoney);
+                if(old>=cg){
+                    self.NewAvailMoney=parseInt(self.OldAvailMoney)-parseInt(self.form.ChangeMoney);
+                    this.url="/demo/hk/insertMoney";
+                    axios.post(this.url,{user_id:self.userId,
+                        c_Moneytype:self.CMoneyType,c_changemoney:self.form.ChangeMoney,
+                        c_changetime:self.Changetime,c_availmoney:self.NewAvailMoney,c_describes:self.Describes})
+                        .then(function (response) {
+                            //添加或者修改成功
+                            if(response.data>0){
+                                self.$message({
+                                    message:'恭喜你，提现成功！',
+                                    type:'success',
+                                });
+                                //跳转到个人账户页面
+                                location.href="zhanghu/zhanghu.html";
+
+                            }else{
+                                //添加或者修改错误
+                                self.$message.error('错了哦，操作错误');
+                            }
+                        });
+                }else {
+                    self.$message.error('提现金额不能大于可用余额！');
+                }
+            },
+            inputFuc:function (e) {
+                var self=this;
+                var number = 6;   //定义输入最大值
+                var pw = $("input[name = 'password']").val(); //定义pw为name是password的input框的输入值
+                var list = $(".password-div ul li");  //定义list是li
+                for(var i = 0; i < number ; i++){    //for循环遍历将·放入li标签
+                    if(pw[i]){
+                        $(list[i]).text("*");
+                        if(i==5){
+                            if(pw==self.paymentCode){
+                                //调用充值方法
+                                self.chongzhi();
+                                self.dialogFormVisible=false;
+                            }else {
+                                self.$message("密码错误");
+                            }
+                        }
+                    }else{
+                        $(list[i]).text("");
+                    };
+                };
+            }
+        }
+
+    });
+</script>
+
+
+</body>
+</html>

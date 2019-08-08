@@ -46,4 +46,20 @@ public interface HkDao {
     @Insert("insert into client_money(c_id,user_id,c_Moneytype,c_changemoney,c_changetime,c_availmoney,c_describes) " +
             "values(0,#{user_id},#{c_Moneytype},#{c_changemoney},#{c_changetime},#{c_availmoney},#{c_describes})")
     Integer insertMoney(Map map);
+
+    /**
+     * 查询平台流水表里最新的可用余额
+     * @return
+     */
+    @Select("select availmoney from platform_money where p_id=(SELECT Max(P_id) from platform_money)")
+    Map selectPTAvailMoney();
+
+    /**
+     * 向平台流水表录入数据
+     * @param map
+     * @return
+     */
+    @Insert("insert into platform_money(loanid,Moneytype,changemoney,Change_time,availmoney,describes)" +
+            "values (#{loanId},#{MoneyType},#{changemoney},#{Change_time},#{availmoney},#{describes})")
+    Integer insertPTMoney(Map map);
 }

@@ -261,4 +261,17 @@
         insert into cp_info(username,cp_name,cp_code,cp_address,license_name,license_url,cp_tel,cp_account1,cp_account2,cp_email)
         values (#{userName},#{cpName},#{cpCode},#{cpAddress},#{licenseName},#{licenseUrl},#{cpTel},#{cpAccount1},#{cpAccount2},#{cpEmail})
     </insert>
+
+    <select id="selectCpInfo" resultType="Map">
+        select * from cp_info  where username=#{userName}
+    </select>
+    <select id="selectHead" resultType="Map">
+        select head_portrait from login  where username=#{userName}
+    </select>
+
+    <update id="updataCpInfo">
+          update cp_info set cp_name=#{cpName},cp_code=#{cpCode},cp_address=#{cpAddress},
+          license_name=#{licenseName},license_url=#{licenseUrl},cp_tel=#{cpTel},
+    cp_account1=#{cpAccount1},cp_account2=#{cpAccount2},cp_email=#{cpEmail} where username=#{userName}
+    </update>
 </mapper>

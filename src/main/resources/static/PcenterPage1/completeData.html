@@ -36,10 +36,13 @@
             height: 180px;
             display: block;
         }
+        #app{
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
-<div id="app" style="width:100%;height: 100%">
+<div id="app" style="width:700px;height: 100%">
     <el-container>
         <el-form ref="form" :label-position="left" :inline="true" label-width="120px" :model="sizeForm" label-width="80px" size="medium">
             <el-title><h4 style="text-align: center">完善公司信息</h4></el-title>
@@ -81,16 +84,19 @@
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess"
                             :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="licenseUrl1" :src="licenseUrl1" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </el-form-item>
             </el-row>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">下一步</el-button>
-                <el-button>保存</el-button>
-            </el-form-item>
-
+            <div style="text-align: center">
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">完善信息</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="updateCpInfo">确认修改</el-button>
+                </el-form-item>
+            </div>
         </el-form>
     </el-container>
 </div>
@@ -99,7 +105,7 @@
         el:"#app",
         data: {
             form: {
-                userName:'xiaoming',
+                userName:'',
                 cpName: '',
                 cpAddress: '',
                 cpTel: '',
@@ -110,10 +116,11 @@
                 licenseName: '',
                 licenseUrl: ''
             },
-            imageUrl:''
+            licenseUrl1:''
         },
         created:function(){
             this.getUserName();
+            this.selectCpInfo();
         },
         methods: {
             //提交表单
@@ -135,10 +142,10 @@
             },
             //获取当前登陆的用户名
             getUserName:function(){
-                //var self=this;
+                var self=this;
                 axios.post("/demo/apply/getUserId")
-                    .then(function (data) {
-                       this.form.userName=data.response.username;
+                    .then(function (response) {
+                       self.form.userName=response.data.username;
                     });
             },
             beforeAvatarUpload:function(file) {
@@ -155,13 +162,45 @@
             },
             handleAvatarSuccess:function(res, file) {
                 //用来回显图片
-                this.imageUrl = URL.createObjectURL(file.raw);
+                this.licenseUrl1= URL.createObjectURL(file.raw);
                 //给表单对应字段赋值
                 this.form.licenseName = file.response.originalFilename;
                 this.form.licenseUrl =file.response.newFileName;
-                alert(this.form.licenseUrl);
+            },
+            selectCpInfo:function () {
+                var self=this;
+                axios.post("/demo/cpInfo/selectCpInfo")
+                    .then(function (response) {
+                        self.form.cpName=response.data.cp_name;
+                        self.form.cpAddress=response.data.cp_address;
+                        self.form.cpTel=response.data.cp_tel;
+                        self.form.cpCode=response.data.cp_code;
+                        self.form.cpAccount1=response.data.cp_account1;
+                        self.form.cpAccount2=response.data.cp_account2;
+                        self.form.cpEmail=response.data.cp_email;
+                        self.form.licenseUrl=response.data.license_url;
+                        self.form.licenseName=response.data.license_name;
+                        if(self.form.licenseUrl!=null&&self.form.licenseUrl!=''){
+                            self.licenseUrl1 = "http://localhost:8888/demo/apply/show?fileName="+response.data.license_url;
+                        }else {
+                        }
+                    });
+            },
+            updateCpInfo:function () {
+                var self=this;
+                self.form.licenseUrl=self.form.licenseUrl1;
+                axios.post("/demo/cpInfo/updateCpInfo",this.form)
+                    .then(function (response) {
+                       if (response.data>0){
+                           self.$message({
+                               message:'恭喜你，操作成功！',
+                               type:'success',
+                           });
+                       } else {
+                           self.$message.error('错了哦，操作错误');
+                       }
+                    });
             }
-
         }
     });
 </script>

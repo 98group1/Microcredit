@@ -1,10 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <title>资金记录</title>
+    <!--先引入vue.js库-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
+<div id="app">
+    <el-row>
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="请选择日期">
+                <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="开始日期" v-model="formInline.date" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary" @click="flush">刷新</el-button>
+            </el-form-item>
+        </el-form>
+    </el-row>
+    <el-row>
+        <el-table
+                :data="tableData"
+                style="width: 100%">
+            <el-table-column
+                    prop="c_changemoney"
+                    label="变动资金">
+            </el-table-column>
+            <el-table-column
+                    prop="changetime"
+                    label="变动时间">
+            </el-table-column>
+            <el-table-column
+                    prop="c_availmoney"
+                    label="可用资金">
+            </el-table-column>
+            <el-table-column
+                    prop="c_describes"
+                    label="用途描述">
+            </el-table-column>
+        </el-table>
+    </el-row>
 
+    <el-row>
+        <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[1,2,3,4,5,10,15,100, 200, 300, 400]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+        </el-pagination>
+    </el-row>
+</div>
+<script>
+    var vue =new Vue({
+        el:"#app",
+        data:{
+            tableData:[],
+            currentPage:1,
+            pageSize:5,
+            total:0,
+            formInline: {
+                date:''
+            },
+            form: {
+                c_changemoney: '',
+                changetime:'',
+                c_availmoney: '',
+                c_describes:'',
+                userId:'13'
+            },
+            formLabelWidth: '120px',
+            pickerOptions: {
+                disabledDate:function(time) {
+                    return time.getTime() > Date.now();
+                },
+                shortcuts: [{
+                    text: '今天',
+                    onClick:function(picker) {
+                        picker.$emit('pick', new Date());
+                    }
+                }, {
+                    text: '昨天',
+                    onClick:function(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24);
+                        picker.$emit('pick', date);
+                    }
+                }, {
+                    text: '一周前',
+                    onClick:function(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', date);
+                    }
+                }]
+            },
+            url:''
+
+        },
+        created:function(){
+            this.loadData();
+        },
+        methods: {
+            loadData: function () {
+                var self = this;
+                //开始位置  (currentPage-1)*pageSize
+                var start = (this.currentPage - 1) * this.pageSize;
+                axios.post('/demo/climoney/query', {
+                    start: start, pageSize: this.pageSize,
+                    date: this.formInline.date,userId:this.form.userId
+                })
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+                        //JSON.stringify  把json对象转换为json字符串
+                        console.log(JSON.stringify(response.data));
+                        //JSON.parse()把json字符串转换为json对象
+                        console.log(response);
+                        self.tableData = response.data.cliMoney;
+                        self.total = response.data.total;
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                    .then(function () {
+                        // always executed
+                    });
+            },
+            handleSizeChange: function (val) {
+                console.log('每页条数:' + val);
+                this.pageSize = val;
+                this.loadData();
+            },
+            handleCurrentChange: function (val) {
+                console.log('当前页:' + val);
+                this.currentPage = val;
+                this.loadData();
+            },
+            onSubmit: function () {
+                console.log('submit!');
+                this.loadData();
+            },
+            flush: function () {
+                this.pageSize = 5;
+                this.currentPage = 1;
+                this.formInline.date = '';
+                this.loadData();
+
+            },
+            getUserId:function () {
+                var self=this;
+                axios.post("/demo/apply/getUserId")
+                    .then(function (response) {
+                        self.form.userId=response.data.id;
+                    });
+            }
+        }
+    });
+</script>
 </body>
 </html>
