@@ -17,11 +17,11 @@
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    l_id, Apply_Id, cp_id, loan_type, r_type, Repayment_id, loan_money, r_money, z_periobs,
+    l_id, Apply_Id, cp_id, loan_type, r_type, Repayment_id, loan_money, r_money, z_periobs, 
     r_capital, apply_time, loan_time, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from loan
     where l_id = #{lId,jdbcType=INTEGER}
@@ -307,4 +307,23 @@ values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_m
     insert into  client_money(user_id,c_Moneytype,c_changemoney,c_changetime,c_availmoney,c_describes)
      values(#{user_id},)
 </insert>
- </mapper>
+  <!--前台用户查询自己的贷款信息-->
+  <select id="selectLoan1" resultType="Map">
+     select l_id lId, l.loan_money loanMoney,r_money rMoney ,z_periobs zPeriobs,r_capital rCapital ,date_format(apply_time,'%Y-%m-%d %H:%i:%s') applyTime,date_format(Loan_time,'%Y-%m-%d %H:%i:%s') loanTime,d3.dictionary_name status,
+    d.dictionary_name loanType,cp.cp_name cpName,d1.dictionary_name rType,d2.dictionary_name repaymentId
+    from loan l,cp_info cp, dictionary d , dictionary d1, dictionary d2 , dictionary d3, login
+    where (l.loan_type=d.dictionary_value and d.keyword='loan_type')
+    and (l.r_type=d1.dictionary_value and d1.keyword='repayment_type')
+    and (l.Repayment_id=d2.dictionary_value and d2.keyword='Repayment')
+    and (l.status=d3.dictionary_value and d3.keyword='loan_status')
+    and cp.cp_id=l.cp_id and login.username=cp.username and login.id=#{userId}
+  </select>
+  <select id="selectLoanCount" resultType="Integer">
+     select count(*) from loan l,cp_info cp, dictionary d , dictionary d1, dictionary d2 , dictionary d3, login
+    where (l.loan_type=d.dictionary_value and d.keyword='loan_type')
+    and (l.r_type=d1.dictionary_value and d1.keyword='repayment_type')
+    and (l.Repayment_id=d2.dictionary_value and d2.keyword='Repayment')
+    and (l.status=d3.dictionary_value and d3.keyword='loan_status')
+    and cp.cp_id=l.cp_id and login.username=cp.username and login.id=#{userId}
+  </select>
+</mapper>

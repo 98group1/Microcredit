@@ -28,9 +28,10 @@ public interface UserService {
 
     List<Map> queryAll();
 
+    List<User> queryPage(Map map);
+    int queryPageCount(Map map);
 
-
-    List<Map> selectUserRole(Integer empid);
+    List<Integer> getRolesByUserId(int empid);
 
     int insetUserRole(Integer empid,List list);
 }

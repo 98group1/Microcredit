@@ -26,15 +26,6 @@ public class LoanController {
     private ClientMoneyService clientMoneyService;
     @Autowired
     private ClientMoneyMapper clientMoneyMapper;
-//    @ResponseBody
-//    @RequestMapping("/selectLoanAll")
-//    public List<Map> selectloanAll(){
-//        System.out.println("查询贷款");
-//        Map map=new HashMap();
-//        map.put("loan",loanService.selectAll());
-//        List<Map> mapList = loanService.selectAll();
-//        return mapList;
-//    }
     @ResponseBody
     @RequestMapping("/selectLoanMxAll")
     public Map selectloanMxAll(@RequestBody Map map){
@@ -184,5 +175,17 @@ public class LoanController {
         public Object selectNews() {
 
     return   "list";
+    }
+
+    @ResponseBody
+    @RequestMapping("/selectLoan1")
+    public Map selectloan(@RequestBody Map map){
+        Integer userId= (Integer) map.get("userId");
+        System.out.println("查询贷款明细");
+        List<Map> mapList = loanService.selectLoan1(userId);
+        Map mappage=new HashMap();
+        mappage.put("mapList",mapList);
+        mappage.put("total",loanService.selectLoanCount(userId));
+        return mappage;
     }
 }
