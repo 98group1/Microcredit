@@ -53,7 +53,6 @@ public class PowerController {
      */
     @RequestMapping("/update")
     public Object update(@RequestBody TreeNode menu){
-        System.out.println (menu+"11111111111111" );
         return powerService.updateByPrimaryKeySelective(menu);
     }
     /**
@@ -63,8 +62,6 @@ public class PowerController {
      */
     @RequestMapping("/delete")
     public Object delete(Integer menuid){
-        System.out.println ("0000000" );
-        System.out.println (menuid+"000000" );
         return powerService.deleteByPrimaryKey (menuid);
     }
 
@@ -75,9 +72,7 @@ public class PowerController {
     @RequestMapping("/saveRole")
     public  Object savarole(@RequestBody Map map){
         Integer roleid = (Integer) map.get ("roleid");
-        System.out.println (roleid+"AAAAAA");
         List list= (List) map.get ("array");
-        System.out.println (list+"BBBBBBB" );
         return powerService.insetRoleMenu (roleid,list);
     }
     /**
@@ -86,7 +81,6 @@ public class PowerController {
      */
     @RequestMapping("/tree")
     public Object tree(){
-
         return powerService.getPowerTreeData();
     }
 
@@ -94,8 +88,6 @@ public class PowerController {
 
     @RequestMapping("/setree")
     public Object setree(Integer empid){
-        System.out.println ("111111");
-        System.out.println (empid+"22222222" );
         return powerService.getPowersTreeData(empid);
     }
 

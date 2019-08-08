@@ -51,7 +51,7 @@ public class RoleControlle {
      */
     @RequestMapping("save")
     public Object save(@RequestBody TreeRole treeRole, HttpSession session){
-
+        System.out.println ("1111" );
         return roleService.save(treeRole,session);
     }
 
@@ -62,8 +62,6 @@ public class RoleControlle {
      */
     @RequestMapping("update")
     public Object update(@RequestBody TreeRole treeRole){
-        System.out.println ("111111" );
-        System.out.println ("11111"+ treeRole);
 
         return roleService.update(treeRole);
     }
@@ -85,9 +83,8 @@ public class RoleControlle {
      * @param roleId
      * @return
      */
-    @RequestMapping("getPowersByRoleId")
+    @RequestMapping("/getPowersByRoleId")
     public Object getPowersByRoleId(Integer roleId){
-        System.out.println (roleId+"111111" );
         return roleService.getPowersByRoleId(roleId);
     }
 
