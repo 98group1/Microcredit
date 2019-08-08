@@ -1,6 +1,7 @@
 package com.aaa.microcredit.service;
 
 import com.aaa.microcredit.entity.Login;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +40,11 @@ public interface RegisterService {
      * @return
      */
     int changePwd(String passWord,Integer id);
+
+    /**
+     * 根据员工姓名查出数据
+     * @param eName
+     * @return
+     */
+    Map backLogin(String eName);
 }

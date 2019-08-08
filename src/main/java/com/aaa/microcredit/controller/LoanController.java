@@ -17,20 +17,15 @@ import java.util.Map;
 public class LoanController {
     @Autowired
     private LoanService loanService;
-//    @ResponseBody
-////    @RequestMapping("/selectLoanAll")
-////    public List<Map> selectloanAll(){
-////        System.out.println("查询贷款");
-//////        Map map=new HashMap();
-//////        map.put("loan",loanService.selectAll());
-////        List<Map> mapList = loanService.selectAll();
-////        return mapList;
-////    }
+
+    /**
+     * 查询所有的明细信息
+     * @param map
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/selectLoanMxAll")
     public Map selectloanMxAll(@RequestBody Map map){
-        System.out.println("查询贷款明细");
-        System.out.println(map.get("start"));
         List<Map> mapList = loanService.selectMxPjAll(map);
         Map mappage=new HashMap();
         mappage.put("mapList",mapList);

@@ -58,7 +58,27 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public Map selectApplyAll() {
-        return applyMapper.selectApplyAll();
+    public Map selectApplyAll(String applyId) {
+        return applyMapper.selectApplyAll( applyId);
+    }
+
+    @Override
+    public List<Map> selectApply(Map map) {
+        return applyMapper.selectApply(map);
+    }
+
+    @Override
+    public Integer selectApplyCount(Map map) {
+        return applyMapper.selectApplyCount(map);
+    }
+
+    @Override
+    public Integer updateApplyStatus(Map map) {
+        return applyMapper.updateApplyStatus(map);
+    }
+
+    @Override
+    public Integer updateReason(Map map) {
+        return applyMapper.updateReason(map);
     }
 }

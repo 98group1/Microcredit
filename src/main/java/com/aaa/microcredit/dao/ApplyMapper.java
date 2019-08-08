@@ -27,5 +27,29 @@ public interface ApplyMapper {
     List<Map> selectByUserId(Integer userId);
 
     // 后台根据用户id查询申请信息
-    Map selectApplyAll();
+    Map selectApplyAll(String applyId);
+
+    /**
+     * 查询出需要审核的申请信息
+     * @return
+     */
+    List<Map> selectApply(Map map);
+
+    /**
+     * 查询出需要审核的申请信息总条数
+     * @return
+     */
+    Integer selectApplyCount(Map map);
+
+    /**
+     * 修改申请表中的贷款状态
+     * @return
+     */
+    Integer updateApplyStatus(Map map);
+
+    /**
+     * 申请不通过时，修改申请表中的贷款状态并填写驳回理由
+     * @return
+     */
+    Integer updateReason(Map map);
 }

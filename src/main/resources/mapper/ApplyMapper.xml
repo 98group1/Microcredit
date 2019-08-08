@@ -328,7 +328,7 @@ and ( a.repayment_id=d2.dictionary_value and d2.keyword='Repayment')
 and ( a.loan_status=d3.dictionary_value and d3.keyword='loan_status')
 and ( law.status=d4.dictionary_value and d4.keyword='law_status')
 and (cp.username=login.username and login.id=a.user_id)
- and (cp.username=law.username) and(a.apply_id=p.apply_id  )and a.apply_id=1
+ and (cp.username=law.username) and(a.apply_id=p.apply_id  )and a.apply_id=#{applyId}
  </select>
 
   <select id="selectByApplyId" resultType="Map">
@@ -365,4 +365,70 @@ from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='
 ) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type'
 ) e JOIN dictionary d on d.dictionary_value=e.loanStatus where keyword='loan_status' and UserId=#{userId}
   </select>
+
+
+  <!--查询出为审核的申请信息-->
+<select id="selectApply" resultType="map" >
+    select  Apply_Id applyId,d.dictionary_name loanStatus,d1.dictionary_name loanType ,d2.dictionary_name repaymentType,d3.dictionary_name repaymentId,
+  cp.cp_name cpName,a.loan_money loanMoney,a.bondsman_name bondsmanName,law.law_person lawName,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime
+  from apply a , dictionary d ,dictionary d1 ,dictionary d2 , dictionary d3,cp_info cp,login,law_person law
+  WHERE ( a.loan_status=d.dictionary_value and d.keyword='loan_status')
+  and (a.Loan_type=d1.dictionary_value and d1.keyword='loan_type')
+  and (a.Repayment_type=d2.dictionary_value and d2.keyword='repayment_type')
+  and (a.Repayment_id=d3.dictionary_value and d3.keyword='repayment')
+  and (a.user_id=login.id and cp.username=login.username)
+  and (cp.username=law.username)and a.loan_status=#{loanStatus}
+  -- 根据公司名称查询
+  <if test="cpName!=null and cpName!=''">
+    and cp.cp_name like concat('%',#{cpName},'%')
+  </if>
+  --   贷款类型 房贷 抵押
+  <if test="loanType!=null and loanType!=''">
+    and a.loan_type=#{loanType}
+  </if>
+  --     还款类型 等额本金  等额本息
+  <if test="rType!=null and rType!=''">
+    and a.Repayment_type=#{rType}
+  </if>
+  <if test="RepaymentId!=null and RepaymentId!=''">
+    and a.Repayment_id=#{RepaymentId}
+  </if>
+   limit ${start},${pageSize}
+
+</select>
+
+  <select id="selectApplyCount" resultType="Integer" >
+    select count(*)   from apply a , dictionary d ,dictionary d1 ,dictionary d2 , dictionary d3,cp_info cp,login,law_person law
+    WHERE ( a.loan_status=d.dictionary_value and d.keyword='loan_status')
+    and (a.Loan_type=d1.dictionary_value and d1.keyword='loan_type')
+    and (a.Repayment_type=d2.dictionary_value and d2.keyword='repayment_type')
+    and (a.Repayment_id=d3.dictionary_value and d3.keyword='repayment')
+    and (a.user_id=login.id and cp.username=login.username)
+    and (cp.username=law.username)and a.loan_status=#{loanStatus}
+    -- 根据公司名称查询
+    <if test="cpName!=null and cpName!=''">
+      and cp.cp_name like concat('%',#{cpName},'%')
+    </if>
+    --   贷款类型 房贷 抵押
+    <if test="loanType!=null and loanType!=''">
+      and a.loan_type=#{loanType}
+    </if>
+    --     还款类型 等额本金  等额本息
+    <if test="rType!=null and rType!=''">
+      and a.Repayment_type=#{rType}
+    </if>
+    <if test="RepaymentId!=null and RepaymentId!=''">
+      and a.Repayment_id=#{RepaymentId}
+    </if>
+    limit ${start},${pageSize}
+
+  </select>
+  <!--修改申请表中的贷款状态-->
+  <update id="updateApplyStatus" parameterType="map">
+    UPDATE  apply set loan_status=#{loanStatus}, ${careful}=#{person}, ${time}=#{newTime} where Apply_Id=#{applyId}
+  </update>
+  <!--  申请被驳回，修改申请表中状态并填写驳回理由-->
+  <update id="updateReason">
+    update apply set loan_status=#{loanStatus},Reason=#{desc} where apply_id=#{applyId}
+  </update>
 </mapper>

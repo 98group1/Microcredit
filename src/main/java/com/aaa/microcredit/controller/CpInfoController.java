@@ -52,7 +52,6 @@ public class CpInfoController {
         Map resultMap = new HashMap();
         resultMap.put("cpInfoList", cpInfoService.queryAll(map));
         resultMap.put("total", cpInfoService.queryPageCount(map));
-        System.out.println("执行分页查询");
         return resultMap;
     }
 
@@ -65,9 +64,6 @@ public class CpInfoController {
     @RequestMapping("/querystatus1")
     @ResponseBody
     public Object queryStatus1(@RequestBody Map map){
-        System.out.println(map.get("status"));
-        System.out.println(map.get("start"));
-        System.out.println(map.get("pageSize")+",,,,,,,,,,,,,,,,,,");
         Map map1=new HashMap();
        map1.put("querystatus1",cpInfoService.queryStatus1(map));
        //查询一审
