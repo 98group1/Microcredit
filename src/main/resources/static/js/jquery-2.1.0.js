@@ -8835,7 +8835,7 @@ jQuery.offset = {
 			curElem = jQuery( elem ),
 			props = {};
 
-		// Set position first, in-case top/left are set even on static elem
+		// Set position first, in-case top/left are set even on staticDL elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
 		}

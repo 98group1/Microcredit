@@ -25,9 +25,9 @@
                         :defaultSelectedKeys="['2']"
                         :style="{ lineHeight: '64px' }"
                 >
-                    <a-menu-item key="1">nav 1</a-menu-item>
-                    <a-menu-item key="2">nav 2</a-menu-item>
-                    <a-menu-item key="3">nav 3</a-menu-item>
+                    <a-menu-item key="1">个人中心</a-menu-item>
+                    <a-menu-item key="2">个人中心</a-menu-item>
+                    <a-menu-item ><a @click="zhuxiao">注销</a></a-menu-item>
                 </a-menu>
             </a-layout-header>
             <a-layout-content style="padding: 20px 0px ;height: 750px; ">
@@ -88,6 +88,14 @@
                       // always executed
                   });
           },
+          zhuxiao:function(){
+              axios.post("/demo/register/backLogout")
+                  .then(function (response) {
+                      if (response.data==0){
+                          location.href="/demo/backLogin/demo.html"
+                      }
+                  })
+          }
       },
   })
 </script>

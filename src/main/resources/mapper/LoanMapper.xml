@@ -197,7 +197,7 @@
     and cp.cp_id=l.cp_id
     -- 根据公司名称查询
     <if test="cpName!=null and cpName!=''">
-      and cp.cp_name=#{cpName}
+      and cp.cp_name like  concat('%',#{cpName},'%')
     </if>
     --   贷款类型 房贷 抵押
     <if test="loanType!=null and loanType!=''">
@@ -226,7 +226,7 @@
     and cp.cp_id=l.cp_id
     -- 根据公司名称查询
     <if test="cpName!=null and cpName!=''">
-      and cp.cp_name=#{cpName}
+      and cp.cp_name like concat('%',#{cpName},'%')
     </if>
     --   贷款类型 房贷 抵押
     <if test="loanType!=null and loanType!=''">
@@ -239,7 +239,7 @@
     <if test="RepaymentId!=null and RepaymentId!=''">
       and l.Repayment_id=#{RepaymentId}
     </if>
-    <if test="status!=null and status!=''">
+    <if test="loanStatus!=null and loanStatus!=''">
       and l.status=#{status}
     </if>
   </select>

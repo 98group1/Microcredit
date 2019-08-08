@@ -331,14 +331,14 @@
                 </table>
             </template>
         </el-form>
-                <el-button type="primary">上一步</el-button>
-                <el-button type="primary" >下一步</el-button>
+                <el-button type="primary" @click="fanhui">返回</el-button>
 </div>
 </body>
 <script>
    var vue =new Vue({
        el:"#app",
        data:{
+
            formInline: {
                user: '',
                region: '',
@@ -353,14 +353,20 @@
        },
        methods: {
            loadtable:function(){
-               var self=this;
-               axios.post("/demo/apply/selectApplyAll")
-                   .then(function (response) {
-                       alert(response.data)
-                       self.tableData=response.data;
-                       alert(JSON.stringify(self.tableData))
 
+               var self=this;
+               //从审核页面传申请编号
+               var con=window.location.search;
+               //获取请求的地址从地址截取等号后面的值
+               var applyId=decodeURI(con.substring(con.indexOf("=")+1));
+               axios.post("/demo/apply/selectApplyAll",{applyId:applyId})
+                   .then(function (response) {
+                       self.tableData=response.data;
                    });
+           },
+           fanhui:function(){
+             //  this.$router.go(-1);//返回上一层
+               location.href='/demo/back/apply.html'
            }
        }
    })

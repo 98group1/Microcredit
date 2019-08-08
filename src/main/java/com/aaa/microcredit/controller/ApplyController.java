@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("/apply")
@@ -91,7 +90,6 @@ public class ApplyController {
     @ResponseBody
     @RequestMapping("/uploadSfzz")
     public Object uploadSfzz(@RequestParam MultipartFile bondsmanSfzz){
-        System.out.println("开始上传。。。");
         String newFileName = ftpUtil.upLoad(bondsmanSfzz);
         Map map=new HashMap();
         map.put("newFileName",newFileName);
@@ -101,7 +99,6 @@ public class ApplyController {
     @ResponseBody
     @RequestMapping("/uploadSfzf")
     public Object uploadSfzf(@RequestParam MultipartFile bondsmanSfzf){
-        System.out.println("开始上传。。。");
         String newFileName = ftpUtil.upLoad(bondsmanSfzf);
         Map map=new HashMap();
         map.put("newFileName",newFileName);
@@ -132,8 +129,9 @@ public class ApplyController {
 
     @ResponseBody
     @RequestMapping("selectApplyAll")
-    public Map selectApplyAll(){
-        return applyService.selectApplyAll();
+    public Map selectApplyAll(@RequestBody Map map){
+        String applyId= (String) map.get("applyId");
+        return applyService.selectApplyAll(applyId);
     }
     /**
      * 从session中获取userid
@@ -147,4 +145,64 @@ public class ApplyController {
         return request.getSession().getAttribute("login1");
     }
 
+
+    /**
+     * 查询出所有需要审核的申请信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("selectApply")
+    public Map selectApply(@RequestBody Map map){
+        Map maplist=new HashMap();
+        maplist.put("map",applyService.selectApply(map));
+        maplist.put("total",applyService.selectApplyCount(map));
+       return maplist;
+    }
+
+    /**
+     * 根据申请ID修改贷款状态
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("updateApplyStatus")
+    public Integer updateApplyStatus(@RequestBody Map map,HttpServletRequest request){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Map emp= (Map) request.getSession().getAttribute("emp");
+        map.put("careful","first_careful");//添加一审人
+        map.put("person",emp.get("ename"));
+        map.put("time","first_time");
+        map.put("newTime",df.format(new Date())) ;// new Date()为获取当前系统时间
+        return applyService.updateApplyStatus(map);
+    }
+
+    /**
+     * 添加二审人
+     * @param map
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("updateApplyStatusTwo")
+    public Integer updateApplyStatusTwo(@RequestBody Map map,HttpServletRequest request){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Map emp= (Map) request.getSession().getAttribute("emp");
+        map.put("careful","two_careful");//添加二审人
+        map.put("person",emp.get("ename"));
+        map.put("time","two_time");//添加二审时间
+        map.put("newTime",df.format(new Date())) ;// new Date()为获取当前系统时间
+        return applyService.updateApplyStatus(map);
+    }
+
+    /**
+     * 申请被驳回，修改申请状态并添加驳回理由
+     * @param map
+     * @return
+     */
+    @RequestMapping("updateReason")
+    public Integer updateReason(@RequestBody Map map){
+        map.put("loanStatus",4);
+        System.out.println(map.toString());
+        return applyService.updateReason(map);
+    }
 }

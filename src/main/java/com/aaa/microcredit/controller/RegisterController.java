@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,5 +105,41 @@ public class RegisterController {
         String credentials= new SimpleHash(hashAlgorithmName, passWord, credentialsSalt,hashIterations ).toHex();
         int i = service.changePwd(credentials, (Integer) login1.get("id"));
         return i;
+    }
+
+    /**
+     * 后台登录方法
+     * @param ename
+     * @param password
+     * @param request
+     * @return
+     */
+    @RequestMapping("/backLogin")
+    public String backLogin(String ename, String password, HttpServletRequest request){
+        System.out.println(ename+password);
+        //根据登录的员工名字去数据库取数据
+        Map map=service.backLogin(ename);
+        //取出密码进行比较
+       String passWord= (String) map.get("epassword");
+       if(map==null){
+           System.out.println("nouser");
+        return "nouser";
+       }
+       if(passWord.equals(password)){
+           System.out.println("success");
+           //登陆成功后将emp存进session
+           request.getSession().setAttribute("emp",map);
+           return "success";
+       }else{
+           System.out.println("usererror");
+           return "usererror";
+       }
+
+    }
+
+@RequestMapping("backLogout")
+    public Integer logout(HttpServletRequest request){
+        request.getSession().removeAttribute("emp");
+        return 0;
     }
 }
