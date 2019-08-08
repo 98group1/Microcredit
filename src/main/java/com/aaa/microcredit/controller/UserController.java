@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sun.rmi.server.InactiveGroupException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +27,29 @@ public class UserController {
     @Autowired
     private UserServiceImpl service;
 
-
+    /**
+     * 查询全部用户
+     * @return
+     */
     @RequestMapping("/qury")
     public Object queryAll(){
         return service.queryAll ();
+    }
 
-
+    /**
+     * 分页查询
+     * @param map
+     * @return
+     */
+    @RequestMapping("/page")
+    public Object queryPage(@RequestBody Map map){
+        System.out.println(map+"0.0.0.0.0.0.0");
+        Map mapResult = new HashMap ();
+        mapResult.put("empList",service.queryPage(map));
+        System.out.println(service.queryPage(map).get (0)+"12121212121");
+        mapResult.put("total",service.queryPageCount(map));
+        System.out.println(service.queryPageCount(map)+"02020202020");
+        return mapResult;
     }
 
 
@@ -42,6 +60,8 @@ public class UserController {
      */
     @RequestMapping("/save")
     public Object save(@RequestBody User user){
+        System.out.println ("000000" );
+        System.out.println (user.getRoleIds ()+"11111" );
         return service.insertSelective(user);
     }
 
@@ -66,24 +86,14 @@ public class UserController {
     }
 
     /**
-     * 根据员工id查询员工角色
-     * @param map
+     * 根据用户id获取该用户关联的所有角色id
+     * @param userId
      * @return
      */
-    @RequestMapping("/selectUserRole")
-    public Object selectUserRole(@RequestBody Map map){
-        Integer empid= (Integer) map.get("empid");
-        System.out.println (empid );
-        List<Map> mapList = service.selectUserRole (empid);
-        List checked= new ArrayList();
-        for (Map map1 : mapList) {
-            Integer roleid = (Integer) map1.get ("roleid");
-            checked.add (roleid);
-        }
-        System.out.println (checked );
-        return checked;
+    @RequestMapping("getRolesByUserId")
+    public Object getRolesByUserId(Integer userId){
+        return service.getRolesByUserId(userId);
     }
-
 
     /**
      * 调用service层封装OK的方法 进行分配角色的操作
@@ -92,9 +102,7 @@ public class UserController {
     @RequestMapping("/saveRole")
     public  Object savarole(@RequestBody Map map){
         Integer empid = (Integer) map.get ("empid");
-        System.out.println (empid+"AAAAAA");
         List list= (List) map.get ("array");
-        System.out.println (list+"BBBBBBB" );
         return service.insetUserRole (empid,list);
     }
 

@@ -10,8 +10,16 @@ public class User {
     private String etel;
 
     private String ezj;
-
+    private String roleIds;
     private String eaddress;
+
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
+    }
 
     public Integer getEmpid() {
         return empid;
