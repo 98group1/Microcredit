@@ -28,7 +28,7 @@
 
 
   <!--查询所有信息-->
-  <select id="selectLawInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectLawInfo"  resultType="Map">
     select * from law_person
     <where>
       <if test="userName!=null and userName!=''">

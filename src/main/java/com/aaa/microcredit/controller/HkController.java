@@ -21,6 +21,7 @@ public class HkController {
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=new Date();
         map.put("c_changetime",dateFormat.format(date));
+        map.put("Change_time",dateFormat.format(date));
         System.out.println(map.get("c_changetime"));
         return hkService.hkcz(map);
     }
@@ -38,7 +39,7 @@ public class HkController {
     }
 
     /**
-     * 向流水表里录入资金变动的数据
+     * 向流水表里录入资金变动的数据，充值、提现
      * @param map
      * @return
      */
@@ -48,6 +49,16 @@ public class HkController {
         Date date=new Date();
         map.put("c_changetime",dateFormat.format(date));
         return hkService.insertMoney(map);
+    }
+
+    /**
+     * 查询平台流水里的可用余额
+     * @return
+     */
+    @RequestMapping("/selectPTAvailMoney")
+    public Object selectPTAvailMoney(){
+        Map map = hkService.selectPTAvailMoney();
+        return map;
     }
 }
 
