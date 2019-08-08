@@ -29,10 +29,11 @@
           <div class="tel-title"><i class="icon-tel"></i> 客服热线：</div>
           <div class="tel-num">400-661-1313</div>
         </div>
-          <div class="company-tel">
-              <div style="font-size:20px">
+
+          <div class="company-tel" >
+              <div style="font-size:20px" id="login1">
                   <a href="regist/regist.html">立即注册</a>/
-                  <a href="login/index.html">立即登陆</a>
+                  <a href="login/index.html">立即登录</a>
               </div>
           </div>
       </div>
@@ -94,8 +95,22 @@
           autoPage:true, 
           trigger:"click"
         });
-
       });
+      //判断是否登录
+     $(function () {
+         $.ajax({
+             url:'/demo/apply/getUserId',
+             type:"POST",
+             dataType:"json",
+             success:function (msg) {
+                 var userId = msg.id;
+                 var username = msg.username;
+                 if(username!=null){
+                     document.getElementById("login1").style.visibility="hidden";
+                 }
+             }
+         });
+     });
     </script>
 
 

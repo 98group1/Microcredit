@@ -176,4 +176,16 @@ public class LoanController {
 
     return   "list";
     }
+
+    @ResponseBody
+    @RequestMapping("/selectLoan1")
+    public Map selectloan(@RequestBody Map map){
+        Integer userId= (Integer) map.get("userId");
+        System.out.println("查询贷款明细");
+        List<Map> mapList = loanService.selectLoan1(userId);
+        Map mappage=new HashMap();
+        mappage.put("mapList",mapList);
+        mappage.put("total",loanService.selectLoanCount(userId));
+        return mappage;
+    }
 }

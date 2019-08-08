@@ -81,4 +81,15 @@ public interface LoanService {
     Map selectLoan(Integer l_id);
 
 
+    /**
+     * 根据前台用户id查询贷款信息
+     * @param userId
+     * @return
+     */
+    List<Map> selectLoan1(Integer userId);
+    /**
+     * 查询贷款条数
+     * @return
+     */
+    Integer selectLoanCount(Integer userId);
 }
