@@ -1,8 +1,10 @@
 package com.aaa.microcredit.entity;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
+@Data
 public class Loan {
     private Integer lId;
 

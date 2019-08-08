@@ -6,41 +6,76 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
+
 public class LoanServiceImpl implements LoanService {
     @Autowired
     private LoanMapper loanMapper;
     @Override
     public int deleteByPrimaryKey(Integer lId) {
-        return 0;
+        return loanMapper.deleteByPrimaryKey(lId) ;
     }
 
     @Override
     public int insert(Loan record) {
-        return 0;
+        return loanMapper.insert(record);
     }
 
     @Override
     public int insertSelective(Loan record) {
-        return 0;
+        return loanMapper.insertSelective(record);
     }
 
     @Override
     public Loan selectByPrimaryKey(Integer lId) {
-        return null;
+        return loanMapper.selectByPrimaryKey(lId);
     }
 
     @Override
     public int updateByPrimaryKeySelective(Loan record) {
-        return 0;
+        return updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(Loan record) {
-        return 0;
+        return updateByPrimaryKeySelective(record);
     }
+
+    @Override
+    public List<Map> selectCpAndLoan(Map map) {
+        return loanMapper.selectCpAndLoan(map);
+    }
+
+    @Override
+    public int queryPageCount(Map map) {
+        return loanMapper.queryPageCount(map);
+    }
+
+    @Override
+    public int insertLoan(Map map) {
+
+        return loanMapper.insertLoan(map);
+    }
+
+    @Override
+    public int updateLoStatus(Map map) {
+        return loanMapper.updateLoStatus(map);
+    }
+
+    @Override
+    public int insertMX(Map map) {
+        return loanMapper.insertMX(map);
+    }
+
+    @Override
+    public Map selectLoan(Integer l_id) {
+        return loanMapper.selectLoan(l_id);
+    }
+
+
 
     @Override
     public List<Map> selectAll(Map map) {
@@ -90,4 +125,6 @@ public class LoanServiceImpl implements LoanService {
 
         return listloan;
     }
+
+
 }

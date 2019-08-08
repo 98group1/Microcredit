@@ -1,5 +1,9 @@
 package com.aaa.microcredit.entity;
 
+
+
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,16 +12,17 @@ import java.util.List;
  * @date: 2019-07-29 19:29
  * @Version 1.0
  */
+
 public class TreeNode {
 
 
     private Integer menuid;
     private String label;
-    private Integer parentId;
+    private Integer parentid;
     private List<TreeNode> children;
     private String url;
     private String addUserName;
-    private String addTime;
+    private Date addTime;
 
 
     public Integer getMenuid() {
@@ -27,6 +32,7 @@ public class TreeNode {
     public void setMenuid(Integer menuid) {
         this.menuid = menuid;
     }
+
     public String getLabel() {
         return label;
     }
@@ -35,12 +41,12 @@ public class TreeNode {
         this.label = label;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getParentid() {
+        return parentid;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParentid(Integer parentid) {
+        this.parentid = parentid;
     }
 
     public List<TreeNode> getChildren() {
@@ -67,28 +73,24 @@ public class TreeNode {
         this.addUserName = addUserName;
     }
 
-    public String getAddTime() {
+    public Date getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(String addTime) {
+    public void setAddTime(Date addTime) {
         this.addTime = addTime;
     }
 
     @Override
     public String toString() {
         return "TreeNode{" +
-                "id=" + menuid +
+                "menuid=" + menuid +
                 ", label='" + label + '\'' +
-                ", parentId=" + parentId +
+                ", parentid=" + parentid +
                 ", children=" + children +
                 ", url='" + url + '\'' +
                 ", addUserName='" + addUserName + '\'' +
-                ", addTime='" + addTime + '\'' +
+                ", addTime=" + addTime +
                 '}';
     }
-
-
-
-
 }
