@@ -31,15 +31,15 @@
     where l_id = #{lId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.aaa.microcredit.entity.Loan">
-    insert into loan (l_id, Apply_Id, cp_id, 
-      loan_type, r_type, Repayment_id, 
-      loan_money, r_money, z_periobs, 
-      r_capital, apply_time, loan_time, 
+    insert into loan (l_id, Apply_Id, cp_id,
+      loan_type, r_type, Repayment_id,
+      loan_money, r_money, z_periobs,
+      r_capital, apply_time, loan_time,
       status)
-    values (#{lId,jdbcType=INTEGER}, #{applyId,jdbcType=INTEGER}, #{cpId,jdbcType=INTEGER}, 
-      #{loanType,jdbcType=INTEGER}, #{rType,jdbcType=INTEGER}, #{repaymentId,jdbcType=INTEGER}, 
-      #{loanMoney,jdbcType=DECIMAL}, #{rMoney,jdbcType=DECIMAL}, #{zPeriobs,jdbcType=INTEGER}, 
-      #{rCapital,jdbcType=DECIMAL}, #{applyTime,jdbcType=TIMESTAMP}, #{loanTime,jdbcType=TIMESTAMP}, 
+    values (#{lId,jdbcType=INTEGER}, #{applyId,jdbcType=INTEGER}, #{cpId,jdbcType=INTEGER},
+      #{loanType,jdbcType=INTEGER}, #{rType,jdbcType=INTEGER}, #{repaymentId,jdbcType=INTEGER},
+      #{loanMoney,jdbcType=DECIMAL}, #{rMoney,jdbcType=DECIMAL}, #{zPeriobs,jdbcType=INTEGER},
+      #{rCapital,jdbcType=DECIMAL}, #{applyTime,jdbcType=TIMESTAMP}, #{loanTime,jdbcType=TIMESTAMP},
       #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Loan">
@@ -249,5 +249,81 @@ SELECT lm.l_id lId, be_periods bePeriods,lm.r_money rMoney,d.dictionary_name ifO
 FROM loan_mx lm,dictionary d,dictionary d1
 where( lm.ifoverdue=d.dictionary_value and d.keyword='ifoverdue')
 and( lm.r_status=d1.dictionary_value and d1.keyword='loan_status')
+  </select>
+
+
+    <select id="selectCpAndLoan" resultType="map" parameterType="map">
+        SELECT a.user_id , a.apply_id,a.loan_type,a.Repayment_type,a.Repayment_id,a.first_careful,date_format(a.first_time,'%Y-%m-%d %H:%i:%s') first_time ,a.two_careful,date_format(a.two_time,'%Y-%m-%d %H:%i:%s') two_time,dy.dictionary_name loanType,dy1.dictionary_name repaymentType,a.Loan_money,a.loan_deadline
+        ,dy2.dictionary_name repaymentId,dy3.dictionary_name loanStatus,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime, cp.cp_name,cp.cp_id
+        FROM apply a,dictionary dy ,dictionary dy1,dictionary dy2,dictionary dy3,cp_info cp,login lo
+        where (a.loan_type=dy.dictionary_value and dy.keyword='loan_type')
+        and (a.Repayment_type=dy1.dictionary_value and dy1.keyword='repayment_type')
+        and (a.Repayment_id=dy2.dictionary_value and dy2.keyword='Repayment')
+        and (a.loan_status=dy3.dictionary_value and dy3.keyword='loan_status')
+        and (a.User_id=lo.id and lo.username=cp.username )and a.loan_status=3 limit ${start},${pageSize}
+    </select>
+
+
+
+    <select id="queryPageCount" resultType="int">
+        select count(*)
+        from
+        (  SELECT a.apply_id,a.loan_type,a.Repayment_type,a.Repayment_id,a.first_careful,date_format(a.first_time,'%Y-%m-%d %H:%i:%s') first_time ,a.two_careful,date_format(a.two_time,'%Y-%m-%d %H:%i:%s') two_time,dy.dictionary_name loanType,dy1.dictionary_name repaymentType,a.Loan_money,a.loan_deadline
+        ,dy2.dictionary_name repaymentId,dy3.dictionary_name loanStatus,date_format(a.loan_time,'%Y-%m-%d %H:%i:%s') loanTime, cp.cp_name,cp.cp_id
+        FROM apply a,dictionary dy ,dictionary dy1,dictionary dy2,dictionary dy3,cp_info cp,login lo
+        where (a.loan_type=dy.dictionary_value and dy.keyword='loan_type')
+        and (a.Repayment_type=dy1.dictionary_value and dy1.keyword='repayment_type')
+        and (a.Repayment_id=dy2.dictionary_value and dy2.keyword='Repayment')
+        and (a.loan_status=dy3.dictionary_value and dy3.keyword='loan_status')
+        and (a.User_id=lo.id and lo.username=cp.username )and a.loan_status=3)as temp
+
+
+    </select>
+<!--放款成功将公司信息加入贷款表中-->
+    <insert id="insertLoan"  parameterType="map">
+<selectKey keyProperty="l_id" resultType="Integer" order="AFTER"  >
+    SELECT LAST_INSERT_ID()
+</selectKey>
+insert into loan(cp_id,apply_id,loan_type,r_type,Repayment_id,loan_money,r_money,z_periobs,r_capital,apply_time,loan_time,status)
+values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_money},#{r_money},#{loan_deadline},#{r_capital},#{apply_time},#{loan_time},#{status})
+    </insert>
+
+<!--放款成功将公司贷款状态更改为待还款-->
+    <update id="updateLoStatus" parameterType="Integer">
+        update apply set loan_status=6 where loan_status=3 and apply_id=#{applyId3}
+    </update>
+
+<!--    放款成功的同时将贷款明细添加到贷款明细表中-->
+    <insert id="insertMX"  parameterType="map">
+        insert into loan_mx(l_id,be_periods,r_money,ifoverdue,o_accrual,be_accrual,r_time,r_status)
+        values(#{l_id},#{be_periods},#{r_money},#{ifoverdue},#{o_accrual},#{be_accrual},#{r_time},#{r_status})
+    </insert>
+
+    <select id="selectLoan" resultType="map" parameterType="map">
+        select * from loan where l_id=#{l_id}
+    </select>
+
+<insert id="insertC_money" parameterType="map">
+    insert into  client_money(user_id,c_Moneytype,c_changemoney,c_changetime,c_availmoney,c_describes)
+     values(#{user_id},)
+</insert>
+  <!--前台用户查询自己的贷款信息-->
+  <select id="selectLoan1" resultType="Map">
+     select l_id lId, l.loan_money loanMoney,r_money rMoney ,z_periobs zPeriobs,r_capital rCapital ,date_format(apply_time,'%Y-%m-%d %H:%i:%s') applyTime,date_format(Loan_time,'%Y-%m-%d %H:%i:%s') loanTime,d3.dictionary_name status,
+    d.dictionary_name loanType,cp.cp_name cpName,d1.dictionary_name rType,d2.dictionary_name repaymentId
+    from loan l,cp_info cp, dictionary d , dictionary d1, dictionary d2 , dictionary d3, login
+    where (l.loan_type=d.dictionary_value and d.keyword='loan_type')
+    and (l.r_type=d1.dictionary_value and d1.keyword='repayment_type')
+    and (l.Repayment_id=d2.dictionary_value and d2.keyword='Repayment')
+    and (l.status=d3.dictionary_value and d3.keyword='loan_status')
+    and cp.cp_id=l.cp_id and login.username=cp.username and login.id=#{userId}
+  </select>
+  <select id="selectLoanCount" resultType="Integer">
+     select count(*) from loan l,cp_info cp, dictionary d , dictionary d1, dictionary d2 , dictionary d3, login
+    where (l.loan_type=d.dictionary_value and d.keyword='loan_type')
+    and (l.r_type=d1.dictionary_value and d1.keyword='repayment_type')
+    and (l.Repayment_id=d2.dictionary_value and d2.keyword='Repayment')
+    and (l.status=d3.dictionary_value and d3.keyword='loan_status')
+    and cp.cp_id=l.cp_id and login.username=cp.username and login.id=#{userId}
   </select>
 </mapper>

@@ -56,4 +56,9 @@ public class ApplyServiceImpl implements ApplyService {
     public List<Map> selectByUserId(Integer userId) {
         return applyMapper.selectByUserId(userId);
     }
+
+    @Override
+    public Map selectApplyAll() {
+        return applyMapper.selectApplyAll();
+    }
 }

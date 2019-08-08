@@ -83,13 +83,13 @@
                 title: '首页',
                 name: '1',
                 // content: '<iframe src="https://www.baidu.com">'
-                url:'http://localhost:8888/demo/emp/list.html'
+                url:'http://localhost:8888/demo/back/daikuan.html'
             }],
             tabIndex: 1
         },
         created:function(){
             var self=this;
-            axios.post("/demo/power/tree", this.form)
+            axios.post("/demo/power/setree?empid="+1, this.form)
                 .then(function (response) {
                     self.treeData=response.data;
                 })

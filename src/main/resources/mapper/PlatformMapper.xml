@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.PlatformMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Platform">
+    <id column="P_id" jdbcType="INTEGER" property="pId" />
+    <result column="loanid" jdbcType="INTEGER" property="loanid" />
+    <result column="Moneytype" jdbcType="INTEGER" property="moneytype" />
+    <result column="changemoney" jdbcType="DECIMAL" property="changemoney" />
+    <result column="Change_time" jdbcType="TIMESTAMP" property="changeTime" />
+    <result column="availmoney" jdbcType="DECIMAL" property="availmoney" />
+    <result column="describes" jdbcType="VARCHAR" property="describes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    P_id, loanid, Moneytype, changemoney, Change_time, availmoney, describes
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_money
+    where P_id = #{pId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from platform_money
+    where P_id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aaa.microcredit.entity.Platform">
+    insert into platform_money (P_id, loanid, Moneytype, 
+      changemoney, Change_time, availmoney, 
+      describes)
+    values (#{pId,jdbcType=INTEGER}, #{loanid,jdbcType=INTEGER}, #{moneytype,jdbcType=INTEGER}, 
+      #{changemoney,jdbcType=DECIMAL}, #{changeTime,jdbcType=TIMESTAMP}, #{availmoney,jdbcType=DECIMAL}, 
+      #{describes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Platform">
+    insert into platform_money
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        P_id,
+      </if>
+      <if test="loanid != null">
+        loanid,
+      </if>
+      <if test="moneytype != null">
+        Moneytype,
+      </if>
+      <if test="changemoney != null">
+        changemoney,
+      </if>
+      <if test="changeTime != null">
+        Change_time,
+      </if>
+      <if test="availmoney != null">
+        availmoney,
+      </if>
+      <if test="describes != null">
+        describes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pId != null">
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="loanid != null">
+        #{loanid,jdbcType=INTEGER},
+      </if>
+      <if test="moneytype != null">
+        #{moneytype,jdbcType=INTEGER},
+      </if>
+      <if test="changemoney != null">
+        #{changemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeTime != null">
+        #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="availmoney != null">
+        #{availmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="describes != null">
+        #{describes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aaa.microcredit.entity.Platform">
+    update platform_money
+    <set>
+      <if test="loanid != null">
+        loanid = #{loanid,jdbcType=INTEGER},
+      </if>
+      <if test="moneytype != null">
+        Moneytype = #{moneytype,jdbcType=INTEGER},
+      </if>
+      <if test="changemoney != null">
+        changemoney = #{changemoney,jdbcType=DECIMAL},
+      </if>
+      <if test="changeTime != null">
+        Change_time = #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="availmoney != null">
+        availmoney = #{availmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="describes != null">
+        describes = #{describes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where P_id = #{pId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aaa.microcredit.entity.Platform">
+    update platform_money
+    set loanid = #{loanid,jdbcType=INTEGER},
+      Moneytype = #{moneytype,jdbcType=INTEGER},
+      changemoney = #{changemoney,jdbcType=DECIMAL},
+      Change_time = #{changeTime,jdbcType=TIMESTAMP},
+      availmoney = #{availmoney,jdbcType=DECIMAL},
+      describes = #{describes,jdbcType=VARCHAR}
+    where P_id = #{pId,jdbcType=INTEGER}
+  </update>
+
+
+<!--分页查询公司流水信息-->
+
+    <select id="queryAll" resultType="map">
+        select  P_id,loanid,Moneytype,dy.dictionary_name,changemoney,date_format(Change_time,'%Y-%m-%d %H:%i:%s') change_time,availmoney,describes
+        from platform_money yp join dictionary dy on Moneytype=dictionary_value where dy.keyword='moneytype'
+
+        <if test="loanid!=null and loanid!=''">
+            and  (loanid like "%"#{loanid}"%")
+        </if>
+        limit ${start},${pageSize}
+    </select>
+
+    <select id="queryPageCount" resultType="int">
+        select count(*)
+        from platform_money
+        <where>
+            <if test="loanid!=null and loanid!=''">
+                and (loanid like "%"#{loanid}"%")
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

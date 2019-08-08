@@ -10,6 +10,7 @@ import com.aaa.microcredit.util.PhoneCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/cpInfo")
+@Transactional
 public class CpInfoController {
     @Autowired
     private CpInfoService cpInfoService;
@@ -33,6 +35,7 @@ public class CpInfoController {
 
     @Autowired
     private FtpConfig ftpConfig; //显示图片时，要拼接下载路径时用到配置文件的配置
+
 
     @RequestMapping("/selectCpInfoId")
     @ResponseBody

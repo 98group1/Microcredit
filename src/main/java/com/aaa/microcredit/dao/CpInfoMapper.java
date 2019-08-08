@@ -36,6 +36,8 @@ public interface CpInfoMapper {
     List<CpInfo> queryAll(Map map);
 
 
+
+
     List queryAllTest();
 
     /**

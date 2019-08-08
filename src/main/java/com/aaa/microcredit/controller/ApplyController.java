@@ -130,6 +130,11 @@ public class ApplyController {
                 ftpConfig.getFtpPassWord()+"@"+ftpConfig.getRemoteIp()+ftpConfig.getRemotePath()+"/"+fileName));
     }
 
+    @ResponseBody
+    @RequestMapping("selectApplyAll")
+    public Map selectApplyAll(){
+        return applyService.selectApplyAll();
+    }
     /**
      * 从session中获取userid
      * @param request

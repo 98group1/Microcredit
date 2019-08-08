@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>公司信息</title>
     <!--先引入vue.js库-->
@@ -13,20 +12,7 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <style>
-        .demo-table-expand {
-            font-size: 0;
-        }
-
-        .demo-table-expand label {
-            width: 90px;
-            color: #99a9bf;
-        }
-
-        .demo-table-expand .el-form-item {
-            margin-right: 0;
-            margin-bottom: 0;
-            width: 50%;
-        }
+        .demo-table-expand {font-size: 0;}  .demo-table-expand label {width: 90px;color: #99a9bf;}  .demo-table-expand .el-form-item {margin-right: 0;margin-bottom: 0;width: 50%;}
     </style>
 </head>
 <body>
@@ -88,12 +74,12 @@
                         <el-form-item label="公司邮箱：">
                             <span>{{ props.row.cp_email }}</span>
                         </el-form-item>
-                        <el-form-item label="营业执照：">
+                   <!--     <el-form-item label="营业执照：">
                             <span>{{props.row.license_url}}</span>
                         </el-form-item>
                         <el-form-item label="执照名称：">
                             <span>{{ props.row.license_name }}</span>
-                        </el-form-item>
+                        </el-form-item>-->
                     </el-form>
                 </template>
             </el-table-column>
@@ -146,8 +132,8 @@
                                        @click="handleEdit(1, scope.row,'移出白名单')">移除白名单
                             </el-button>
                         </template>
-                            <template v-if=" scope.row.status==3">
-                                <el-button type="primary"
+                            <template v-if=" scope.row.status==3" >
+                                <el-button type="danger"
                                            size="mini"
                                            @click="handleEdit(1, scope.row,'移出黑名单')">移除黑名单
                                 </el-button>
@@ -175,7 +161,6 @@
 
     var vue = new Vue({
         el: "#app",
-
         data: {
             tableData: [],
             pageSize:3,
@@ -183,7 +168,6 @@
             currentPage:1,
             show:false,
             formInline: {
-                cpNameOrcpCode: '',
                 username: ''
             },
             // 弹窗初始状态

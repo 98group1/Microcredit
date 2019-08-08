@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>等额本息贷款计算器</title>
     <script src="js/jquery-2.1.0.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function benxi() {
             $.ajax({
@@ -20,17 +24,21 @@
                     var perMonthInterest=msg.perMonthInterest;
                     var perMonthPrincipal=msg.perMonthPrincipal;
                     var interestCount=msg.interestCount;
+                    var loanMoney=parseInt($("#loanMoney").val());
+                    var zonghe=interestCount+loanMoney;
                     //遍历取出perMonthInterest中的值
                     for (var key in perMonthInterest){
                         var tr="<tr>";
                         tr+="<td>"+perMonthPrincipal[key]+"元</td>";
                         tr+="<td>"+perMonthInterest[key]+"元</td>";
+                        tr+="<td>"+perMonthPrincipalInterest+"元</td>";
                         tr+="</tr>";
                         $("#tb").append(tr);
                     }
                     var tr="<tr>";
-                    tr+="<th>需还的总利息</th>";
+                    tr+="<th>总和</th>";
                     tr+="<td>"+interestCount+"元</td>";
+                    tr+="<td>"+zonghe+"元</td>";
                     tr+="</tr>";
                     $("#tb").append(tr);
                 }
@@ -66,58 +74,62 @@
         #table2 td{
             text-align: center;
         }
+        #div1{
+            margin: auto auto;
+            width: 700px;
+        }
     </style>
 </head>
 <body>
-<table border="1">
-    <tr>
-        <td colspan="2" id="top">等额本金还款</td>
-    </tr>
-    <tr>
-        <td class="td1">贷款金额</td>
-        <td class="td2">
-            <input type="text" name="loanMoney" id="loanMoney"/>元
-        </td>
-    </tr>
-    <tr>
-        <td class="td1">贷款期限</td>
-        <!--<td class="td2">
-            <input type="text" name="loanDeadline" id="loanDeadline"/>月(6~12)
-        </td>-->
-        <td class="td2">
-            <select id="loanDeadline" style="font-size: 18px">
-                <option value="6">6   期   </option>
-                <option value="7">7   期   </option>
-                <option value="8">8   期   </option>
-                <option value="9">9   期   </option>
-                <option value="10">10 期   </option>
-                <option value="11">11 期   </option>
-                <option value="12">12 期   </option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td class="td1">贷款年利率</td>
-        <td class="td2">
-            <input type="text" name="lilv" value="4.5" id="lilv"/>%
-        </td>
-    </tr>
-    <tr>
-        <td class="td1">还款方式</td>
-        <td class="td2">
-            <input type="text" value="等额本息还款">
-            <input type="button" value="计算" id="btn" onclick="benxi()"/>
-        </td>
-    </tr>
-</table>
-<table border="1"  id="table2">
-    <tr>
-        <th>每月需还本金</th>
-        <th>每月需还利息</th>
-    </tr>
-    <tbody id="tb">
+<div id="div1">
+    <table border="1" class="table table-bordered table-hover">
+        <tr>
+            <td colspan="2" id="top">等额本息还款</td>
+        </tr>
+        <tr>
+            <td class="td1">贷款金额</td>
+            <td class="td2">
+                <input type="text" name="loanMoney" id="loanMoney"/>元
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">贷款期限</td>
+            <td class="td2">
+                <select id="loanDeadline" style="font-size: 18px">
+                    <option value="6">6   期   </option>
+                    <option value="7">7   期   </option>
+                    <option value="8">8   期   </option>
+                    <option value="9">9   期   </option>
+                    <option value="10">10 期   </option>
+                    <option value="11">11 期   </option>
+                    <option value="12">12 期   </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">贷款年利率</td>
+            <td class="td2">
+                <input type="text" name="lilv" value="4.5" id="lilv"/>%
+            </td>
+        </tr>
+        <tr>
+            <td class="td1">还款方式</td>
+            <td class="td2">
+                <input type="text" value="等额本息还款">
+                <input type="button" class="btn btn-primary" value="计算" id="btn" onclick="benxi()"/>
+            </td>
+        </tr>
+    </table>
+    <table border="1"  id="table2" class="table table-bordered table-hover">
+        <tr>
+            <th>每月需还本金</th>
+            <th>每月需还利息</th>
+            <th>本月需还本息之和</th>
+        </tr>
+        <tbody id="tb">
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
