@@ -15,6 +15,16 @@ public class Login {
     private String userName;
     private String passWord;
     private String paymentCode;
+    private String headPortrait;
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
+
     private String tel;
     private Insert status;
 

@@ -82,6 +82,32 @@
             font-size: 18px;
         }
 
+        /*图片上传的样式*/
+         .avatar-uploader .el-upload {
+             border: 1px dashed #d9d9d9;
+             border-radius: 6px;
+             cursor: pointer;
+             position: relative;
+             overflow: hidden;
+         }
+        .avatar-uploader .el-upload:hover {
+            border-color: black;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            background-color: gainsboro;
+            width: 240px;
+            height: 180px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 240px;
+            height: 180px;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -118,8 +144,20 @@
 
                 <el-aside width="150px">
                     <div>
-                        放照片
-
+                        <el-row>
+                            <!--<el-form-item label="营业执照" >-->
+                                <el-upload
+                                        name="ghtx"
+                                        class="avatar-uploader"
+                                        action="/demo/cpInfo/uploadghtx"
+                                        :show-file-list="false"
+                                        :on-success="handleAvatarSuccess"
+                                        :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            <!--</el-form-item>-->
+                        </el-row>
                     </div>
                     <div style="margin-top: 120px">
                         <el-row height="50px">
@@ -200,13 +238,66 @@
     var vue =new Vue({
         el:"#app",
         data:{
-
+            headPortrait:'',
+            imageUrl:''
         },
         created:function(){
-
+            this.getUserName();
+            this.selectHead();
         },
         methods: {
+            //修改头像的方法
+            changeHeadPic:function(){
+                var self=this;
+                axios.post("/demo/cpInfo/changeHead",{headPortrait:self.headPortrait})
+                    .then(function (response) {
+                        if (response.data==1){
+                        }else{
+                            alert("修改失败");
+                        }
+                    });
+            },
+            //获取当前登陆的用户名
+            getUserName:function(){
+                var self=this;
+                axios.post("/demo/apply/getUserId")
+                    .then(function (response) {
+                        self.form.userName=response.data.username;
+                    });
+            },
+            beforeAvatarUpload:function(file) {
+                var isJPG = file.type === 'image/jpeg';
+                var isLt2M = file.size / 1024 / 1024 < 2;
 
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
+                }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
+                }
+                return isJPG && isLt2M;
+            },
+            handleAvatarSuccess:function(res, file) {
+
+                //用来回显图片
+                this.imageUrl = URL.createObjectURL(file.raw);
+                //给表单对应字段赋值
+                // this.form.headPortrait = file.response.originalFilename;
+                this.headPortrait =file.response.newFileName;
+                this.changeHeadPic();
+            },
+            selectHead:function () {
+                var self = this;
+                axios.post('/demo/cpInfo/selectHead')
+                    .then(function (response) {
+                        self.imageUrl=response.data.head_portrait;
+                        if(self.imageUrl!=null&&self.imageUrl!=''){
+                            self.imageUrl = "http://localhost:8888/demo/apply/show?fileName="+response.data.head_portrait;
+                        }else {
+                            //alert(1111);
+                        }
+                    })
+            }
         }
     });
 </script>

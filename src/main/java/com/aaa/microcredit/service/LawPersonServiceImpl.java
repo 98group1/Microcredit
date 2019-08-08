@@ -40,4 +40,19 @@ public class LawPersonServiceImpl implements LawPersonService {
     public int updateByPrimaryKey(LawPerson record) {
         return Mapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int insertLawInfo(Map map) {
+        return Mapper.insertLawInfo(map);
+    }
+
+    @Override
+    public Map selectLawInfo(String userName) {
+        return Mapper.selectLawInfo(userName);
+    }
+
+    @Override
+    public int updataLawInfo(Map map) {
+        return Mapper.updataLawInfo(map);
+    }
 }

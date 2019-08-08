@@ -25,6 +25,34 @@
     from law_person
     where law_id = #{lawId,jdbcType=INTEGER}
   </select>
+
+
+  <!--查询所有信息-->
+  <select id="selectLawInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from law_person
+    <where>
+      <if test="userName!=null and userName!=''">
+        and username=#{userName}
+      </if>
+    </where>
+  </select>
+<!--完善法人信息-->
+  <insert id="insertLawInfo" parameterType="Map">
+        insert into law_person(username,law_person,law_sex,law_age,law_tel,law_zj,house_address,education,law_sfzz,law_sfzf)
+        values (#{userName},#{lawPerson},#{lawSex},#{lawAge},#{lawTel},#{lawZj},#{houseAddress},#{education},#{lawSfzz},#{lawSfzf})
+    </insert>
+  <!--修改法人信息-->
+  <update id="updataLawInfo" parameterType="Map">
+          update cp_info set law_person=#{lawPerson},law_sex=#{lawSex},law_age=#{lawAge},
+          law_tel=#{lawTel},law_zj=#{lawZj},house_address=#{houseAddress},
+    education=#{education},law_sfzz=#{lawSfzz},law_sfzf=#{lawSfzf} where username=#{userName}
+    </update>
+
+
+
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from law_person
     where law_id = #{lawId,jdbcType=INTEGER}

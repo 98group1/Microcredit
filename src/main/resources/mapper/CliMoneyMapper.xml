@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.microcredit.dao.CliMoneyMapper">
+    <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Climoney">
+        <id column="c_id" jdbcType="INTEGER" property="cId" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="c_Moneytype" jdbcType="VARCHAR" property="cMoneyType" />
+        <result column="c_Changemoney" jdbcType="VARCHAR" property="cChangeMoney" />
+        <result column="c_Changetime" jdbcType="VARCHAR" property="cChangeTime" />
+        <result column="c_availmoney" jdbcType="VARCHAR" property="cAvailMoney" />
+        <result column="c_describes" jdbcType="VARCHAR" property="cDescribes" />
+    </resultMap>
+
+<select id="query" parameterType="map">
+    select * from client_money
+    <where>
+        <if test="userId!=null and userId!=''">
+            and (user_id like "%"#{userId}"%")
+        </if>
+    </where> limit ${start},${pageSize}
+</select>
+<select id="queryCount" parameterType="map">
+    select count(*)
+    from client_money
+    <where>
+        <if test="userId!=null and userId!=''">
+            and (user_id like "%"#{userId}"%")
+        </if>
+    </where>
+</select>
+</mapper>

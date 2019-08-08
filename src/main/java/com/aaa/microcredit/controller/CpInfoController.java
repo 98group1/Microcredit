@@ -2,6 +2,7 @@ package com.aaa.microcredit.controller;
 
 import com.aaa.microcredit.entity.CpInfo;
 
+import com.aaa.microcredit.entity.Login;
 import com.aaa.microcredit.service.CpInfoService;
 import com.aaa.microcredit.util.FtpConfig;
 import com.aaa.microcredit.util.FtpUtil;
@@ -175,7 +176,22 @@ public class CpInfoController {
         Map map=new HashMap();
         map.put("originalFilename",originalFilename);
         map.put("newFileName",newFileName);
-        System.out.println(map);
+        return map;
+    }
+
+    /*
+     *
+     * 营业执照图片上传
+     * @param
+     * @return
+     */
+    @RequestMapping("/uploadghtx")
+    public Object uploadghtx(@RequestParam MultipartFile  ghtx){
+        String originalFilename=ghtx.getOriginalFilename();
+        String newFileName=ftpUtil.upLoad(ghtx);
+        Map map=new HashMap();
+        map.put("originalFilename",originalFilename);
+        map.put("newFileName",newFileName);
         return map;
     }
 
@@ -187,6 +203,52 @@ public class CpInfoController {
     @RequestMapping("cpInfo1")
     public Object cpInfo1(@RequestBody Map map){
         int i = cpInfoService.insertInfo(map);
+        return i;
+    }
+
+    /**
+     * 更换头像
+     * @param map
+     * @param request
+     * @return
+     */
+    @RequestMapping("changeHead")
+    public Object changeHead(@RequestBody Map map,HttpServletRequest request){
+        Map login1 = (Map) request.getSession().getAttribute("login1");
+        String userName = (String) login1.get("username");
+        int i = cpInfoService.changeHead(userName, (String) map.get("headPortrait"));
+        return i;
+    }
+
+    /**
+     * 查询公司信息并显示到页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("selectCpInfo")
+    public Object selectCpInfo(HttpServletRequest request){
+        Map login1 = (Map) request.getSession().getAttribute("login1");
+        String userName = (String) login1.get("username");
+        Map map = cpInfoService.selectCpInfo(userName);
+        return map;
+    }
+
+    /**
+     * 查询头像并显示到页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("selectHead")
+    public Object selectHead(HttpServletRequest request){
+        Map login1 = (Map) request.getSession().getAttribute("login1");
+        String userName = (String) login1.get("username");
+        Map map = cpInfoService.selectHead(userName);
+        return map;
+    }
+
+    @RequestMapping("updateCpInfo")
+    public Object updateCpInfo(@RequestBody Map map){
+        int i = cpInfoService.updataCpInfo(map);
         return i;
     }
 }
