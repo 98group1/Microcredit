@@ -73,5 +73,32 @@ public class CpInfoServiceImpl implements CpInfoService {
         return cpInfoMapper.insertInfo(map);
     }
 
+    /**
+     * 更换头像，并录入到数据库
+     * @param userName
+     * @param headPortrait
+     * @return
+     */
+    @Override
+    public int changeHead(String userName, String headPortrait) {
+        return cpInfoMapper.changeHead(userName,headPortrait);
+    }
+
+    @Override
+    public Map selectCpInfo(String userName) {
+        Map map = cpInfoMapper.selectCpInfo(userName);
+        return map;
+    }
+
+    @Override
+    public int updataCpInfo(Map map) {
+        return cpInfoMapper.updataCpInfo(map);
+    }
+
+    @Override
+    public Map selectHead(String userName) {
+        return cpInfoMapper.selectHead(userName);
+    }
+
 
 }

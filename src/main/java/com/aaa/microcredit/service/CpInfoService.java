@@ -54,4 +54,30 @@ public interface CpInfoService {
      * @return
      */
     int insertInfo(Map map);
+
+    /**
+     * 根据用户名更换相应头像
+     * @param userName
+     * @return
+     */
+    int changeHead(String userName,String headPortrait);
+
+    /**
+     * 查询公司信息
+     * @return
+     */
+    Map selectCpInfo(String userName);
+    /**
+     * 修改公司信息
+     * @param map
+     * @return
+     */
+    int updataCpInfo(Map map);
+
+    /**
+     * 查询头像并显示
+     * @param userName
+     * @return
+     */
+    Map selectHead(String userName);
 }
