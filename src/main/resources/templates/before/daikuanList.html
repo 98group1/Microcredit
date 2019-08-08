@@ -197,7 +197,7 @@
                 //开始位置  (currentPage-1)*pageSize
                 this.form.start = (this.currentPage - 1) * this.pageSize;
                 this.form.pageSize=this.pageSize;
-                axios.post('/demo/loan/selectLoan',{userId:self.userId})
+                axios.post('/demo/loan/selectLoan1',{userId:self.userId})
                     .then(function (response) {
                         self.tableData = response.data.mapList;
                         self.total = response.data.total;
