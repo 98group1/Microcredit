@@ -420,7 +420,6 @@ from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='
     <if test="RepaymentId!=null and RepaymentId!=''">
       and a.Repayment_id=#{RepaymentId}
     </if>
-    limit ${start},${pageSize}
 
   </select>
   <!--修改申请表中的贷款状态-->

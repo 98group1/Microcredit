@@ -34,7 +34,7 @@ public class PMoneyServiceImpl implements PMoneyService {
 
     /**
      * 查询贷款表中状态为待还款的数据 可以根据 状态、时间（年月日）查询 ,
-     * @return  返回的是查询出来的贷款钱数相加得到的总钱数
+     * @return  返回的是查询出来的贷款钱数相加得到的总钱数 贷款金额 已还金额 已还利息
      */
     @Override
     public Map selectLoanMoney(Map map) {
@@ -44,13 +44,13 @@ public class PMoneyServiceImpl implements PMoneyService {
         //创建新的map用来存放信息
         Map selectMap=new HashMap();
         //定义一个新的BigDecimal变量用来存放贷款总额
-        BigDecimal ZongloanMoney=null;
-        BigDecimal ZongRMoney=null;
+        BigDecimal ZongloanMoney=BigDecimal.ZERO;
+        BigDecimal ZongRMoney=BigDecimal.ZERO;
         for (Map loan : list) {
             //从读出来的数据中取出每一条数据中的贷款金额
             BigDecimal loanMoney= (BigDecimal) loan.get("loan_money");
             //相加得到总金额
-            ZongloanMoney=loanMoney.add(ZongloanMoney);
+            ZongloanMoney=ZongloanMoney.add(loanMoney);
             System.out.println(ZongloanMoney);
             //已还金额
             BigDecimal rMoney= (BigDecimal) loan.get("r_money");
@@ -63,8 +63,8 @@ public class PMoneyServiceImpl implements PMoneyService {
         map.put("status",7);
         System.out.println(map.toString());
         //查询数据库中贷款表的信息
-        BigDecimal LoanLxMoney=null;
-        BigDecimal LoanBjMoney=null;
+        BigDecimal LoanLxMoney=BigDecimal.ZERO;
+        BigDecimal LoanBjMoney=BigDecimal.ZERO;
         List<Map> listMx = pMoneyMapper.selectLoanLxMoney(map);
         for (Map mx : listMx) {
             //获取已还的利息

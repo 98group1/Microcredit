@@ -209,14 +209,7 @@
             this.loadData();
         },
         methods:{
-            // loadData:function(){
-            //     var self= this;
-            //     axios.post("/demo/loan/selectLoanMxAll")
-            //         .then(function (response) {
-            //             //添加或者修改成功
-            //             self.tableData=response.data;
-            //         });
-            // },
+
             loadData: function () {
                 var self = this;
                 //开始位置  (currentPage-1)*pageSize
@@ -257,9 +250,7 @@
                 };
                 this.loadData();
             },
-            mx:function (lId) {
-                alert("成功！！"+JSON.stringify(lId))
-            },
+
             handleSizeChange: function (val) {
                 console.log('每页条数:' + val);
                 this.pageSize = val;

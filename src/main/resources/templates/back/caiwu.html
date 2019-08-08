@@ -49,7 +49,7 @@
 <body>
 <div>
     <div id="app">
-        <el-select v-model="year" >
+        <el-select @change="yearchange" v-model="year" >
             <el-option
                     v-for="item in options"
                     :key="item.year"
@@ -57,7 +57,16 @@
                     :value="item.year">
             </el-option>
         </el-select>
-        <div style="width: 48%;height:400px; position: relative; float: left">
+        <el-select @change="yearchange" v-model="month" >
+            <el-option
+                    v-for="item in months"
+                    :key="item.month"
+                    :label="item.month"
+                    :value="item.month">
+            </el-option>
+        </el-select>
+        <el-button type="primary" @click="flash">刷新</el-button>
+        <div style="width: 40%;height:400px; position: relative; float: left">
             <el-row :gutter="20">
                 <el-col :span="12"><div class="grid-content bg-purple ">可用总额<br/><br/>{{ kyye }}</div></el-col>
                 <el-col :span="12"><div class="grid-content bg-purple ">贷款总额<br/><br/>{{ dkje }}</div></el-col>
@@ -71,8 +80,12 @@
 
 
     </div>
-    <div id="main1" style="width: 25%;height:400px;float: right"></div>
-    <div id="main" style="width: 25%;height:400px; float: right"></div>
+    <div style="width: 60%;height:400px;float: right">
+        <div id="main1" style="width: 50%;height:400px; float: left"></div>
+        <div id="main" style="width: 50%;height:400px; float: right"></div>
+    </div>
+
+
 
 </div>
 
@@ -88,6 +101,9 @@
            dkje:0,
            kyye:0,
            hkje:0,
+           months:[{month:1},{month:2},{month:3},{month:4},{month:5},{month:6},{month:7},{month:8},
+               {month:9},{month:10},{month:11},{month:12}],
+           month:'',
            tableData: [{
                date: '90，000',
                name: '10，000',
@@ -96,7 +112,7 @@
            options:[]
        },
        created:function(){
-         this.tubiao()
+
            this.loadData();
        },
        methods: {
@@ -231,6 +247,25 @@
                        console.log(response.data)
                        self.kyye=response.data;
                    })
+               axios.post('/demo/pMoney/selectLoanMoney',{year:this.year,month:this.month})
+                   .then(function (response) {
+                       var dkje=parseFloat(response.data.dkje.toString());
+                       var hklx=parseFloat(response.data.yhlx.toString());
+                       var hkbj=parseFloat(response.data.yhbj.toString());
+                       self.dkje=dkje;
+                       self.hklx=hklx;
+                       self.hkbj=hkbj;
+                       self.hkje=(hkbj+hklx).toFixed(2);
+                       self.tubiao()
+                   })
+           },
+           yearchange:function () {
+               this.loadData();
+           },
+           flash:function () {
+               this.year='';
+               this.month='';
+               this.loadData();
            }
 
        }

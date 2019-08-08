@@ -39,7 +39,7 @@ public interface PMoneyMapper {
      * @return
      */
     @Select("<script> SELECT *  from loan_mx <where> " +
-            "<if test=\"status!=null and status!=''\"> status=#{status} </if> " +
+            "<if test=\"status!=null and status!=''\"> r_status=#{status} </if> " +
             "<if test=\"year!='' and year!=null\"> and DATE_FORMAT(r_time,'%Y')=#{year} </if>" +
             "<if test=\"month!='' and month!=null\"> and DATE_FORMAT(r_time,'%m')=#{month} </if>" +
             "<if test=\"day!='' and day!=null\"> and DATE_FORMAT(r_time,'%d')=#{day} </if>" +

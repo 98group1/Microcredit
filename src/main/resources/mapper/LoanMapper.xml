@@ -239,7 +239,7 @@
     <if test="RepaymentId!=null and RepaymentId!=''">
       and l.Repayment_id=#{RepaymentId}
     </if>
-    <if test="status!=null and status!=''">
+    <if test="loanStatus!=null and loanStatus!=''">
       and l.status=#{status}
     </if>
   </select>

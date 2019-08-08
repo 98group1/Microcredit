@@ -136,4 +136,10 @@ public class RegisterController {
        }
 
     }
+
+@RequestMapping("backLogout")
+    public Integer logout(HttpServletRequest request){
+        request.getSession().removeAttribute("emp");
+        return 0;
+    }
 }

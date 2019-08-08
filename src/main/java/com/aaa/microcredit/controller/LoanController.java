@@ -36,7 +36,7 @@ public class LoanController {
     @RequestMapping("/selectLoanMxAll")
     public Map selectloanMxAll(@RequestBody Map map){
         System.out.println("查询贷款明细");
-        System.out.println(map.get("start"));
+        System.out.println(map.get("loanStart"));
         List<Map> mapList = loanService.selectMxPjAll(map);
         Map mappage=new HashMap();
         mappage.put("mapList",mapList);
