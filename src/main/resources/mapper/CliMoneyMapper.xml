@@ -17,6 +17,9 @@
         <if test="userId!=null and userId!=''">
             and (user_id like "%"#{userId}"%")
         </if>
+        <if test="date!=null and date!=''">
+            and c_changetime like "%"#{date}"%"
+        </if>
     </where> limit ${start},${pageSize}
 </select>
 <select id="queryPageCount" resultType="int">
