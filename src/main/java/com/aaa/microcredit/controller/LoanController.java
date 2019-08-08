@@ -125,7 +125,6 @@ public class LoanController {
     @Transactional
     public Object insertLoanMx( Map map,Integer l_id){
         Map mapResult=new HashMap();
-        System.out.println(map.toString()+"9999999999999999999999999999999");
         Object op=map.get("repaymentId");
         Object lde=map.get("loan_deadline");
         System.out.println(op);

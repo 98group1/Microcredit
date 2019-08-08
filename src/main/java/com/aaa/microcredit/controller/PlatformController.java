@@ -31,7 +31,6 @@ public class PlatformController {
         Map resultMap = new HashMap();
         resultMap.put("platformList", platformService.queryAll(map));
         resultMap.put("total", platformService.queryPageCount(map));
-        System.out.println("执行分页查询");
         return resultMap;
     }
 }
