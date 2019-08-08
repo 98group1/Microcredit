@@ -23,6 +23,7 @@
             color: #333;
             text-align: center;
             line-height: 26px;
+            height: 650px;
         }
 
         .el-main {
@@ -44,9 +45,9 @@
         .el-container:nth-child(7) .el-aside {
             line-height: 320px;
         }
-        /*.el-row {
-            margin-bottom: 10px;
-        }*/
+        .el-row {
+            margin-bottom: 20px;
+        }
         .el-col {
             border-radius: 4px;
 
@@ -70,7 +71,7 @@
             background-color: #f9fafc;
         }
         .el-menu-item{
-            font-size: 15px;
+            font-size: 18px;
             padding:0 auto;
         }
         .el-menu{
@@ -78,10 +79,7 @@
 
         }
         .el-submenu__title{
-            font-size: 15px;
-        }
-        #app{
-            height: 650px;
+            font-size: 18px;
         }
 
         /*图片上传的样式*/
@@ -115,14 +113,14 @@
 <body>
 <div id="app">
     <el-container>
-        <el-header style="padding-left: 0px;padding-right: 0px">
+        <el-header>
             <el-menu
                     class="el-menu-demo"
                     mode="horizontal"
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b">
-                <el-menu-item index="1" style="padding-left: 450px"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a></el-menu-item>
+                <el-menu-item index="1" style="padding-left: 500px"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a></el-menu-item>
                 <el-menu-item index="2"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a></el-menu-item>
                 <el-menu-item index="3"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a></el-menu-item>
                 <el-menu-item index="4"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a></el-menu-item>
@@ -144,7 +142,7 @@
             <el-aside width="200px">
             </el-aside>
 
-                <el-aside width="170px">
+                <el-aside width="150px">
                     <div>
                         <el-row>
                             <!--<el-form-item label="营业执照" >-->
@@ -161,9 +159,9 @@
                             <!--</el-form-item>-->
                         </el-row>
                     </div>
-                    <div style="margin-top: 50px">
-                       <!-- <el-row height="50px">
-                        </el-row>-->
+                    <div style="margin-top: 120px">
+                        <el-row height="50px">
+                        </el-row>
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="1">
@@ -203,7 +201,7 @@
                         <el-row>
                         <el-menu>
                             <el-menu-item index="5">
-                                <a href="/demo/before/daikuanList.html" target="tab1" style="text-decoration:none;">
+                                <a href="cooperation.html" target="tab1" style="text-decoration:none;">
                                     <span slot="title">借款/贷款查询</span>
                                 </a>
                             </el-menu-item>
@@ -212,7 +210,7 @@
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="6">
-                                    <a href="chongzhi.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
+                                    <a href="aboutus.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
@@ -227,7 +225,7 @@
 
                 </el-aside>
                 <el-main>
-                    <iframe width="100%"  style="border: 0px;" height="550px;" src="zhanghu/zhanghu.html" name="tab1"></iframe>
+                    <iframe width="100%" style="border: 0px;" height="650px;" src="PcenterPage1/completeData.html" width="100%" name="tab1"></iframe>
                 </el-main>
         </el-container>
 

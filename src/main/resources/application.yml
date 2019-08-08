@@ -34,8 +34,3 @@ spring:
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.aaa.microcredit.entity
-
-
-
-
-
