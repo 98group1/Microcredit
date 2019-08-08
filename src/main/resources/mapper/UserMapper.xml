@@ -12,6 +12,43 @@
   <sql id="Base_Column_List">
     empid, ename, epassword, etel, ezj, eaddress
   </sql>
+
+  <!--start计算出开始-->
+  <select id="queryPage" resultType="user">
+    select m.empid,m.ename,m.epassword,m.etel,m.ezj,m.eaddress
+    from m_user m
+    <where>
+      <if test="ename!=null and ename!=''">
+        and (ename like "%"#{ename}"%"
+        or m.ename like "%"#{ename}"%")
+      </if>
+      <if test="empid!=null and empid!=''">
+        and m.empid = #{empid}
+      </if>
+      <if test="epassword!=null and epassword!=''">
+        and m.epassword = #{epassword}
+      </if>
+
+    </where>  limit ${start},${pageSize}
+  </select>
+
+  <select id="queryPageCount" resultType="int">
+    select COUNT(*) from m_user
+    <where>
+      <if test="ename!=null and ename!=''">
+        and (ename like "%"#{ename}"%"
+        or m.ename like "%"#{ename}"%")
+      </if>
+      <if test="empid!=null and empid!=''">
+        and m.empid = #{empid}
+      </if>
+      <if test="epassword!=null and epassword!=''">
+        and m.epassword = #{epassword}
+      </if>
+    </where>
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -31,6 +68,9 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.User">
+    <selectKey keyProperty="empid" order="AFTER" resultType="int">
+      select last_insert_id()
+    </selectKey>
     insert into m_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="empid != null">
@@ -103,4 +143,9 @@
       eaddress = #{eaddress,jdbcType=VARCHAR}
     where empid = #{empid,jdbcType=INTEGER}
   </update>
+
+
+
+
+
 </mapper>

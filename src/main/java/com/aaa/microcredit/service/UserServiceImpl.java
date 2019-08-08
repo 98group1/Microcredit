@@ -31,10 +31,22 @@ public class UserServiceImpl implements UserService {
         return mapper.insert (record);
     }
 
-    @Override
-    public int insertSelective(User record) {
-        return mapper.insertSelective (record);
-    }
+
+  @Override
+  public int insertSelective(User record) {
+      //添加人员
+      int i = mapper.insertSelective(record);
+      if(record.getRoleIds ()!=null&&!"".equals(record.getRoleIds())) {
+          //解析roleid字符串
+          String roleIds = record.getRoleIds();
+          String[] roleIdsArr = roleIds.split(",");
+          //批量添加用户角色关联
+          for (String roleId : roleIdsArr) {
+              mapper.insertRole(record.getEmpid (), Integer.valueOf(roleId));
+          }
+      }
+      return i;
+  }
 
     @Override
     public User selectByPrimaryKey(Integer empid) {
@@ -49,13 +61,26 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<Map> selectUserRole(Integer empid) {
-        return mapper.selectUserRole (empid);
+    public List<Integer> getRolesByUserId(int empid) {
+        return mapper.getRolesByUserId(empid);
     }
 
     @Override
     public int updateByPrimaryKeySelective(User record) {
-        return mapper.updateByPrimaryKeySelective (record);
+        //更新人员信息
+        int i = mapper.updateByPrimaryKeySelective(record);
+        if(record.getRoleIds()!=null&&!"".equals(record.getRoleIds())) {
+            //根据用户id删除该用户原来关联的角色id
+            mapper.deleteRole(record.getEmpid());
+            //解析roleid字符串
+            String roleIds = record.getRoleIds();
+            String[] roleIdsArr = roleIds.split(",");
+            //批量添加用户角色关联
+            for (String roleId : roleIdsArr) {
+                mapper.insertRole(record.getEmpid(), Integer.valueOf(roleId));
+            }
+        }
+        return i;
     }
 
     @Override
@@ -72,7 +97,6 @@ public class UserServiceImpl implements UserService {
          */
         System.out.println (empid );
         Integer i1 = mapper.deleteRole (empid);
-        System.out.println (empid+"EEEEEE" );
         /**
          * 根据用户Id进行循环分配角色操作
          */
@@ -85,4 +109,13 @@ public class UserServiceImpl implements UserService {
         return 1;
     }
 
+    @Override
+    public List<User> queryPage(Map map) {
+        return mapper.queryPage (map);
+    }
+
+    @Override
+    public int queryPageCount(Map map) {
+        return mapper.queryPageCount (map);
+    }
 }

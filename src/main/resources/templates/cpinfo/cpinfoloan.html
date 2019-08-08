@@ -55,7 +55,7 @@
         <el-table
                 :data="tableData"
                 style="width: 100%">
-            <el-table-column type="expand">
+      <!--      <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item label="贷款类型数字：" >
@@ -65,37 +65,17 @@
                                 <span>{{props.row.Repayment_type}}</span>
                             </el-form-item>
 
-                   <!--     <el-form-item label="App_id：">
-                            <span>{{ props.row. apply_id}}</span>
-                        </el-form-item>
-                        <el-form-item label="user：">
-                            <span>{{ props.row. status}}</span>
-                        </el-form-item>
-                        <el-form-item label="还款类型：">
-                            <span>{{ props.row.r_type }}</span>
-                        </el-form-item>-->
-
-                    <!--    <el-form-item label="还款类型：">
-                            <span>{{ props.row.repayment }}</span>
-                        </el-form-item>-->
                     </el-form>
                 </template>
-            </el-table-column>
-            <!--<el-table-column
-                    label="Apply_Id"
-                    prop="Apply_Id" v-if="show">
-            </el-table-column>
-            <el-table-column
-                    label="cp_id"
-                    prop="cp_id" v-if="show">
             </el-table-column>-->
+
             <el-table-column
                     label="公司名称"
                     prop="cp_name">
             </el-table-column>
             <el-table-column
                     label="user_id"
-                    prop="user_id">
+                    prop="user_id" v-if="show">
             </el-table-column>
             <el-table-column
                     label="贷款金额"
@@ -150,24 +130,9 @@
                                    size="mini"
                                    @click="handleEdit(6, scope.row,'放款',scope.row)">放款
                         </el-button>
-                       <!-- <el-button
-                                size="mini"
-                                type="danger"
-                                @click="handleEdit(3, scope.row,'加入黑名单')">加入黑名单
-                        </el-button>-->
+
                     </template>
-                  <!--  <template v-if=" scope.row.status==2">
-                        <el-button type="primary"
-                                   size="mini"
-                                   @click="handleEdit(1, scope.row,'移出白名单')">移除白名单
-                        </el-button>
-                    </template>
-                    <template v-if=" scope.row.status==3">
-                        <el-button type="danger"
-                                   size="mini"
-                                   @click="handleEdit(1, scope.row,'移出黑名单')">移除黑名单
-                        </el-button>
-                    </template>-->
+
                 </template>
             </el-table-column>
         </el-table>
@@ -305,7 +270,6 @@
                     });
                 });
             }
-
         }
     })
 </script>

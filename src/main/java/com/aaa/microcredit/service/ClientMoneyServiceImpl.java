@@ -37,7 +37,7 @@ public class ClientMoneyServiceImpl implements ClientMoneyService {
         System.out.println(availMoney.add(lM));
         Map mapinsert=new HashMap();
         mapinsert.put("userId",map.get("user_id"));
-        mapinsert.put("moneyType",1);//资金变动类型   1代表放款
+        mapinsert.put("moneyType",2);//资金变动类型   2代表放款
         mapinsert.put("changeMoney",map.get("Loan_money")); //变动金额  相当于客户的贷款金额
         mapinsert.put("changeTime",map.get("loan_time"));
         mapinsert.put("availMoney",availMoney.add(lM));
@@ -52,7 +52,7 @@ public class ClientMoneyServiceImpl implements ClientMoneyService {
                 if(r>0) { //大于
             Map mappingtai=new HashMap();
             mappingtai.put("loanId",map.get("l_id"));
-            mappingtai.put("moneyType",1);//资金变动类型   1代表放款
+            mappingtai.put("moneyType",2);//资金变动类型   2代表放款
             mappingtai.put("changeMoney",map.get("Loan_money")); //变动金额  相当于客户的贷款金额
             mappingtai.put("changeTime",map.get("loan_time"));
             mappingtai.put("describes","放款");
