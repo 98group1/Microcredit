@@ -30,16 +30,20 @@
                 :data="tableData"
                 style="width: 100%">
             <el-table-column
-                    prop="cChangeMoney"
+                    prop="c_changemoney"
                     label="变动资金">
             </el-table-column>
             <el-table-column
-                    prop="cChangeMoney"
+                    prop="changetime"
                     label="变动时间">
             </el-table-column>
             <el-table-column
-                    prop="cAvailMoney"
+                    prop="c_availmoney"
                     label="可用资金">
+            </el-table-column>
+            <el-table-column
+                    prop="c_describes"
+                    label="用途描述">
             </el-table-column>
         </el-table>
     </el-row>
@@ -69,10 +73,11 @@
                 date2: ''
             },
             form: {
-                cChangeMoney: '',
-                cChangeMoney:'',
-                cAvailMoney: '',
-                userId:''
+                c_changemoney: '',
+                changetime:'',
+                c_availmoney: '',
+                c_describes:'',
+                userId:'13'
             },
             formLabelWidth: '120px',
             pickerOptions: {
@@ -113,7 +118,7 @@
                 var start = (this.currentPage - 1) * this.pageSize;
                 axios.post('/demo/climoney/query', {
                     start: start, pageSize: this.pageSize,
-                    date: this.formInline.date
+                    date: this.formInline.date,userId:this.form.userId
                 })
                     .then(function (response) {
                         // handle success

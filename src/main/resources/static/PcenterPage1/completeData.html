@@ -161,7 +161,7 @@
                 this.licenseUrl1= URL.createObjectURL(file.raw);
                 //给表单对应字段赋值
                 this.form.licenseName = file.response.originalFilename;
-                this.form.licenseUrl1 =file.response.newFileName;
+                this.form.licenseUrl =file.response.newFileName;
             },
             selectCpInfo:function () {
                 var self=this;

@@ -2,6 +2,7 @@ package com.aaa.microcredit.entity;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 
@@ -16,8 +17,8 @@ public class Climoney {
     private Integer cId;
     private Integer userId;
     private Integer cMoneyType;
-    private Integer cChangeMoney;
+    private BigDecimal cChangeMoney;
     private Date cChangeTime;
-    private Integer cAvailMoney;
+    private BigDecimal cAvailMoney;
     private String cDescribes;
 }

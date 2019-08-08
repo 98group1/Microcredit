@@ -1,5 +1,6 @@
 package com.aaa.microcredit.dao;
 
+import com.aaa.microcredit.entity.Climoney;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 

@@ -29,12 +29,12 @@
           <div class="tel-title"><i class="icon-tel"></i> 客服热线：</div>
           <div class="tel-num">400-661-1313</div>
         </div>
-
           <div class="company-tel" >
               <div style="font-size:20px" id="login1">
                   <a href="regist/regist.html">立即注册</a>/
                   <a href="login/index.html">立即登录</a>
               </div>
+              <div style="font-size:20px" id="logout2"><a id="a">注销</a></div>
           </div>
       </div>
       <div class="header-nav" style="position: absolute; height: 55px; background-color: rgba(21, 45, 71, 0.78); top: 86px; width: 100%; z-index: 999;">
@@ -107,10 +107,32 @@
                  var username = msg.username;
                  if(username!=null){
                      document.getElementById("login1").style.visibility="hidden";
+                     document.getElementById("logout2").style.visibility="visible";
                  }
              }
          });
      });
+      //判断是否要注销
+      $(function () {
+          if(document.getElementById("login1").style.visibility="visible"){
+              document.getElementById("logout2").style.visibility="hidden";
+          }
+      });
+      // 注销
+     $(function () {
+         $("#a").click(function () {
+             $.ajax({
+                 url:'/demo/logout/logout1',
+                 type:"POST",
+                 dataType:"json",
+                 success:function (response) {
+                     if (response==true){
+                         location.href='/demo/index.html';
+                     }
+                 }
+             })
+         })
+     })
     </script>
 
 

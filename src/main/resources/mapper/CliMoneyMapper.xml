@@ -3,23 +3,23 @@
 <mapper namespace="com.aaa.microcredit.dao.CliMoneyMapper">
     <resultMap id="BaseResultMap" type="com.aaa.microcredit.entity.Climoney">
         <id column="c_id" jdbcType="INTEGER" property="cId" />
-        <result column="user_id" jdbcType="VARCHAR" property="userId" />
-        <result column="c_Moneytype" jdbcType="VARCHAR" property="cMoneyType" />
-        <result column="c_Changemoney" jdbcType="VARCHAR" property="cChangeMoney" />
-        <result column="c_Changetime" jdbcType="VARCHAR" property="cChangeTime" />
-        <result column="c_availmoney" jdbcType="VARCHAR" property="cAvailMoney" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="c_Moneytype" jdbcType="INTEGER" property="cMoneyType" />
+        <result column="c_changemoney" jdbcType="DECIMAL" property="cChangeMoney" />
+        <result column="c_changetime" jdbcType="TIMESTAMP" property="cChangeTime" />
+        <result column="c_availmoney" jdbcType="DECIMAL" property="cAvailMoney" />
         <result column="c_describes" jdbcType="VARCHAR" property="cDescribes" />
     </resultMap>
 
-<select id="query" parameterType="map">
-    select * from client_money
+<select id="query" resultType="Map">
+    select c_changemoney,date_format(c_changetime,'%Y-%m-%d %H:%i:%s') changetime  ,c_availmoney,c_describes from client_money
     <where>
         <if test="userId!=null and userId!=''">
             and (user_id like "%"#{userId}"%")
         </if>
     </where> limit ${start},${pageSize}
 </select>
-<select id="queryCount" parameterType="map">
+<select id="queryPageCount" resultType="int">
     select count(*)
     from client_money
     <where>

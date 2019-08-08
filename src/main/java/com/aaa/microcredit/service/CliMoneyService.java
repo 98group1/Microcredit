@@ -1,5 +1,7 @@
 package com.aaa.microcredit.service;
 
+import com.aaa.microcredit.entity.Climoney;
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +12,7 @@ import java.util.Map;
  * ceeateTime:2019/8/6 20:44
  */
 public interface CliMoneyService {
-    Map query(Map map);
+    List<Map> query(Map map);
 
     int queryPageCount(Map map);
 }
