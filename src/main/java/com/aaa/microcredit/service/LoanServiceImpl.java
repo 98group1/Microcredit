@@ -127,13 +127,13 @@ public class LoanServiceImpl implements LoanService {
 
     /**
      * 根据前台用户id查询贷款信息及其明细
-     * @param userId
+     * @param map
      * @return
      */
     @Override
-    public List<Map> selectLoan1(Integer userId) {
+    public List<Map> selectLoan1(Map map) {
         //先查询出贷款表
-        List<Map> listloan = loanMapper.selectLoan1(userId);
+        List<Map> listloan = loanMapper.selectLoan1(map);
         //判断不为空
         if (listloan!=null&&listloan.size()>0){
             //遍历

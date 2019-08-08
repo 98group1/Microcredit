@@ -22,4 +22,9 @@ public interface HkService {
      * @return
      */
     Integer insertMoney(Map map);
+    /**
+     * 查询平台流水表里最新的可用余额
+     * @return
+     */
+    Map selectPTAvailMoney();
 }
