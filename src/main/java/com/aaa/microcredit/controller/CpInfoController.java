@@ -35,6 +35,7 @@ public class CpInfoController {
     @Autowired
     private FtpConfig ftpConfig; //显示图片时，要拼接下载路径时用到配置文件的配置
 
+
     @RequestMapping("/selectCpInfoId")
     @ResponseBody
     public CpInfo selectCpInfoId(Integer cpId) {
