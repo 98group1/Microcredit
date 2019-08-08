@@ -29,6 +29,8 @@ public class PlatformController {
     @ResponseBody
     public Object queryAll(@RequestBody Map map) {
         Map resultMap = new HashMap();
+        resultMap.put("beginTime",map.get("beginTime"));
+        resultMap.put("endTime",map.get("endTime"));
         resultMap.put("platformList", platformService.queryAll(map));
         resultMap.put("total", platformService.queryPageCount(map));
         return resultMap;

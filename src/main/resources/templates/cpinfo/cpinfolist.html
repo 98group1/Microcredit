@@ -305,36 +305,6 @@
                 //让弹出框显示
                 this.dialogFormVisible = true
             }
-            /*,
-            handleEdit: function (index, row) {
-                // console.log(index, row);
-                this.title = '信息修改';
-                this.url = "/demo/cpInfo/update";
-                //赋值
-                this.form = row;
-                //让弹出框显示
-                this.dialogFormVisible = true
-            }
-            ,
-            saveData: function () {
-                var self = this;
-                axios.post(this.url, this.form)
-                    .then(function (response) {
-                        //添加或者修改成功
-                        if (response.data == 1) {
-                            self.$message({
-                                message: '恭喜你， 操作成功',
-                                type: 'success'
-                            });
-                            //关闭弹出框
-                            self.dialogFormVisible = false;
-                            //刷新页面
-                            self.loadData();
-                        } else { //添加或者修改错误
-                            self.$message.error('错了哦， 操作错误');
-                        }
-                    })
-            }*/
             ,
             handleEdit: function (status,row,name) {
                 var self = this;
@@ -364,29 +334,9 @@
                         message: '已取消'
                     });
                 });
-            },
-            handleAvatarSuccess: function (res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
-
-                this.form.headPicName = file.response.originalFilename;
-                this.form.headPic = file.response.newFileName;
-
-
-            },
-            beforeAvatarUpload: function (file) {
-                var isJPG = file.type === 'image/jpeg';
-                var isLt2M = file.size / 1024 / 1024 < 2;
-
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
             }
-        }
 
+        }
     });
 
 </script>

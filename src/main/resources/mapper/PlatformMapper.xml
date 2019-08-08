@@ -118,24 +118,38 @@
 
 <!--分页查询公司流水信息-->
 
-    <select id="queryAll" resultType="map">
+    <select id="queryAll" resultType="map" parameterType="map">
         select  P_id,loanid,Moneytype,dy.dictionary_name,changemoney,date_format(Change_time,'%Y-%m-%d %H:%i:%s') change_time,availmoney,describes
-        from platform_money yp join dictionary dy on Moneytype=dictionary_value where dy.keyword='moneytype'
+        from platform_money py join dictionary dy on Moneytype=dictionary_value where dy.keyword='moneytype'
 
-        <if test="loanid!=null and loanid!=''">
-            and  (loanid like "%"#{loanid}"%")
+        <if test="beginTime!=null and beginTime!=''">
+            and Change_time &gt;=#{beginTime}
         </if>
-        limit ${start},${pageSize}
+        <if test="endTime!=null and endTime!=''">
+            and Change_time &lt;=#{endTime}
+        </if>
+         limit  ${start},${pageSize}
     </select>
+
+
+<!--    <if test="startDate!=null and startDate!=''"> and CREATEDATE &gt;=#{startDate}</if>
+    <if test="endDate!=null and endDate!=''"> and CREATEDATE &lt;=#{endDate}</if>
+    &#45;&#45;                 between ${beginTime} and ${endTime}) ORDER BY p_id-->
+
+
 
     <select id="queryPageCount" resultType="int">
         select count(*)
         from platform_money
         <where>
-            <if test="loanid!=null and loanid!=''">
-                and (loanid like "%"#{loanid}"%")
+            <if test="beginTime!=null and beginTime!=''">
+                 Change_time &gt;=#{beginTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and Change_time &lt;=#{endTime}
             </if>
         </where>
+
     </select>
 
 
