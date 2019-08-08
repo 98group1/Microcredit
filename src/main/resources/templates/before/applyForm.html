@@ -279,7 +279,7 @@
         el:"#app",
         data:{
             form:{
-                userId:'1',
+                userId:'',
                 loanType:'',//贷款类型
                 loanMoney:'',//贷款金额
                 loanDeadline:'',//贷款期限
@@ -352,6 +352,9 @@
             imageUrl:'',
             imageUrl1:''
         },
+        created:function(){
+            this.getUserId();
+        },
         methods:{
             close:function(){
               location.href="#";
@@ -405,6 +408,12 @@
                     this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
                 return isJPG && isLt2M;
+            },
+            getUserId:function () {
+                var self=this;
+                axios.post('/demo/apply/getUserId').then(function (response){
+                    self.form.userId=response.data.id;
+                });
             }
         }
     });

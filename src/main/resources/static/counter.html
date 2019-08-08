@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>贷款计算器</title>
     <script src="js/jquery-2.1.0.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function jisuan() {
             $.ajax({
@@ -75,7 +79,7 @@
 </head>
 <body>
 <div id="div1">
-    <table border="1">
+    <table border="1" class="table table-bordered table-hover">
         <tr>
             <td colspan="2" id="top">等额本金还款</td>
         </tr>
@@ -109,11 +113,11 @@
             <td class="td1">还款方式</td>
             <td class="td2">
                 <input type="text" value="等额本金还款" style="font-size: 18px"/>
-                <input type="button" value="计算      " id="btn" onclick="jisuan()"/>
+                <input type="button" class="btn btn-primary" value="计算" id="btn" onclick="jisuan()"/>
             </td>
         </tr>
     </table>
-    <table border="1"  id="table2">
+    <table border="1"  id="table2" class="table table-bordered table-hover">
         <tr>
             <th>每月需还本金</th>
             <th>每月需还利息</th>

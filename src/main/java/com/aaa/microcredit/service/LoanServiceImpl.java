@@ -90,4 +90,47 @@ public class LoanServiceImpl implements LoanService {
 
         return listloan;
     }
+
+    /**
+     * 根据前台用户id查询贷款信息及其明细
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Map> selectLoan(Integer userId) {
+        //先查询出贷款表
+        List<Map> listloan = loanMapper.selectLoan(userId);
+        //判断不为空
+        if (listloan!=null&&listloan.size()>0){
+            //遍历
+            for (Map maploan : listloan) {
+                //查询出明细表
+                List<Map> listmx = loanMapper.selectMxAll();
+                //创建新的数组，用与拼接
+                List listpj=new ArrayList();
+                //判断并遍历
+                if (listmx!=null&&listmx.size()>0){
+                    for (Map mapmx : listmx) {
+                        //当贷款表的id等于明细表中的贷款id时
+                        if(mapmx.get("lId").equals(maploan.get("lId"))){
+                            //将明细表中的这条数据添加到拼接的数组中
+                            listpj.add(mapmx);
+                        }
+                    }
+                }
+                //将拼接的数组添加到贷款表中的这条数据中
+                maploan.put("tab",listpj);
+            }
+        }
+
+        return listloan;
+    }
+
+    @Override
+    public Integer selectLoanCount(Integer userId) {
+        return loanMapper.selectLoanCount(userId);
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.aaa.microcredit.dao;
 
 import com.aaa.microcredit.entity.Loan;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +34,24 @@ public interface LoanMapper {
      * @return
      */
     Integer selectAllCount(Map map);
+
+
     /**
      * 用Map拼接还款表和明细表
      * @return
      */
     List<Map> selectMxPjAll(Map map);
+
+    /**
+     * 根据前台用户id查询贷款信息
+     * @param userId
+     * @return
+     */
+    List<Map> selectLoan(Integer userId);
+    /**
+     * 查询贷款条数
+     * @return
+     */
+    Integer selectLoanCount(Integer userId);
+
 }

@@ -42,4 +42,16 @@ public class LoanController {
         String s= (String) map.get("getSession");
         return  request.getSession().getAttribute(s);
     }
+
+    @ResponseBody
+    @RequestMapping("/selectLoan")
+    public Map selectloan(@RequestBody Map map){
+        Integer userId= (Integer) map.get("userId");
+        System.out.println("查询贷款明细");
+        List<Map> mapList = loanService.selectLoan(userId);
+        Map mappage=new HashMap();
+        mappage.put("mapList",mapList);
+        mappage.put("total",loanService.selectLoanCount(userId));
+        return mappage;
+    }
 }

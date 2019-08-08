@@ -38,4 +38,15 @@ public interface LoanService {
      * @return
      */
     List<Map> selectMxPjAll(Map map);
+    /**
+     * 根据前台用户id查询贷款信息
+     * @param userId
+     * @return
+     */
+    List<Map> selectLoan(Integer userId);
+    /**
+     * 查询贷款条数
+     * @return
+     */
+    Integer selectLoanCount(Integer userId);
 }
