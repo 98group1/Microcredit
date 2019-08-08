@@ -131,9 +131,9 @@
 
 
     <el-dialog title="驳回理由" :visible.sync="dialogFormVisible" >
-        <el-form :model="formline">
-            <el-form-item >
-                <el-input type="text"  v-model="formline.applyId"></el-input>
+        <el-form  :model="formline">
+            <el-form-item v-if="false" >
+                <el-input type="hide"  v-model="formline.applyId"></el-input>
             </el-form-item>
             <el-form-item >
                 <el-input type="textarea" rows="6" cols="40" v-model="formline.desc"></el-input>
