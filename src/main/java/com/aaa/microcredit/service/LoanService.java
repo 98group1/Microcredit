@@ -83,10 +83,10 @@ public interface LoanService {
 
     /**
      * 根据前台用户id查询贷款信息
-     * @param userId
+     * @param map
      * @return
      */
-    List<Map> selectLoan1(Integer userId);
+    List<Map> selectLoan1(Map map);
     /**
      * 查询贷款条数
      * @return

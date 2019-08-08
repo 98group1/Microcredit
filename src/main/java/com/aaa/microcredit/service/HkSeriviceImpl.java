@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 @Service
-@Transactional
+
 public class HkSeriviceImpl implements HkService {
     @Autowired
     private HkDao hkDao;
     @Override
+    @Transactional
     public Integer hkcz(Map map) {
         //修改明细表里的贷款状态
         Integer result1 = hkDao.updateLoanmx(map);
@@ -22,6 +23,7 @@ public class HkSeriviceImpl implements HkService {
         //向流水表里添加还款的记录
         Integer result3 = hkDao.insertMoney(map);
         Integer result4 = hkDao.updateLoanHK(map);
+        Integer result5 = hkDao.insertPTMoney(map);
         if(result1==1&&bePeriods.equals(zPeriobs)){
             //修改贷款表里的贷款状态
             Integer result2 = hkDao.updateLoan(loanId);
@@ -29,7 +31,7 @@ public class HkSeriviceImpl implements HkService {
             System.out.println(result);
             return result;
         }
-        return result1+result3+result4;
+        return result1+result3+result4+result5;
     }
 
     /**
@@ -50,5 +52,10 @@ public class HkSeriviceImpl implements HkService {
     @Override
     public Integer insertMoney(Map map) {
         return hkDao.insertMoney(map);
+    }
+
+    @Override
+    public Map selectPTAvailMoney() {
+        return hkDao.selectPTAvailMoney();
     }
 }

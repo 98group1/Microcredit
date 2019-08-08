@@ -63,9 +63,8 @@
       #{twoCareful,jdbcType=VARCHAR}, #{twoTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.aaa.microcredit.entity.Apply">
+  <insert id="insertSelective" keyProperty="applyId" useGeneratedKeys="true" parameterType="com.aaa.microcredit.entity.Apply">
     insert into apply
-
     <trim prefix="(" suffix=")" suffixOverrides=",">
        Loan_time,
       <if test="applyId != null">
