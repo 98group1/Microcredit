@@ -23,7 +23,6 @@
             color: #333;
             text-align: center;
             line-height: 26px;
-            height: 650px;
         }
 
         .el-main {
@@ -45,9 +44,9 @@
         .el-container:nth-child(7) .el-aside {
             line-height: 320px;
         }
-        .el-row {
-            margin-bottom: 20px;
-        }
+        /*.el-row {
+            margin-bottom: 10px;
+        }*/
         .el-col {
             border-radius: 4px;
 
@@ -71,7 +70,7 @@
             background-color: #f9fafc;
         }
         .el-menu-item{
-            font-size: 18px;
+            font-size: 15px;
             padding:0 auto;
         }
         .el-menu{
@@ -79,48 +78,24 @@
 
         }
         .el-submenu__title{
-            font-size: 18px;
+            font-size: 15px;
         }
-
-        /*图片上传的样式*/
-         .avatar-uploader .el-upload {
-             border: 1px dashed #d9d9d9;
-             border-radius: 6px;
-             cursor: pointer;
-             position: relative;
-             overflow: hidden;
-         }
-        .avatar-uploader .el-upload:hover {
-            border-color: black;
+        #app{
+            height: 650px;
         }
-        .avatar-uploader-icon {
-            font-size: 28px;
-            color: #8c939d;
-            background-color: gainsboro;
-            width: 240px;
-            height: 180px;
-            line-height: 178px;
-            text-align: center;
-        }
-        .avatar {
-            width: 240px;
-            height: 180px;
-            display: block;
-        }
-
     </style>
 </head>
 <body>
 <div id="app">
     <el-container>
-        <el-header>
+        <el-header style="padding-left: 0px;padding-right: 0px">
             <el-menu
                     class="el-menu-demo"
                     mode="horizontal"
                     background-color="#545c64"
                     text-color="#fff"
                     active-text-color="#ffd04b">
-                <el-menu-item index="1" style="padding-left: 500px"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a></el-menu-item>
+                <el-menu-item index="1" style="padding-left: 450px"><a href="index.html" style="color: white;text-decoration:none;">网站首页</a></el-menu-item>
                 <el-menu-item index="2"><a href="aboutus.html" style="color: white;text-decoration:none;">企业简介</a></el-menu-item>
                 <el-menu-item index="3"><a href="view.html" style="color: white;text-decoration:none;">行业新闻</a></el-menu-item>
                 <el-menu-item index="4"><a href="cooperation.html" style="color: white;text-decoration:none;">商务合作</a></el-menu-item>
@@ -139,29 +114,19 @@
 
         <el-container>
 
-            <el-aside width="200px">
+            <el-aside width="180px">
+                <div style="margin-bottom: 0px">
+                    <img src="images/jr4.jpg" style="width: 170px;height: 260px">
+                </div>
+                <div style="margin-top: 0px">
+                    <img src="images/jr3.jpg" style="width: 170px;height: 260px">
+                </div>
             </el-aside>
 
-                <el-aside width="150px">
-                    <div>
-                        <el-row>
-                            <!--<el-form-item label="营业执照" >-->
-                                <el-upload
-                                        name="ghtx"
-                                        class="avatar-uploader"
-                                        action="/demo/cpInfo/uploadghtx"
-                                        :show-file-list="false"
-                                        :on-success="handleAvatarSuccess"
-                                        :before-upload="beforeAvatarUpload">
-                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                </el-upload>
-                            <!--</el-form-item>-->
-                        </el-row>
-                    </div>
-                    <div style="margin-top: 120px">
-                        <el-row height="50px">
-                        </el-row>
+                <el-aside width="170px">
+                    <div style="margin-top: 50px">
+                       <!-- <el-row height="50px">
+                        </el-row>-->
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="1">
@@ -201,7 +166,7 @@
                         <el-row>
                         <el-menu>
                             <el-menu-item index="5">
-                                <a href="cooperation.html" target="tab1" style="text-decoration:none;">
+                                <a href="/demo/before/daikuanList.html" target="tab1" style="text-decoration:none;">
                                     <span slot="title">借款/贷款查询</span>
                                 </a>
                             </el-menu-item>
@@ -210,7 +175,7 @@
                         <el-row>
                             <el-menu>
                                 <el-menu-item index="6">
-                                    <a href="aboutus.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
+                                    <a href="chongzhi.html" target="tab1" style="text-decoration:none;"><span slot="title">充值</span></a>
                                 </el-menu-item>
                             </el-menu>
                         </el-row>
@@ -222,10 +187,9 @@
                             </el-menu>
                         </el-row>
                     </div>
-
                 </el-aside>
                 <el-main>
-                    <iframe width="100%" style="border: 0px;" height="650px;" src="PcenterPage1/completeData.html" width="100%" name="tab1"></iframe>
+                    <iframe width="100%"  style="border: 0px;" height="550px;" src="zhanghu/zhanghu.html" name="tab1"></iframe>
                 </el-main>
         </el-container>
 
@@ -238,66 +202,13 @@
     var vue =new Vue({
         el:"#app",
         data:{
-            headPortrait:'',
-            imageUrl:''
+
         },
         created:function(){
-            this.getUserName();
-            this.selectHead();
+
         },
         methods: {
-            //修改头像的方法
-            changeHeadPic:function(){
-                var self=this;
-                axios.post("/demo/cpInfo/changeHead",{headPortrait:self.headPortrait})
-                    .then(function (response) {
-                        if (response.data==1){
-                        }else{
-                            alert("修改失败");
-                        }
-                    });
-            },
-            //获取当前登陆的用户名
-            getUserName:function(){
-                var self=this;
-                axios.post("/demo/apply/getUserId")
-                    .then(function (response) {
-                        self.form.userName=response.data.username;
-                    });
-            },
-            beforeAvatarUpload:function(file) {
-                var isJPG = file.type === 'image/jpeg';
-                var isLt2M = file.size / 1024 / 1024 < 2;
 
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!');
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isJPG && isLt2M;
-            },
-            handleAvatarSuccess:function(res, file) {
-
-                //用来回显图片
-                this.imageUrl = URL.createObjectURL(file.raw);
-                //给表单对应字段赋值
-                // this.form.headPortrait = file.response.originalFilename;
-                this.headPortrait =file.response.newFileName;
-                this.changeHeadPic();
-            },
-            selectHead:function () {
-                var self = this;
-                axios.post('/demo/cpInfo/selectHead')
-                    .then(function (response) {
-                        self.imageUrl=response.data.head_portrait;
-                        if(self.imageUrl!=null&&self.imageUrl!=''){
-                            self.imageUrl = "http://localhost:8888/demo/apply/show?fileName="+response.data.head_portrait;
-                        }else {
-                            //alert(1111);
-                        }
-                    })
-            }
         }
     });
 </script>
