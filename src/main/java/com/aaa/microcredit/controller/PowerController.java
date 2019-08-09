@@ -87,7 +87,9 @@ public class PowerController {
     /*getPowersTreeData*/
 
     @RequestMapping("/setree")
-    public Object setree(Integer empid){
+    public Object setree(HttpServletRequest request){
+        Map emp = (Map) request.getSession().getAttribute("emp");
+        Integer empid= (Integer) emp.get("empid");
         return powerService.getPowersTreeData(empid);
     }
 

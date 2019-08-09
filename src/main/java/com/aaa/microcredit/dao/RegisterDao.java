@@ -22,7 +22,6 @@ public interface RegisterDao {
      * @param login
      * @return
      */
-    @Insert("insert into login (username,password,tel) values (#{userName},#{passWord},#{tel})")
     int addUser(Login login);
 
     /**

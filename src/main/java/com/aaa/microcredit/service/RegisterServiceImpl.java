@@ -1,10 +1,15 @@
 package com.aaa.microcredit.service;
 
+import com.aaa.microcredit.dao.ClientMoneyMapper;
 import com.aaa.microcredit.dao.RegisterDao;
 import com.aaa.microcredit.entity.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +23,26 @@ import java.util.Map;
 public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private RegisterDao dao;
+
+    @Autowired
+    private ClientMoneyMapper clientMoneyMapper;
     @Override
+    @Transactional
     public int addUser(Login login) {
-        return dao.addUser(login);
+        dao.addUser(login);
+        Integer lid=login.getId();
+        System.out.println(lid);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date=new Date();
+        Map map=new HashMap();
+        map.put("userId",lid);
+        map.put("moneyType",1);
+        map.put("changeMoney",0);
+        map.put("changeTime",df.format(date));//当前时间
+        map.put("availMoney",0);
+        map.put("describes","初始资金");
+        System.out.println(map.toString());
+        return clientMoneyMapper.insert(map);
     }
 
     /**

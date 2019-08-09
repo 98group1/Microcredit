@@ -29,7 +29,7 @@ public interface ClientMoneyMapper {
     Map selectPingtai();
 
     /**
-     * 像流水表中添加一条数据
+     * 像平台流水表中添加一条数据
      * @return
      */
     Integer insertPingtai(Map map);

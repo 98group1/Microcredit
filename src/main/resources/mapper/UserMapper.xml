@@ -20,13 +20,13 @@
     <where>
       <if test="ename!=null and ename!=''">
         and (ename like "%"#{ename}"%"
-        or m.ename like "%"#{ename}"%")
+        or ename like "%"#{ename}"%")
       </if>
       <if test="empid!=null and empid!=''">
-        and m.empid = #{empid}
+        and empid = #{empid}
       </if>
       <if test="epassword!=null and epassword!=''">
-        and m.epassword = #{epassword}
+        and epassword = #{epassword}
       </if>
 
     </where>  limit ${start},${pageSize}
@@ -37,13 +37,13 @@
     <where>
       <if test="ename!=null and ename!=''">
         and (ename like "%"#{ename}"%"
-        or m.ename like "%"#{ename}"%")
+        or ename like "%"#{ename}"%")
       </if>
       <if test="empid!=null and empid!=''">
-        and m.empid = #{empid}
+        and empid = #{empid}
       </if>
       <if test="epassword!=null and epassword!=''">
-        and m.epassword = #{epassword}
+        and epassword = #{epassword}
       </if>
     </where>
   </select>
