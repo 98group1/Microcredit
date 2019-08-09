@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付密码输入框</title>
+
+    <style type="text/css">
+        ul,li{
+            list-style: none;
+        }
+        .password-div input{
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            border: 0;
+        }
+        .password-lable{
+            height: 30px;
+            clear: both;
+        }
+        .password-lable li{
+            float: left;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border: 1px solid #dedede;
+            margin-left: -1px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<!-- 按钮触发模态框 -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                支付密码
+            </div>
+            <div class="modal-body">
+                <div class="password-div">
+                    <label for="password" class="password-lable">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <input onkeyup="change()" id="password" type="password" name="password" maxlength="6">
+                    </label>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+
+    function change() {
+        var a=$("#password").val();
+        if (a.length==6){
+            alert(a)
+            $("#myModal").modal("hide");
+        }
+    }
+</script>
+</body>
+<script type="text/javascript">
+    $(".password-div input").on("input",function(e){ //标签为password-div下的input添加oninput事件
+        var number = 6;   //定义输入最大值
+        var pw = $("input[name = 'password']").val(); //定义pw为name是password的input框的输入值
+        var list = $(".password-div ul li");  //定义list是li
+        for(var i = 0; i < number ; i++){    //for循环遍历将·放入li标签
+            if(pw[i]){
+                $(list[i]).text("·");
+            }else{
+                $(list[i]).text("");
+            };
+        };
+    });
+    $(".password-div ul").click(function(){
+        $("input[name = 'password']").val("");
+        $("#password").focus();
+        $(".password-div ul li").text("");
+    });
+</script>
+</html>

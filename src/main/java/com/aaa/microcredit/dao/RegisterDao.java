@@ -55,5 +55,13 @@ public interface RegisterDao {
      */
     @Update("update login set payment_code=#{paymentCode} where id=#{id}")
     int changePayCode(String paymentCode,Integer id);
+
+    /**
+     * 根据员工姓名查出数据
+     * @param eName
+     * @return
+     */
+    @Select("select * from m_user where ename=#{eName}")
+    Map backLogin(String eName);
 }
 

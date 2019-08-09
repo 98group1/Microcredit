@@ -26,11 +26,17 @@ public class LoanController {
     private ClientMoneyService clientMoneyService;
     @Autowired
     private ClientMoneyMapper clientMoneyMapper;
+
+    /**
+     * 查询所有的明细信息
+     * @param map
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/selectLoanMxAll")
     public Map selectloanMxAll(@RequestBody Map map){
         System.out.println("查询贷款明细");
-        System.out.println(map.get("start"));
+        System.out.println(map.get("loanStart"));
         List<Map> mapList = loanService.selectMxPjAll(map);
         Map mappage=new HashMap();
         mappage.put("mapList",mapList);
@@ -128,7 +134,7 @@ public class LoanController {
         Object op=map.get("repaymentId");
         Object lde=map.get("loan_deadline");
         System.out.println(op);
-        Integer z_periods=0;
+        int z_periods=0;
         if((Integer)op==2){
             map.put("z_periods",lde);
              z_periods= (Integer) lde;
@@ -137,7 +143,8 @@ public class LoanController {
              z_periods=1;
             System.out.println("总期数"+z_periods);
         }
-        int k_per=(Integer) map.get("Loan_money")/z_periods;
+        double loan_money = Double.valueOf((Integer) map.get("Loan_money")) ;
+        double k_per = loan_money / z_periods;
         Calendar calendar = new GregorianCalendar();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date =new Date();
@@ -150,7 +157,7 @@ public class LoanController {
             mapResult.put("r_money",k_per);
             mapResult.put("ifoverdue",1);
             mapResult.put("o_accrual",0);
-            mapResult.put("be_accrual",(((Integer)map.get("Loan_money")/z_periods)*0.045));
+            mapResult.put("be_accrual",(((loan_money-k_per*(i-1))/z_periods)*0.045));
             mapResult.put("r_time",df.format(date));
             mapResult.put("r_status",6);
            int b=loanService.insertMX(mapResult);

@@ -48,4 +48,9 @@ public class RegisterServiceImpl implements RegisterService {
     public int changePayCode(String paymentCode, Integer id) {
         return dao.changePayCode(paymentCode,id);
     }
+
+    @Override
+    public Map backLogin(String eName) {
+        return dao.backLogin(eName);
+    }
 }

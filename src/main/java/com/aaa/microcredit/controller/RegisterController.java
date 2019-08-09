@@ -113,4 +113,40 @@ public class RegisterController {
         Map login1 = (Map) session.getAttribute("login1");
         return service.changePayCode(paymentCode, (Integer) login1.get("id"));
     }
+
+    /**
+     * 后台登录方法
+     * @param ename
+     * @param password
+     * @param request
+     * @return
+     */
+    @RequestMapping("/backLogin")
+    public String backLogin(String ename, String password, HttpServletRequest request){
+        System.out.println(ename+password);
+        //根据登录的员工名字去数据库取数据
+        Map map=service.backLogin(ename);
+        //取出密码进行比较
+       String passWord= (String) map.get("epassword");
+       if(map==null){
+           System.out.println("nouser");
+        return "nouser";
+       }
+       if(passWord.equals(password)){
+           System.out.println("success");
+           //登陆成功后将emp存进session
+           request.getSession().setAttribute("emp",map);
+           return "success";
+       }else{
+           System.out.println("usererror");
+           return "usererror";
+       }
+
+    }
+
+@RequestMapping("backLogout")
+    public Integer logout(HttpServletRequest request){
+        request.getSession().removeAttribute("emp");
+        return 0;
+    }
 }
