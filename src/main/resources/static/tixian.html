@@ -57,7 +57,7 @@
         <a href="#" target="_blank">《贷款电子协议》</a>
     </span>
     </div>
-    <el-button type="primary" @click="mima">提现</el-button>
+    <el-button type="primary" @click="mima('form')">提现</el-button>
     <!--密码支付框-->
     <el-dialog :visible.sync="dialogFormVisible">
         <div class="password-div">
@@ -136,8 +136,16 @@
                     self.OldAvailMoney=response.data.c_availmoney;
                 });
             },
-            mima:function(){
-                this.dialogFormVisible=true;
+            mima(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //验证通过之后调用录入方法
+                        this.dialogFormVisible=true;
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
             chongzhi:function () {
                 var self=this;

@@ -358,7 +358,7 @@ SELECT a.Apply_Id ApplyId,a.User_id UserId,a.Loan_type loanType,a.Loan_money loa
 a.loan_deadline loanDeadline,a.Repayment_type,a.Repayment_id,a.bondsman_name bondsmanName,
 a.bondsman_age bondsmanAge,a.bondsman_sex bondsmanSex,a.bondsman_tel bondsmanTel,a.bondsman_zj bondsmanZj,
 a.bondsman_sfzz bondsmanSfzz,a.bondsman_sfzf bondsmanSfzf,a.bondsman_add bondsmanAdd,
-a.income,a.describes,date_format(a.Loan_time,'%Y-%m-%d %H:%i:%s') applyTime,a.loan_status loanStatus,d.dictionary_name loanType1
+a.income,a.describes,date_format(a.Loan_time,'%Y-%m-%d %H:%i:%s') applyTime,a.loan_status loanStatus,a.Reason,d.dictionary_name loanType1
 from apply a join dictionary d on d.dictionary_value=a.Loan_type where keyword='loan_type'
 ) b join dictionary d on d.dictionary_value=b.Repayment_id where keyword='Repayment'
 ) c join dictionary d on d.dictionary_value=c.repayment_type where keyword='repayment_type'

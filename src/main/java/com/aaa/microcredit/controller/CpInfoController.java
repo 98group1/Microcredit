@@ -224,7 +224,7 @@ public class CpInfoController {
     }
 
     /**
-     * 查询公司信息并显示到页面
+     * 根据用户名查询公司信息并显示到页面
      * @param request
      * @return
      */
