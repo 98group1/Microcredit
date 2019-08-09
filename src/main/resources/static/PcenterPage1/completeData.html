@@ -44,34 +44,34 @@
 <body>
 <div id="app" style="width:700px;height: 100%">
     <el-container>
-        <el-form ref="form" :label-position="left" :inline="true" label-width="120px" :model="sizeForm" label-width="80px" size="medium">
+        <el-form  ref="form" :rules="rules" :model="form" :label-position="left" :inline="true" label-width="120px"  label-width="80px" size="medium">
             <el-title><h4 style="text-align: center">完善公司信息</h4></el-title>
             <el-row>
-                    <el-form-item label="公司名称">
+                    <el-form-item label="公司名称" prop="cpName">
                         <el-input v-model="form.cpName" :span="30"></el-input>
                     </el-form-item>
-                    <el-form-item label="公司地址">
+                    <el-form-item label="公司地址" prop="cpAddress">
                         <el-input v-model="form.cpAddress" :span="30"></el-input>
                     </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="公司电话">
+                <el-form-item label="公司电话" prop="cpTel">
                     <el-input v-model="form.cpTel" :span="30"></el-input>
                 </el-form-item>
-                <el-form-item label="营业执照编号">
+                <el-form-item label="营业执照编号" prop="cpCode">
                     <el-input v-model="form.cpCode" :span="30"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="公司账户1">
+                <el-form-item label="公司账户1" prop="cpAccount1">
                     <el-input v-model="form.cpAccount1" :span="30"></el-input>
                 </el-form-item>
-                <el-form-item label="公司账户2">
+                <el-form-item label="公司账户2" prop="cpAccount2">
                     <el-input v-model="form.cpAccount2" :span="30"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="公司邮编">
+                <el-form-item label="公司邮箱" prop="cpEmail">
                     <el-input v-model="form.cpEmail" :span="30"></el-input>
                 </el-form-item>
             </el-row>
@@ -101,6 +101,60 @@
     </el-container>
 </div>
 <script>
+    //验证电话
+    var validateTel = (rule, value, callback) => {
+        var reg= /0\d{2,3}-\d{7,8}/;
+        if (value === '') {
+            callback(new Error('公司电话不能为空,且为座机'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的座机电话'));
+        } else {
+            callback();
+        }
+    }
+    //验证营业执照
+    var cpCode = (rule, value, callback) => {
+        var reg= /^[a-zA-Z0-9]{10,20}$/;
+        if (value === '') {
+            callback(new Error('营业执照编号不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的营业执照编号'));
+        } else {
+            callback();
+        }
+    }
+    //验证银行卡,
+    var cpAccount1 = (rule, value, callback) => {
+        var reg= /^([1-9]{1})(\d{14}|\d{18})$/;
+        if (value === '') {
+            callback(new Error('银行卡号不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的银行卡号'));
+        } else {
+            callback();
+        }
+    };
+    var cpAccount2 = (rule, value, callback) => {
+        var reg= /^([1-9]{1})(\d{14}|\d{18})$/;
+        if (value === '') {
+            callback();
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的银行卡号'));
+        } else {
+            callback();
+        }
+    };
+    //验证邮箱
+    var cpEmail = (rule, value, callback) => {
+        var reg=/^\w+([-+.]\w+)*@\w+([-.]\\w+)*\.\w+([-.]\w+)*$/;
+        if (value === '') {
+            callback(new Error('公司邮箱不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的邮箱'));
+        } else {
+            callback();
+        }
+    }
     var vue=new Vue( {
         el:"#app",
         data: {
@@ -117,7 +171,24 @@
                 licenseUrl: ''
             },
             licenseUrl1:'',
-            showbutton:0
+            showbutton:0,
+            rules:{
+                cpName:[{
+                    required: true,
+                    message: '公司名称不能为空',
+                    trigger: 'blur'
+                }],
+                cpAddress:[{
+                    required: true,
+                    message: '公司地址不能为空',
+                    trigger: 'blur'
+                }],
+                cpTel:[{validator: validateTel, trigger: 'blur'}],
+                cpCode:[{validator: cpCode, trigger: 'blur'}],
+                cpAccount1:[{validator: cpAccount1, trigger: 'blur'}],
+                cpAccount2:[{validator: cpAccount2, trigger: 'blur'}],
+                cpEmail:[{validator: cpEmail, trigger: 'blur'}],
+            }
         },
         created:function(){
             this.getUserName();
@@ -141,6 +212,17 @@
                             self.$message.error('错了哦，操作错误');
                         }
                     });
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //验证通过之后调用录入方法
+                        this.onSubmit();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
             //获取当前登陆的用户名
             getUserName:function(){
@@ -196,7 +278,7 @@
             },
             updateCpInfo:function () {
                 var self=this;
-                self.form.licenseUrl=self.form.licenseUrl1;
+                self.form.licenseUrl=self.form.licenseUrl;
                 axios.post("/demo/cpInfo/updateCpInfo",this.form)
                     .then(function (response) {
                        if (response.data>0){
@@ -208,6 +290,17 @@
                            self.$message.error('错了哦，操作错误');
                        }
                     });
+            },
+            updateForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //验证通过之后调用录入方法
+                        this.updateCpInfo();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             }
         }
     });

@@ -46,35 +46,48 @@
 <body>
 <div id="app">
     <el-container>
-        <el-form ref="form" :label-position="left" :inline="true" label-width="120px" :model="sizeForm" label-width="80px" size="medium">
+        <el-form ref="form" :model="form" :rules="rules" :label-position="left" :inline="true" label-width="120px"  label-width="80px" size="medium">
             <el-title><h4 style="text-align: center">完善法人信息</h4></el-title>
             <el-row>
-                <el-form-item label="姓名">
+                <el-form-item label="姓名" prop="lawPerson">
                     <el-input v-model="form.lawPerson" :span="30"></el-input>
                 </el-form-item>
-                <el-form-item label="性别">
+                <!--<el-form-item label="性别" prop="lawSex">
                     <el-input v-model="form.lawSex" :span="30"></el-input>
+                </el-form-item>-->
+                <el-form-item label="性别" prop="lawSex">
+                    <el-select v-model="form.lawSex" placeholder="请选择性别">
+                        <el-option label="男" value="男"></el-option>
+                        <el-option label="女" value="女"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="年龄">
-                    <el-input v-model="form.lawAge" :span="30"></el-input>
+                <el-form-item label="年龄" prop="lawAge">
+                    <el-input v-model.number="form.lawAge" :span="30"></el-input>
                 </el-form-item>
-                <el-form-item label="电话">
+                <el-form-item label="电话" prop="lawTel">
                     <el-input v-model="form.lawTel" :span="30"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="身份证号">
+                <el-form-item label="身份证号" prop="lawZj">
                     <el-input v-model="form.lawZj" :span="30"></el-input>
                 </el-form-item>
-                <el-form-item label="家庭地址">
+                <el-form-item label="家庭地址" prop="houseAddress">
                     <el-input v-model="form.houseAddress" :span="30"></el-input>
                 </el-form-item>
             </el-row>
             <el-row>
-                <el-form-item label="学历">
-                    <el-input v-model="form.education" :span="30"></el-input>
+                <el-form-item label="学历" prop="education">
+                    <!--<el-input v-model="form.education" :span="30"></el-input>-->
+                    <el-select v-model="form.education" placeholder="请选择学历">
+                        <el-option label="博士" value="博士"></el-option>
+                        <el-option label="硕士" value="硕士"></el-option>
+                        <el-option label="本科" value="本科"></el-option>
+                        <el-option label="专科" value="专科"></el-option>
+                        <el-option label="高中" value="高中"></el-option>
+                    </el-select>
                 </el-form-item>
             </el-row>
             <el-row>
@@ -115,6 +128,58 @@
     </el-container>
 </div>
 <script>
+    //验证姓名
+    var validateName = (rule, value, callback) => {
+        var reg = /^[\u4e00-\u9fa5]{2,12}$/;
+        if (value === '') {
+            callback(new Error('担保人姓名不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('格式错误 : 姓名由2-12位汉字组成'));
+        } else {
+            callback();
+        }
+    };
+    //验证年龄大小
+    var lawAge = (rule, value, callback) => {
+        if (!value) {
+            return callback(new Error('年龄不能为空'));
+        }
+        setTimeout(() => {
+            if (!Number.isInteger(value)) {
+                callback(new Error('请输入数字值'));
+            } else {
+                if (value > 70) {
+                    callback(new Error('年龄不能大于70'));
+                } else if(value < 20){
+                    callback(new Error('年龄不能低于20'));
+                }else {
+                    callback();
+                }
+            }
+        }, 1000);
+    };
+    //验证电话
+    var validateTel = (rule, value, callback) => {
+        var reg= /^1[3456789][0-9]{9}$/;
+        if (value === '') {
+            callback(new Error('担保人电话不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的电话'));
+        } else {
+            callback();
+        }
+    };
+    //验证身份证,身份证号为15位或18位
+    var validateZj = (rule, value, callback) => {
+        var reg= /(^\d{15}$)|(^\d{17}(\d|X|x)$)/;
+        if (value === '') {
+            callback(new Error('担保人身份证号不能为空'));
+        } else if (!reg.test(value)) {
+            callback(new Error('请输入正确的身份证号'));
+        } else {
+            callback();
+        }
+    };
     var vue=new Vue( {
         el:"#app",
         data: {
@@ -129,6 +194,27 @@
                 education:'',
                 lawSfzz: '',
                 lawSfzf: ''
+            },
+            rules:{
+                lawPerson: [{validator: validateName, trigger: 'blur'}],
+                lawSex:[{
+                    required: true,
+                    message: '请选择性别',
+                    trigger: 'change'
+                }],
+                lawAge:[{validator: lawAge, trigger: 'blur'}],
+                lawTel:[{validator: validateTel, trigger: 'blur'}],
+                lawZj:[{validator: validateZj, trigger: 'blur'}],
+                houseAddress:[{
+                    required: true,
+                    message: '家庭住址不能为空',
+                    trigger: 'blur'
+                }],
+                education:[{
+                    required: true,
+                    message: '请选择学历',
+                    trigger: 'change'
+                }],
             },
             lawSfzz1:'',
             lawSfzf1:'',
@@ -156,6 +242,17 @@
                             self.$message.error('错了哦，操作错误');
                         }
                     });
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //验证通过之后调用录入方法
+                        this.onSubmit();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
             //获取当前登陆的用户名
             getUserName:function(){
@@ -227,6 +324,17 @@
                             self.$message.error('错了哦，操作错误');
                         }
                     });
+            },
+            updateForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        //验证通过之后调用录入方法
+                        this.updateLawInfo();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             }
         }
     });
