@@ -76,7 +76,7 @@
                 changetime:'',
                 c_availmoney: '',
                 c_describes:'',
-                userId:'13'
+                userId:''
             },
             formLabelWidth: '120px',
             pickerOptions: {
@@ -108,7 +108,7 @@
 
         },
         created:function(){
-            this.loadData();
+            this.getUserId();
         },
         methods: {
             loadData: function () {
@@ -163,6 +163,7 @@
                 axios.post("/demo/apply/getUserId")
                     .then(function (response) {
                         self.form.userId=response.data.id;
+                        self.loadData();
                     });
             }
         }
