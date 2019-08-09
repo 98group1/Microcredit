@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,5 +105,12 @@ public class RegisterController {
         String credentials= new SimpleHash(hashAlgorithmName, passWord, credentialsSalt,hashIterations ).toHex();
         int i = service.changePwd(credentials, (Integer) login1.get("id"));
         return i;
+    }
+
+    //修改支付密码
+    @RequestMapping("change1")
+    public Object change1(String paymentCode, HttpSession session){
+        Map login1 = (Map) session.getAttribute("login1");
+        return service.changePayCode(paymentCode, (Integer) login1.get("id"));
     }
 }

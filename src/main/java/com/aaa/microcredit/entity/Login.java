@@ -1,5 +1,6 @@
 package com.aaa.microcredit.entity;
 
+import lombok.Data;
 import org.apache.ibatis.annotations.Insert;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
  * author:雷建林
  * ceeateTime:2019/7/27 19:53
  */
-@Component
+@Data
 public class Login {
     private Integer id;
     private String userName;

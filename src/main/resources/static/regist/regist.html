@@ -19,7 +19,6 @@
                     dataType:"json",
                     success:function (resp) {
                         if (resp==true){
-                            alert("成功");
                             $.ajax({
                                 url: "/demo/register/reg1",
                                 type:"POST",
@@ -148,7 +147,7 @@
                         <input type="password" id="password" name="passWord" onblur="ifpassword()" placeholder="密码"><em>使用字母、数字、符号两种及以上的组合，6-12个字符</em>
                     </div>
                     <div class="againpwd">
-                        <input type="password" id="passwordTwo"name="passWord" onblur="equalsPass()" placeholder="再次输入密码"><em>两次密码不一致</em>
+                        <input type="password" id="passwordTwo"name="passWord" onblur="equalsPass()" placeholder="再次输入密码">
                     </div>
                     <div><input type="text" id="password1" name="passWord1" placeholder="请输入验证码"></div>
                     <button type="button" id="btn" style="background-color: #00F7DE">获取验证码</button>

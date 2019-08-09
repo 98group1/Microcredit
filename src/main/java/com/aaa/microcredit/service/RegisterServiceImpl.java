@@ -43,4 +43,9 @@ public class RegisterServiceImpl implements RegisterService {
 
         return dao.changePwd(passWord,id);
     }
+
+    @Override
+    public int changePayCode(String paymentCode, Integer id) {
+        return dao.changePayCode(paymentCode,id);
+    }
 }

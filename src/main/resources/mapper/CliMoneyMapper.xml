@@ -20,7 +20,7 @@
         <if test="date!=null and date!=''">
             and c_changetime like "%"#{date}"%"
         </if>
-    </where> limit ${start},${pageSize}
+    </where> order by c_changetime desc limit ${start},${pageSize}
 </select>
 <select id="queryPageCount" resultType="int">
     select count(*)

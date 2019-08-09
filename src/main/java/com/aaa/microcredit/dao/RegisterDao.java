@@ -46,5 +46,14 @@ public interface RegisterDao {
      */
     @Update("update login set passWord=#{passWord} where id=#{id}")
     int changePwd(String passWord,Integer id);
+
+    /**
+     * 修改账户支付密码
+     * @param paymentCode
+     * @param id
+     * @return
+     */
+    @Update("update login set payment_code=#{paymentCode} where id=#{id}")
+    int changePayCode(String paymentCode,Integer id);
 }
 

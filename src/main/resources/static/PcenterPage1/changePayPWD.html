@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更改支付密码</title>
+    <script type="text/javascript" src="../regist/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../layui/layui.all.js"></script>
+    <script>
+        $(function () {
+            $("#btn7").click(function () {
+                $.ajax({
+                    url: "/demo/register/change1",
+                    type:"POST",
+                    data:{paymentCode:$("#password2").val()},
+                    dataType:"json",
+                    success:function (response) {
+                        if (response==1){
+                            layer.msg('修改成功', {icon: 6});
+                            location.href='#';
+                        }
+                    }
+                })
+            })
+        })
+        //判断两次密码是否一致
+        function equalsPass() {
+            var password1= $("#password1").val();
+            var password2= $("#password2").val();
+            if(password1!=password2){
+                layer.msg('两次密码不一样', {icon: 5});
+                $("#password2").val(null);
+            }
+        }
+    </script>
+</head>
+<body>
+<div>
+    <form style="padding-left: 150px">
+        <div><h1 style="padding-left: 100px">更改支付密码</h1></div>
+        <div style="padding-left: 100px" id="paymentCode">提示:默认支付密码为123456</div>
+        <div>
+            <table>
+                <tr style="height: 10px"></tr>
+                <tr>
+                    <td>旧密码：</td>
+                    <td><input type="text" id="password" name="paymentCode"  style="height: 30px;width: 300px"></td>
+                </tr>
+                <tr style="height: 30px"></tr>
+                <tr>
+                    <td>新密码：</td>
+                    <td><input type="text" id="password1" name="paymentCode" style="height: 30px;width: 300px"></td>
+                </tr>
+                <tr style="height: 30px"></tr>
+                <tr>
+                    <td>确认密码：</td>
+                    <td><input type="text" id="password2" name="paymentCode" onblur="equalsPass()" style="height: 30px;width: 300px"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <input type="button" id="btn7" value="确定" style="height: 30px;width: 100px;margin-top: 50px">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+</body>
+</html>
