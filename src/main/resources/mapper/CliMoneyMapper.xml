@@ -15,7 +15,7 @@
     select c_changemoney,date_format(c_changetime,'%Y-%m-%d %H:%i:%s') changetime  ,c_availmoney,c_describes from client_money
     <where>
         <if test="userId!=null and userId!=''">
-            and (user_id like "%"#{userId}"%")
+           user_id=#{userId}
         </if>
         <if test="date!=null and date!=''">
             and c_changetime like "%"#{date}"%"
@@ -27,7 +27,7 @@
     from client_money
     <where>
         <if test="userId!=null and userId!=''">
-            and (user_id like "%"#{userId}"%")
+             (user_id = #{userId})
         </if>
     </where>
 </select>

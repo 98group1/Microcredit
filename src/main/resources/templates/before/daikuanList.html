@@ -67,6 +67,12 @@
                                     >
                             </el-table-column>
                             <el-table-column
+                                    v-if="false"
+                                    prop="yearMonth"
+                                    label="还款时间"
+                            >
+                            </el-table-column>
+                            <el-table-column
                                     prop="ifOverdue"
                                     label="是否逾期"
                                     >
@@ -82,7 +88,7 @@
                             </el-table-column>
                             <el-table-column>
                                 <template slot-scope="scope">
-                                <el-button  v-if="scope.row.status=='待还款'" id="'btn'+scope.row.bePeriods" type="primary" @click="hk(props.row,scope.row)">还款</el-button>
+                                <el-button  v-if=" scope.row.yearMonth== nowTime && scope.row.status=='待还款'"  id="'btn'+scope.row.bePeriods" type="primary" @click="hk(props.row,scope.row)">还款</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -183,13 +189,27 @@
             rMoney:'',
             PTNewAvailMoney:'',
             PTOldAvailMoney:'',
+            nowTime:''
 
         },
         created:function(){
+            this.getTime()
             this.getUserId();
             this.getPTAvailMoney();
+
         },
         methods:{
+            getTime:function(){
+                nowDate = new Date();
+                let date = {
+                    year: nowDate.getFullYear(),
+                    month: nowDate.getMonth() + 1,
+                    date: nowDate.getDate(),
+                }
+                this.nowTime = date.year + '-'+0+ date.month;
+
+
+            },
             getUserId:function () {
                 var self=this;
                 axios.post('/demo/apply/getUserId').then(function (response){
@@ -246,58 +266,60 @@
             //还款操作
             hk:function (row1,row2) {
                 var self=this;
-
-                axios.post('/demo/hk/selectAvailMoney',{userId:self.userId})
-                    .then(function (response){
-                        self.OldAvailMoney=response.data.c_availmoney;
-                        var rMoney=row2.rMoney;
-                        var beAccrual=row2.beAccrual;
-                        //将需还本金和需还利息加起来，就是每次还款的金额变动数
-                        self.ChangeMoney=parseInt(rMoney)+parseInt(beAccrual);
-                        //条件判断，如果账户余额大于等于当期还款金额，才可进行还款
-                        if(self.OldAvailMoney>=self.ChangeMoney){
-                            axios.post('/demo/hk/selectPTAvailMoney')
-                                .then(function (response){
-                                    self.PTOldAvailMoney=response.data.availmoney;
-                                    //已还款金额
-                                    self.rMoney=parseInt(row1.rMoney)+self.ChangeMoney;
-                                    //将字符串转化为数字格式，进行减法计算，个人换一次，少一次，用减法
-                                    self.NewAvailMoney=parseInt(self.OldAvailMoney)-self.ChangeMoney;
-                                    //平台最新可用余额变动，还一次，多一次，用加法
-                                    self.PTNewAvailMoney=parseInt(self.PTOldAvailMoney)+self.ChangeMoney;
-                                    axios.post('/demo/hk/updateStatus',{loanId:row2.lId,bePeriods:row2.bePeriods,
-                                        ApplyId:row1.ApplyId,zPeriobs:row1.zPeriobs,user_id:self.userId,
-                                        c_Moneytype:self.CMoneyType, c_changemoney:self.ChangeMoney,
-                                        c_changetime:self.Changetime, c_availmoney:self.NewAvailMoney,
-                                        c_describes:'第'+row2.bePeriods+'期'+self.Describes,
-                                        rMoney:self.rMoney,MoneyType:self.CMoneyType,changemoney:self.ChangeMoney,
-                                        Change_time:self.Changetime,availmoney:self.PTNewAvailMoney,
-                                        describes:'第'+row2.bePeriods+'期'+self.Describes})
-                                        .then(function (response) {
-                                            if(response.data>0){
-                                                self.$message("还款成功");
-                                                // $(".bt").attr("disabled","disabled");
-                                                self.loadData();
-                                            }else {
-                                                alert("失败");
-                                            }
-                                        })
-                                        .catch(function (error) {
-                                            // handle error
-                                            console.log(error);
-                                        })
-                                        .then(function () {
-                                            // always executed
-                                        });
+                if(true){
+                    axios.post('/demo/hk/selectAvailMoney',{userId:self.userId})
+                        .then(function (response){
+                            self.OldAvailMoney=response.data.c_availmoney;
+                            var rMoney=row2.rMoney;
+                            var beAccrual=row2.beAccrual;
+                            //将需还本金和需还利息加起来，就是每次还款的金额变动数
+                            self.ChangeMoney=parseInt(rMoney)+parseInt(beAccrual);
+                            //条件判断，如果账户余额大于等于当期还款金额，才可进行还款
+                            if(self.OldAvailMoney>=self.ChangeMoney){
+                                axios.post('/demo/hk/selectPTAvailMoney')
+                                    .then(function (response){
+                                        self.PTOldAvailMoney=response.data.availmoney;
+                                        //已还款金额
+                                        self.rMoney=parseInt(row1.rMoney)+self.ChangeMoney;
+                                        //将字符串转化为数字格式，进行减法计算，个人换一次，少一次，用减法
+                                        self.NewAvailMoney=parseInt(self.OldAvailMoney)-self.ChangeMoney;
+                                        //平台最新可用余额变动，还一次，多一次，用加法
+                                        self.PTNewAvailMoney=parseInt(self.PTOldAvailMoney)+self.ChangeMoney;
+                                        axios.post('/demo/hk/updateStatus',{loanId:row2.lId,bePeriods:row2.bePeriods,
+                                            ApplyId:row1.ApplyId,zPeriobs:row1.zPeriobs,user_id:self.userId,
+                                            c_Moneytype:self.CMoneyType, c_changemoney:self.ChangeMoney,
+                                            c_changetime:self.Changetime, c_availmoney:self.NewAvailMoney,
+                                            c_describes:'第'+row2.bePeriods+'期'+self.Describes,
+                                            rMoney:self.rMoney,MoneyType:self.CMoneyType,changemoney:self.ChangeMoney,
+                                            Change_time:self.Changetime,availmoney:self.PTNewAvailMoney,
+                                            describes:'第'+row2.bePeriods+'期'+self.Describes})
+                                            .then(function (response) {
+                                                if(response.data>0){
+                                                    self.$message("还款成功");
+                                                    // $(".bt").attr("disabled","disabled");
+                                                    self.loadData();
+                                                }else {
+                                                    self.$message("失败");
+                                                }
+                                            })
+                                            .catch(function (error) {
+                                                // handle error
+                                                console.log(error);
+                                            })
+                                            .then(function () {
+                                                // always executed
+                                            });
+                                    });
+                            }
+                            else{
+                                self.$message({
+                                    message: '余额不足，请充值！',
+                                    type: 'warning'
                                 });
-                        }
-                        else{
-                            self.$message({
-                                message: '余额不足，请充值！',
-                                type: 'warning'
-                            });
-                        }
-                    });
+                            }
+                        });
+                }
+
             }
         }
     });

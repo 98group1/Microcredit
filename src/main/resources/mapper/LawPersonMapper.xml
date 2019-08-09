@@ -43,7 +43,7 @@
     </insert>
   <!--修改法人信息-->
   <update id="updataLawInfo" parameterType="Map">
-          update cp_info set law_person=#{lawPerson},law_sex=#{lawSex},law_age=#{lawAge},
+          update law_person set law_person=#{lawPerson},law_sex=#{lawSex},law_age=#{lawAge},
           law_tel=#{lawTel},law_zj=#{lawZj},house_address=#{houseAddress},
     education=#{education},law_sfzz=#{lawSfzz},law_sfzf=#{lawSfzf} where username=#{userName}
     </update>

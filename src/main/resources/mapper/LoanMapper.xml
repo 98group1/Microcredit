@@ -245,7 +245,7 @@
   </select>
   <!--查询明细表中的信息 用于拼接-->
   <select id="selectMxAll" resultType="map">
-SELECT lm.l_id lId, be_periods bePeriods,lm.r_money rMoney,d.dictionary_name ifOverdue, o_accrual oAccrual,be_accrual beAccrual,date_format(r_time,'%Y-%m-%d %H:%i:%s') rTime,d1.dictionary_name status
+SELECT lm.l_id lId, be_periods bePeriods,lm.r_money rMoney,d.dictionary_name ifOverdue, o_accrual oAccrual,be_accrual beAccrual,date_format(r_time,'%Y-%m-%d %H:%i:%s') rTime,date_format(r_time,'%Y-%m') yearMonth,d1.dictionary_name status
 FROM loan_mx lm,dictionary d,dictionary d1
 where( lm.ifoverdue=d.dictionary_value and d.keyword='ifoverdue')
 and( lm.r_status=d1.dictionary_value and d1.keyword='loan_status')

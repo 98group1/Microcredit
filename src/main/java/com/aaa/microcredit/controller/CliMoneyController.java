@@ -26,6 +26,7 @@ public class CliMoneyController {
     @ResponseBody
     public Object query(@RequestBody Map map){
         Map mapResult=new HashMap();
+        System.out.println(map.toString());
         mapResult.put("cliMoney",service.query(map));
         mapResult.put("total",service.queryPageCount(map));
         return mapResult;

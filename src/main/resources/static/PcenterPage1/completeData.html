@@ -91,10 +91,10 @@
             </el-row>
             <div style="text-align: center">
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">完善信息</el-button>
+                    <el-button  v-if="showbutton==1" type="primary" @click="onSubmit">完善信息</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="updateCpInfo">确认修改</el-button>
+                    <el-button  v-if="showbutton==2" type="primary" @click="updateCpInfo">确认修改</el-button>
                 </el-form-item>
             </div>
         </el-form>
@@ -116,7 +116,8 @@
                 licenseName: '',
                 licenseUrl: ''
             },
-            licenseUrl1:''
+            licenseUrl1:'',
+            showbutton:0
         },
         created:function(){
             this.getUserName();
@@ -134,6 +135,7 @@
                                 message:'恭喜你，操作成功！',
                                 type:'success',
                             });
+                            self.showbutton=2;
                         }else{
                             //添加或者修改错误
                             self.$message.error('错了哦，操作错误');
@@ -171,6 +173,12 @@
                 var self=this;
                 axios.post("/demo/cpInfo/selectCpInfo")
                     .then(function (response) {
+                        if(response.data==null){
+
+                            self.showbutton=1;
+                        }else{
+                            self.showbutton=2;
+                        }
                         self.form.cpName=response.data.cp_name;
                         self.form.cpAddress=response.data.cp_address;
                         self.form.cpTel=response.data.cp_tel;

@@ -105,10 +105,10 @@
             </el-row>
             <div style="text-align: center">
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">完善信息</el-button>
+                    <el-button v-if="showbutton==1" type="primary" @click="onSubmit">完善信息</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="updateLawPersonInfo">确认修改</el-button>
+                    <el-button v-if="showbutton==2" type="primary" @click="updateLawInfo">确认修改</el-button>
                 </el-form-item>
             </div>
         </el-form>
@@ -131,7 +131,8 @@
                 lawSfzf: ''
             },
             lawSfzz1:'',
-            lawSfzf1:''
+            lawSfzf1:'',
+            showbutton:0
         },
         created:function(){
             this.getUserName();
@@ -149,6 +150,7 @@
                                 message:'恭喜你，操作成功！',
                                 type:'success',
                             });
+                            self.showbutton=2;
                         }else{
                             //添加或者修改错误
                             self.$message.error('错了哦，操作错误');
@@ -187,6 +189,11 @@
                 var self=this;
                 axios.post("/demo/lawperson/selectLawInfo")
                     .then(function (response) {
+                        if(response.data==null){
+                            self.showbutton=1;
+                        }else{
+                            self.showbutton=2;
+                        }
                         self.form.lawPerson=response.data.law_person;
                         self.form.lawSex=response.data.law_sex;
                         self.form.lawAge=response.data.law_age;
