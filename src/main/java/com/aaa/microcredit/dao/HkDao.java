@@ -14,6 +14,7 @@ public interface HkDao {
     @Update("update loan_mx set r_status=7 where l_id=#{loanId} and be_periods=#{bePeriods}")
     Integer updateLoanmx(Map map);
 
+
     /**
      * 点击还款时修改贷款表里的已还款金额
      * @param map
@@ -29,6 +30,14 @@ public interface HkDao {
      */
     @Update("update loan set status=7 where l_id=#{loanId}")
     Integer updateLoan(Integer loanId);
+
+    /**
+     * 修改申请表里的贷款状态
+     * @param ApplyId
+     * @return
+     */
+    @Update("update apply set loan_status=7 where Apply_Id=#{ApplyId}")
+    Integer updateApply(Integer ApplyId);
 
 
     /**

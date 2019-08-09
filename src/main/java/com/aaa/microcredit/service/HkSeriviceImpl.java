@@ -20,6 +20,7 @@ public class HkSeriviceImpl implements HkService {
         Integer zPeriobs = (Integer) map.get("zPeriobs");
         Integer bePeriods = (Integer) map.get("bePeriods");
         Integer loanId = (Integer) map.get("loanId");
+        Integer applyId = (Integer) map.get("ApplyId");
         //向流水表里添加还款的记录
         Integer result3 = hkDao.insertMoney(map);
         Integer result4 = hkDao.updateLoanHK(map);
@@ -27,7 +28,9 @@ public class HkSeriviceImpl implements HkService {
         if(result1==1&&bePeriods.equals(zPeriobs)){
             //修改贷款表里的贷款状态
             Integer result2 = hkDao.updateLoan(loanId);
-            Integer result=result1+result2;
+            //修改申请表里的贷款状态
+            Integer result6 = hkDao.updateApply(applyId);
+            Integer result=result1+result2+result6;
             System.out.println(result);
             return result;
         }

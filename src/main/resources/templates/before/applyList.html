@@ -43,44 +43,48 @@
             <el-table-column
                     prop="ApplyId"
                     label="申请编号"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="loanType1"
                     label="贷款类型"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="loanMoney"
                     label="贷款金额"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="repaymentType1"
                     label="还款类型"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="repaymentId1"
                     label="还款方式"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     prop="loanDeadline"
                     label="贷款期数"
-                    width="100">
+                    width="80">
             </el-table-column>
             <el-table-column
                     label="申请时间"
                     prop="applyTime"
-                    width="200">
+                    width="180">
             </el-table-column>
             <el-table-column
                     label="贷款状态"
                     width="80"
                     prop="loanStatus1">
             </el-table-column>
-            <el-table-column label="操作"  >
+            <el-table-column
+                    label="驳回理由"
+                    prop="Reason">
+            </el-table-column>
+            <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button type="primary" @click="showList(scope.row.ApplyId)">查询</el-button>
                     <el-button type="primary" @click="showPhoto(scope.row.ApplyId)">查看图片资料</el-button>

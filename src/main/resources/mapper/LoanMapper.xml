@@ -309,7 +309,7 @@ values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_m
 </insert>
   <!--前台用户查询自己的贷款信息-->
   <select id="selectLoan1" resultType="Map">
-     select l_id lId, l.loan_money loanMoney,r_money rMoney ,z_periobs zPeriobs,r_capital rCapital ,date_format(apply_time,'%Y-%m-%d %H:%i:%s') applyTime,date_format(Loan_time,'%Y-%m-%d %H:%i:%s') loanTime,d3.dictionary_name status,
+     select l_id lId,Apply_Id ApplyId, l.loan_money loanMoney,r_money rMoney ,z_periobs zPeriobs,r_capital rCapital ,date_format(apply_time,'%Y-%m-%d %H:%i:%s') applyTime,date_format(Loan_time,'%Y-%m-%d %H:%i:%s') loanTime,d3.dictionary_name status,
     d.dictionary_name loanType,cp.cp_name cpName,d1.dictionary_name rType,d2.dictionary_name repaymentId
     from loan l,cp_info cp, dictionary d , dictionary d1, dictionary d2 , dictionary d3, login
     where (l.loan_type=d.dictionary_value and d.keyword='loan_type')

@@ -297,7 +297,6 @@
                 describes:'',//贷款描述
                 loanStatus:'1'//贷款状态默认为1，未审核
             },
-
             rules:{
                 loanType:[{
                     required: true,
@@ -413,6 +412,22 @@
                 var self=this;
                 axios.post('/demo/apply/getUserId').then(function (response){
                     self.form.userId=response.data.id;
+                    axios.post('/demo/cpInfo/selectCpInfo').then(function (response) {
+                        if(response.data!=null&&response.data!=''){
+                            axios.post('/demo/lawperson/selectLawInfo').then(function (response) {
+                                if(response.data!=null&&response.data!=''){
+
+                                }else {
+                                    self.$message.error('请先完善法人信息！');
+                                    location.href="/demo/PcenterPage1/completeLawPerson.html";
+                                    self.$message.error('请先完善法人信息！');
+                                }
+                            })
+                        }else {
+                            self.$message.error('请先完善公司信息！');
+                            location.href="/demo/PcenterPage1/completeData.html";
+                        }
+                    })
                 });
             }
         }
