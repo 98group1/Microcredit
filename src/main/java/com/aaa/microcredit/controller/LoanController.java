@@ -157,7 +157,7 @@ public class LoanController {
             mapResult.put("r_money",k_per);
             mapResult.put("ifoverdue",1);
             mapResult.put("o_accrual",0);
-            mapResult.put("be_accrual",(((loan_money-k_per*(i-1))/z_periods)*0.045));
+            mapResult.put("be_accrual",((loan_money-k_per*(i-1))*(0.045/12)));
             mapResult.put("r_time",df.format(date));
             mapResult.put("r_status",6);
            int b=loanService.insertMX(mapResult);

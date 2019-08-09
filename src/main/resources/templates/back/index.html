@@ -26,7 +26,7 @@
                         :style="{ lineHeight: '64px' }"
                 >
                     <a-menu-item key="1">个人中心</a-menu-item>
-                    <a-menu-item key="2">个人中心</a-menu-item>
+
                     <a-menu-item ><a @click="zhuxiao">注销</a></a-menu-item>
                 </a-menu>
             </a-layout-header>
@@ -76,7 +76,7 @@
       methods: {
           tree:function () {
               var self=this;
-              axios.post("/demo/power/tree")
+              axios.post("/demo/power/setree")
                   .then(function (response) {
                       self.menuDate=response.data;
                   })

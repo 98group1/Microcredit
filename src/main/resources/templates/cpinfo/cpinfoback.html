@@ -33,9 +33,9 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                    <!--    <el-form-item label="法人id：" >
-                            <span>{{ props.row.law_id }}</span>
-                        </el-form-item>-->
+                        <!--    <el-form-item label="法人id：" >
+                                <span>{{ props.row.law_id }}</span>
+                            </el-form-item>-->
                         <el-form-item label="法人代表：">
                             <span>{{ props.row.law_person }}</span>
                         </el-form-item>
@@ -72,12 +72,12 @@
                         <el-form-item label="公司邮箱：">
                             <span>{{ props.row.cp_email }}</span>
                         </el-form-item>
-                   <!--     <el-form-item label="营业执照：">
-                            <span>{{props.row.license_url}}</span>
-                        </el-form-item>
-                        <el-form-item label="执照名称：">
-                            <span>{{ props.row.license_name }}</span>
-                        </el-form-item>-->
+                        <!--     <el-form-item label="营业执照：">
+                                 <span>{{props.row.license_url}}</span>
+                             </el-form-item>
+                             <el-form-item label="执照名称：">
+                                 <span>{{ props.row.license_name }}</span>
+                             </el-form-item>-->
                     </el-form>
                 </template>
             </el-table-column>
@@ -124,18 +124,18 @@
                                 @click="handleEdit(3, scope.row,'加入黑名单')">加入黑名单
                         </el-button>
                     </template>
-                        <template v-if=" scope.row.status==2">
-                            <el-button type="primary"
-                                       size="mini"
-                                       @click="handleEdit(1, scope.row,'移出白名单')">移除白名单
-                            </el-button>
-                        </template>
-                            <template v-if=" scope.row.status==3" >
-                                <el-button type="danger"
-                                           size="mini"
-                                           @click="handleEdit(1, scope.row,'移出黑名单')">移除黑名单
-                                </el-button>
-                        </template>
+                    <template v-if=" scope.row.status==2">
+                        <el-button type="primary"
+                                   size="mini"
+                                   @click="handleEdit(1, scope.row,'移出白名单')">移除白名单
+                        </el-button>
+                    </template>
+                    <template v-if=" scope.row.status==3" >
+                        <el-button type="danger"
+                                   size="mini"
+                                   @click="handleEdit(1, scope.row,'移出黑名单')">移除黑名单
+                        </el-button>
+                    </template>
                 </template>
             </el-table-column>
         </el-table>
@@ -194,44 +194,17 @@
             }
         },
         created: function () {
-           this.loadData();
+            this.status1();
         },
         methods: {
-            loadData: function () {
-                var self = this;
-                //开始位置  (currentPage-1)*pageSize
-                var start = (this.currentPage - 1) * this.pageSize;
-                axios.post('/demo/cpInfo/page', {
-                    start: start, pageSize: this.pageSize,
-                    username: this.formInline.like,
-                    cp_code: this.formInline.like
-                })
-                    .then(function (response) {
-                        // handle success
-                        console.log(response);
-                        //JSON.stringify  把json对象转换为json字符串
-                        console.log(JSON.stringify(response.data));
 
-                        //JSON.parse()把json字符串转换为json对象
-                        console.log(response);
-                        self.tableData = response.data.cpInfoList;
-                        self.total = response.data.total;
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    })
-                    .then(function () {
-                        // always executed
-                    });
-            },
             status1:function(status){
                 var self = this;
                 //开始位置  (currentPage-1)*pageSize
                 var start = (this.currentPage - 1) * this.pageSize;
                 axios.post('/demo/cpInfo/querystatus1', {
-                    start: start, pageSize: this.pageSize,status:status
-            }) .then(function (response) {
+                    start: start, pageSize: this.pageSize,status:3
+                }) .then(function (response) {
                     // handle success
                     console.log(response);
                     //JSON.stringify  把json对象转换为json字符串

@@ -128,7 +128,7 @@
         <if test="endTime!=null and endTime!=''">
             and Change_time &lt;=#{endTime}
         </if>
-         limit  ${start},${pageSize}
+        ORDER BY Change_time DESC  limit  ${start},${pageSize}
     </select>
 
 

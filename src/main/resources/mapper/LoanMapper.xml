@@ -282,7 +282,7 @@ and( lm.r_status=d1.dictionary_value and d1.keyword='loan_status')
 <!--放款成功将公司信息加入贷款表中-->
     <insert id="insertLoan"  parameterType="map">
 <selectKey keyProperty="l_id" resultType="Integer" order="AFTER"  >
-    SELECT LAST_INSERT_ID()
+      SELECT LAST_INSERT_ID()
 </selectKey>
 insert into loan(cp_id,apply_id,loan_type,r_type,Repayment_id,loan_money,r_money,z_periobs,r_capital,apply_time,loan_time,status)
 values(#{cp_id},#{apply_id},#{loanType},#{repaymentType},#{repaymentId},#{Loan_money},#{r_money},#{loan_deadline},#{r_capital},#{apply_time},#{loan_time},#{status})
