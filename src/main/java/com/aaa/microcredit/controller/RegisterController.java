@@ -107,13 +107,6 @@ public class RegisterController {
         return i;
     }
 
-    //修改支付密码
-    @RequestMapping("change1")
-    public Object change1(String paymentCode, HttpSession session){
-        Map login1 = (Map) session.getAttribute("login1");
-        return service.changePayCode(paymentCode, (Integer) login1.get("id"));
-    }
-
     /**
      * 后台登录方法
      * @param ename
@@ -149,4 +142,15 @@ public class RegisterController {
         request.getSession().removeAttribute("emp");
         return 0;
     }
+
+    //修改支付密码
+    @RequestMapping("change1")
+    public Object change1(String paymentCode, HttpSession session){
+        Map login1 = (Map) session.getAttribute("login1");
+        return service.changePayCode(paymentCode, (Integer) login1.get("id"));
+    }
+
+
+
+
 }
